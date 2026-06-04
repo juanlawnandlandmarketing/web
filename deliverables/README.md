@@ -1,0 +1,43 @@
+# SEO Deliverables — Automation Builds
+
+All 38 SEO deliverables organized by category. Each folder contains the automation build, scripts, prompts, and documentation for that deliverable.
+
+## Categories
+
+| Category | Deliverables | Folder |
+|----------|-------------|--------|
+| 📄 On-Page SEO | 9 | [on-page/](./on-page/) |
+| 🔗 Off-Page SEO | 10 | [off-page/](./off-page/) |
+| ⚙️ Technical SEO | 9 | [technical/](./technical/) |
+| 📍 GBP SEO | 8 | [gbp/](./gbp/) |
+| 📊 Reporting | 2 | [reporting/](./reporting/) |
+
+## Automation Readiness Scale
+
+| Score | Meaning |
+|-------|---------|
+| 🔴 1–2 | Manual — hard to automate |
+| 🟡 3–4 | Low automation — mostly human |
+| 🟢 5–6 | Partial automation possible |
+| ✅ 7–8 | Highly automatable |
+| 🚀 9–10 | Near-full automation |
+
+## Build Priority
+
+Ordered by automation readiness (highest first):
+
+| # | Deliverable | Score | Status |
+|---|------------|-------|--------|
+| 04 | [Blog Content](./on-page/04-blog-content/) | 🚀 9/10 | 🔨 **In Progress** |
+| 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | 🔲 Not started |
+| 37 | [Internal Monthly Scorecard](./reporting/37-internal-monthly-scorecard/) | 🚀 9/10 | 🔲 Not started |
+| 06 | [Alt Text on Images](./on-page/06-alt-text/) | 🚀 9/10 | 🔲 Not started |
+| 05 | [Internal Linking](./on-page/05-internal-linking/) | ✅ 8/10 | 🔲 Not started |
+| 09 | [Competitor Analysis](./on-page/09-competitor-analysis/) | ✅ 8/10 | 🔲 Not started |
+| 22 | [Google Search Console](./technical/22-google-search-console/) | ✅ 8/10 | 🔲 Not started |
+| 26 | [Page Speed / Core Web Vitals](./technical/26-page-speed-core-web-vitals/) | ✅ 8/10 | 🔲 Not started |
+| 31 | [Weekly GBP Posts](./gbp/31-gbp-weekly-posts/) | ✅ 8/10 | 🔲 Not started |
+
+---
+
+*SEO Command Center · Lawn & Land Marketing · Built March 2026*

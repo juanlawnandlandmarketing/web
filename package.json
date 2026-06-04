@@ -1,0 +1,12 @@
+{
+  "name": "seo-command-center",
+  "version": "1.0.0",
+  "description": "SEO Command Center for Lawn & Land Marketing",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

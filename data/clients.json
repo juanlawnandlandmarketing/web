@@ -1,0 +1,432 @@
+{
+  "clients": [
+    {
+      "id": "client-001",
+      "name": "Keepers of the Green",
+      "website": "https://www.keepersofthegreen.com",
+      "domain": "keepersofthegreen.com",
+      "city": "Tampa",
+      "state": "FL",
+      "keywords": [
+        {
+          "id": "kw-001",
+          "keyword": "lawn care Tampa",
+          "service": "lawn care",
+          "area": "Tampa",
+          "rankings": {
+            "position": 2,
+            "url": "https://www.keepersofthegreen.com/lawn-care-tampa",
+            "snippet": "Tampa's premier lawn care service. Weekly mowing, edging, fertilization and more. Family-owned since 2010.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Care Services in Tampa, FL — Starting at $29", "url": "https://lawnlove.com/tampa-fl/lawn-care", "description": "Find top-rated lawn care pros near you in Tampa. Get instant quotes." },
+              { "rank": 2, "domain": "keepersofthegreen.com", "title": "Professional Lawn Care Tampa FL | Keepers of the Green", "url": "https://www.keepersofthegreen.com/lawn-care-tampa", "description": "Tampa's premier lawn care service. Weekly mowing, edging, fertilization and more. Family-owned since 2010." },
+              { "rank": 3, "domain": "lawnstarter.com", "title": "Lawn Care in Tampa, FL | LawnStarter", "url": "https://www.lawnstarter.com/tampa-fl-lawn-care", "description": "Get affordable lawn care in Tampa, FL with LawnStarter. Book online in minutes." },
+              { "rank": 4, "domain": "angi.com", "title": "Best Lawn Care Services in Tampa, FL | Angi", "url": "https://www.angi.com/companylist/us/fl/tampa/lawn-care.htm", "description": "Find and hire the best lawn care pros in Tampa, FL. Read reviews and compare quotes." },
+              { "rank": 5, "domain": "thumbtack.com", "title": "Tampa, FL Lawn Care Services Near You — Thumbtack", "url": "https://www.thumbtack.com/fl/tampa/lawn-care", "description": "Compare prices and read reviews for lawn care services in Tampa FL." },
+              { "rank": 6, "domain": "trugreen.com", "title": "Lawn Care Services Tampa FL | TruGreen", "url": "https://www.trugreen.com/local-lawn-care/fl/tampa", "description": "TruGreen provides science-based lawn care services in Tampa." },
+              { "rank": 7, "domain": "yelp.com", "title": "Best Lawn Care Services in Tampa, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=lawn+care&find_loc=Tampa%2C+FL", "description": "Reviews on lawn care services near Tampa FL." },
+              { "rank": 8, "domain": "homeadvisor.com", "title": "Lawn Care in Tampa, FL | HomeAdvisor", "url": "https://www.homeadvisor.com/c.Lawn-Care.Tampa.FL.html", "description": "Find pros for lawn care services in Tampa, FL." },
+              { "rank": 9, "domain": "greentampabay.com", "title": "Green Tampa Bay Lawn Care Services", "url": "https://www.greentampabay.com", "description": "Local lawn care services for the Tampa Bay area." },
+              { "rank": 10, "domain": "turfhog.com", "title": "Lawn Care Tampa FL | Turf Hog", "url": "https://turfhog.com/lawn-care-tampa", "description": "Professional lawn care and landscaping in Tampa FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-002",
+          "keyword": "lawn mowing Tampa FL",
+          "service": "lawn mowing",
+          "area": "Tampa",
+          "rankings": {
+            "position": 5,
+            "url": "https://www.keepersofthegreen.com/lawn-mowing",
+            "snippet": "Professional lawn mowing services in Tampa FL. Reliable, affordable, and consistent. Starting at $35.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Mowing Services in Tampa, FL | LawnLove", "url": "https://lawnlove.com/tampa-fl/lawn-mowing", "description": "Hire a trusted lawn mowing service in Tampa, FL. Instant pricing." },
+              { "rank": 2, "domain": "angi.com", "title": "Best Lawn Mowing Services Tampa FL | Angi", "url": "https://www.angi.com/lawn-mowing/tampa", "description": "Find and hire lawn mowing services in Tampa. Read verified reviews." },
+              { "rank": 3, "domain": "lawnstarter.com", "title": "Lawn Mowing Tampa FL | Starting at $27 | LawnStarter", "url": "https://www.lawnstarter.com/tampa-fl-lawn-mowing", "description": "Book lawn mowing in Tampa today. Transparent pricing." },
+              { "rank": 4, "domain": "yelp.com", "title": "Best Lawn Mowing in Tampa, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=lawn+mowing&find_loc=Tampa%2C+FL", "description": "Find top rated lawn mowing in Tampa FL." },
+              { "rank": 5, "domain": "keepersofthegreen.com", "title": "Lawn Mowing Tampa FL | Keepers of the Green", "url": "https://www.keepersofthegreen.com/lawn-mowing", "description": "Consistent, reliable lawn mowing in Tampa FL. Starting at $35/visit. No contracts." },
+              { "rank": 6, "domain": "thumbtack.com", "title": "Tampa Lawn Mowing Services — Thumbtack", "url": "https://www.thumbtack.com/fl/tampa/lawn-mowing", "description": "Compare lawn mowing quotes in Tampa FL." },
+              { "rank": 7, "domain": "homeadvisor.com", "title": "Lawn Mowing Tampa FL | HomeAdvisor", "url": "https://www.homeadvisor.com/c.Lawn-Mowing.Tampa.FL.html", "description": "Find pros for lawn mowing in Tampa, FL." },
+              { "rank": 8, "domain": "trugreen.com", "title": "Lawn Mowing Tampa | TruGreen", "url": "https://www.trugreen.com/lawn-mowing/tampa", "description": "TruGreen lawn mowing services in Tampa FL." },
+              { "rank": 9, "domain": "nextdoor.com", "title": "Lawn Mowing Services near Tampa, FL — Nextdoor", "url": "https://nextdoor.com/services/lawn-mowing/tampa-fl", "description": "Find lawn mowing services recommended by Tampa neighbors." },
+              { "rank": 10, "domain": "turfhog.com", "title": "Lawn Mowing Tampa FL | Turf Hog Lawn Care", "url": "https://turfhog.com/lawn-mowing-tampa", "description": "Reliable lawn mowing services in Tampa FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-003",
+          "keyword": "lawn fertilization Tampa",
+          "service": "lawn fertilization",
+          "area": "Tampa",
+          "rankings": {
+            "position": 8,
+            "url": "https://www.keepersofthegreen.com/fertilization",
+            "snippet": "Expert lawn fertilization in Tampa. 6-step program for St. Augustine and Bahia grass.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "scotts.com", "title": "Lawn Fertilization Schedule for Tampa Florida | Scotts", "url": "https://www.scotts.com/en-us/library/grass-fertilization/tampa", "description": "Learn the best lawn fertilization schedule for Tampa, FL lawns." },
+              { "rank": 2, "domain": "turfhog.com", "title": "Lawn Fertilization Tampa FL | Turf Hog", "url": "https://turfhog.com/lawn-fertilization-tampa", "description": "Expert lawn fertilization services in Tampa FL. Weed-free guarantee." },
+              { "rank": 3, "domain": "lawnlove.com", "title": "Lawn Fertilization in Tampa, FL | LawnLove", "url": "https://lawnlove.com/tampa/fertilization", "description": "Top-rated lawn fertilization services in Tampa." },
+              { "rank": 4, "domain": "trugreen.com", "title": "Lawn Fertilizer & Care Programs | TruGreen Tampa", "url": "https://www.trugreen.com/local-lawn-care/fl/tampa", "description": "TruGreen provides professional lawn fertilization in Tampa FL." },
+              { "rank": 5, "domain": "sunnilandcorp.com", "title": "Fertilizing Your Florida Lawn | Sunniland Corp", "url": "https://sunnilandcorp.com/florida-lawn-fertilization", "description": "Florida lawn fertilization guide and products." },
+              { "rank": 6, "domain": "angi.com", "title": "Best Lawn Fertilization Services Tampa FL | Angi", "url": "https://www.angi.com/fertilization/tampa-fl", "description": "Find and hire lawn fertilization services in Tampa." },
+              { "rank": 7, "domain": "lawnstarter.com", "title": "Lawn Fertilization Tampa | LawnStarter", "url": "https://www.lawnstarter.com/tampa-fl-fertilization", "description": "Book lawn fertilization in Tampa. Affordable rates." },
+              { "rank": 8, "domain": "keepersofthegreen.com", "title": "Lawn Fertilization Tampa FL | Keepers of the Green", "url": "https://www.keepersofthegreen.com/fertilization", "description": "Expert lawn fertilization in Tampa. 6-step program for St. Augustine and Bahia grass." },
+              { "rank": 9, "domain": "ifas.ufl.edu", "title": "Florida Lawn Fertilization Guide | UF IFAS Extension", "url": "https://ifas.ufl.edu/lawn-fertilization", "description": "University of Florida guide to lawn fertilization in Florida." },
+              { "rank": 10, "domain": "tampabaylawn.com", "title": "Lawn Fertilization Tampa Bay | Tampa Bay Lawn", "url": "https://tampabaylawn.com/fertilization", "description": "Professional lawn fertilization for Tampa Bay homeowners." }
+            ]
+          }
+        },
+        {
+          "id": "kw-004",
+          "keyword": "lawn care South Tampa",
+          "service": "lawn care",
+          "area": "South Tampa",
+          "rankings": {
+            "position": 1,
+            "url": "https://www.keepersofthegreen.com/south-tampa",
+            "snippet": "South Tampa's #1 lawn care company. Serving Hyde Park, Davis Island, Palma Ceia and surrounding areas.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "keepersofthegreen.com", "title": "Lawn Care South Tampa FL | #1 Rated | Keepers of the Green", "url": "https://www.keepersofthegreen.com/south-tampa", "description": "South Tampa's top-rated lawn care service. Serving Hyde Park, Davis Island, Palma Ceia and more." },
+              { "rank": 2, "domain": "lawnlove.com", "title": "Lawn Care in South Tampa, FL | LawnLove", "url": "https://lawnlove.com/south-tampa", "description": "Find lawn care services in South Tampa." },
+              { "rank": 3, "domain": "thumbtack.com", "title": "South Tampa Lawn Care Services — Thumbtack", "url": "https://www.thumbtack.com/fl/south-tampa/lawn-care", "description": "Compare lawn care in South Tampa FL." },
+              { "rank": 4, "domain": "angi.com", "title": "Lawn Care in South Tampa FL | Angi", "url": "https://www.angi.com/lawn-care/south-tampa", "description": "Find lawn care professionals in South Tampa." },
+              { "rank": 5, "domain": "lawnstarter.com", "title": "South Tampa Lawn Care | LawnStarter", "url": "https://www.lawnstarter.com/south-tampa-lawn-care", "description": "Affordable lawn care in South Tampa." }
+            ]
+          }
+        },
+        {
+          "id": "kw-005",
+          "keyword": "weed control Tampa FL",
+          "service": "weed control",
+          "area": "Tampa",
+          "rankings": {
+            "position": 14,
+            "url": "https://www.keepersofthegreen.com/weed-control",
+            "snippet": "Professional weed control services in Tampa FL. Pre and post-emergent treatments.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "trugreen.com", "title": "Weed Control Tampa FL | TruGreen", "url": "https://www.trugreen.com/weed-control/tampa", "description": "TruGreen professional weed control services in Tampa FL." },
+              { "rank": 2, "domain": "scotts.com", "title": "Weed Control for Tampa FL Lawns | Scotts", "url": "https://www.scotts.com/weed-control/tampa", "description": "Get the right weed control for your Tampa FL lawn." },
+              { "rank": 3, "domain": "orkin.com", "title": "Lawn Weed Control Tampa FL | Orkin", "url": "https://www.orkin.com/lawn/weed-control/tampa", "description": "Professional weed control in Tampa." },
+              { "rank": 4, "domain": "lawnlove.com", "title": "Weed Control Tampa FL | LawnLove", "url": "https://lawnlove.com/tampa/weed-control", "description": "Top-rated weed control services in Tampa." },
+              { "rank": 14, "domain": "keepersofthegreen.com", "title": "Weed Control Tampa FL | Keepers of the Green", "url": "https://www.keepersofthegreen.com/weed-control", "description": "Targeted weed control services in Tampa. Pre and post-emergent treatments available." }
+            ]
+          }
+        },
+        {
+          "id": "kw-006",
+          "keyword": "lawn service Tampa FL",
+          "service": "lawn service",
+          "area": "Tampa",
+          "rankings": {
+            "position": 3,
+            "url": "https://www.keepersofthegreen.com",
+            "snippet": "Full-service lawn care in Tampa FL. Mowing, edging, fertilization, weed control and more.",
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Service Tampa FL | LawnLove", "url": "https://lawnlove.com/tampa/lawn-service", "description": "Book lawn service in Tampa FL. Top-rated pros." },
+              { "rank": 2, "domain": "lawnstarter.com", "title": "Lawn Service Tampa FL | LawnStarter", "url": "https://www.lawnstarter.com/tampa-lawn-service", "description": "Affordable lawn service in Tampa. Book online." },
+              { "rank": 3, "domain": "keepersofthegreen.com", "title": "Lawn Service Tampa FL | Keepers of the Green", "url": "https://www.keepersofthegreen.com", "description": "Complete lawn care service in Tampa FL. Weekly or biweekly service available." },
+              { "rank": 4, "domain": "angi.com", "title": "Best Lawn Service Tampa FL | Angi", "url": "https://www.angi.com/lawn-service/tampa", "description": "Find lawn service companies in Tampa FL." },
+              { "rank": 5, "domain": "trugreen.com", "title": "Lawn Care Service Tampa | TruGreen", "url": "https://www.trugreen.com/local-lawn-care/fl/tampa", "description": "TruGreen lawn care service plans in Tampa FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-007",
+          "keyword": "grass cutting Tampa",
+          "service": "grass cutting",
+          "area": "Tampa",
+          "rankings": {
+            "position": 22,
+            "url": null,
+            "snippet": null,
+            "checkedAt": "2026-03-12T09:15:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Grass Cutting Tampa FL | LawnLove", "url": "https://lawnlove.com/tampa/grass-cutting", "description": "Get grass cutting in Tampa FL from top-rated pros." },
+              { "rank": 2, "domain": "thumbtack.com", "title": "Best Grass Cutting in Tampa FL — Thumbtack", "url": "https://www.thumbtack.com/fl/tampa/grass-cutting", "description": "Find grass cutting services in Tampa." },
+              { "rank": 3, "domain": "yelp.com", "title": "Best Grass Cutting in Tampa, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=grass+cutting&find_loc=Tampa%2C+FL", "description": "Top rated grass cutting services in Tampa FL." }
+            ]
+          }
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "client-002",
+      "name": "Coastal Hardscapes",
+      "website": "https://www.coastalhardscapes.com",
+      "domain": "coastalhardscapes.com",
+      "city": "Clearwater",
+      "state": "FL",
+      "keywords": [
+        {
+          "id": "kw-008",
+          "keyword": "hardscaping Clearwater FL",
+          "service": "hardscaping",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 1,
+            "url": "https://www.coastalhardscapes.com/hardscaping",
+            "snippet": "Clearwater's premier hardscaping company. Pavers, retaining walls, outdoor kitchens and more.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "coastalhardscapes.com", "title": "Hardscaping Clearwater FL | #1 Rated | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/hardscaping", "description": "Clearwater's premier hardscaping company. Pavers, retaining walls, outdoor kitchens and more." },
+              { "rank": 2, "domain": "angi.com", "title": "Best Hardscaping in Clearwater FL | Angi", "url": "https://www.angi.com/hardscaping/clearwater-fl", "description": "Find and hire hardscaping pros in Clearwater FL." },
+              { "rank": 3, "domain": "thumbtack.com", "title": "Top Hardscaping in Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/hardscaping", "description": "Compare hardscaping quotes in Clearwater." },
+              { "rank": 4, "domain": "yelp.com", "title": "Best Hardscaping in Clearwater, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=hardscaping&find_loc=Clearwater%2C+FL", "description": "Find top rated hardscaping in Clearwater FL." },
+              { "rank": 5, "domain": "homeadvisor.com", "title": "Hardscaping Clearwater FL | HomeAdvisor", "url": "https://www.homeadvisor.com/hardscaping/clearwater", "description": "Find hardscaping pros in Clearwater FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-009",
+          "keyword": "paver installation Clearwater",
+          "service": "paver installation",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 3,
+            "url": "https://www.coastalhardscapes.com/pavers",
+            "snippet": "Expert paver installation in Clearwater. Driveways, patios, walkways and pool decks.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "sunstatepavers.com", "title": "Paver Installation Clearwater FL | Sun State Pavers", "url": "https://www.sunstatepavers.com/clearwater", "description": "Professional paver installation in Clearwater FL." },
+              { "rank": 2, "domain": "angi.com", "title": "Best Paver Installation in Clearwater FL | Angi", "url": "https://www.angi.com/paver-installation/clearwater", "description": "Find paver installation contractors in Clearwater." },
+              { "rank": 3, "domain": "coastalhardscapes.com", "title": "Paver Installation Clearwater FL | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/pavers", "description": "Expert paver installation in Clearwater. Driveways, patios, walkways and pool decks." },
+              { "rank": 4, "domain": "thumbtack.com", "title": "Paver Installation Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/paver-installation", "description": "Compare paver installation quotes in Clearwater." },
+              { "rank": 5, "domain": "homeadvisor.com", "title": "Paver Installation Clearwater FL | HomeAdvisor", "url": "https://www.homeadvisor.com/paver-installation/clearwater", "description": "Find paver installation pros in Clearwater FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-010",
+          "keyword": "retaining walls Clearwater",
+          "service": "retaining walls",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 2,
+            "url": "https://www.coastalhardscapes.com/retaining-walls",
+            "snippet": "Custom retaining wall design and installation in Clearwater FL.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "angi.com", "title": "Best Retaining Wall Contractors Clearwater FL | Angi", "url": "https://www.angi.com/retaining-walls/clearwater", "description": "Find retaining wall contractors in Clearwater." },
+              { "rank": 2, "domain": "coastalhardscapes.com", "title": "Retaining Walls Clearwater FL | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/retaining-walls", "description": "Custom retaining wall design and installation in Clearwater FL. Natural stone and concrete block." },
+              { "rank": 3, "domain": "thumbtack.com", "title": "Retaining Wall Installation Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/retaining-walls", "description": "Compare retaining wall installation quotes." },
+              { "rank": 4, "domain": "homeadvisor.com", "title": "Retaining Wall Clearwater FL | HomeAdvisor", "url": "https://www.homeadvisor.com/retaining-walls/clearwater", "description": "Find retaining wall contractors in Clearwater FL." },
+              { "rank": 5, "domain": "sunstatepavers.com", "title": "Retaining Walls Clearwater FL | Sun State", "url": "https://www.sunstatepavers.com/retaining-walls", "description": "Retaining wall installation in Clearwater." }
+            ]
+          }
+        },
+        {
+          "id": "kw-011",
+          "keyword": "outdoor kitchen Clearwater FL",
+          "service": "outdoor kitchen",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 4,
+            "url": "https://www.coastalhardscapes.com/outdoor-kitchens",
+            "snippet": "Custom outdoor kitchen design and build in Clearwater FL. Transform your backyard.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "outdoorhomescapes.com", "title": "Outdoor Kitchen Clearwater FL | Outdoor Homescapes", "url": "https://outdoorhomescapes.com/clearwater", "description": "Custom outdoor kitchens in Clearwater FL." },
+              { "rank": 2, "domain": "angi.com", "title": "Best Outdoor Kitchen Builders Clearwater FL | Angi", "url": "https://www.angi.com/outdoor-kitchens/clearwater", "description": "Find outdoor kitchen builders in Clearwater." },
+              { "rank": 3, "domain": "thumbtack.com", "title": "Outdoor Kitchen Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/outdoor-kitchen", "description": "Compare outdoor kitchen quotes in Clearwater." },
+              { "rank": 4, "domain": "coastalhardscapes.com", "title": "Outdoor Kitchen Clearwater FL | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/outdoor-kitchens", "description": "Custom outdoor kitchen design and build in Clearwater FL. Transform your backyard." },
+              { "rank": 5, "domain": "houzz.com", "title": "Outdoor Kitchen Builders in Clearwater, FL | Houzz", "url": "https://www.houzz.com/professionals/outdoor-kitchen/clearwater-fl", "description": "Find outdoor kitchen builders in Clearwater FL on Houzz." }
+            ]
+          }
+        },
+        {
+          "id": "kw-012",
+          "keyword": "patio installation Clearwater",
+          "service": "patio installation",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 6,
+            "url": "https://www.coastalhardscapes.com/patios",
+            "snippet": "Beautiful custom patio installation in Clearwater FL. Pavers, concrete, natural stone.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "angi.com", "title": "Best Patio Installation in Clearwater FL | Angi", "url": "https://www.angi.com/patio/clearwater", "description": "Find patio installation pros in Clearwater FL." },
+              { "rank": 2, "domain": "homeadvisor.com", "title": "Patio Installation Clearwater FL | HomeAdvisor", "url": "https://www.homeadvisor.com/patio/clearwater", "description": "Find patio installation contractors in Clearwater." },
+              { "rank": 3, "domain": "thumbtack.com", "title": "Patio Installation Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/patio-installation", "description": "Compare patio installation quotes." },
+              { "rank": 4, "domain": "sunstatepavers.com", "title": "Patio Installation Clearwater FL | Sun State Pavers", "url": "https://www.sunstatepavers.com/patios", "description": "Professional patio installation in Clearwater." },
+              { "rank": 5, "domain": "yelp.com", "title": "Best Patio Contractors in Clearwater, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=patio+installation&find_loc=Clearwater%2C+FL", "description": "Top rated patio contractors in Clearwater FL." },
+              { "rank": 6, "domain": "coastalhardscapes.com", "title": "Patio Installation Clearwater FL | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/patios", "description": "Beautiful custom patio installation in Clearwater FL. Pavers, concrete, natural stone." }
+            ]
+          }
+        },
+        {
+          "id": "kw-013",
+          "keyword": "pool deck pavers Clearwater",
+          "service": "pool deck pavers",
+          "area": "Clearwater",
+          "rankings": {
+            "position": 1,
+            "url": "https://www.coastalhardscapes.com/pool-decks",
+            "snippet": "Premium pool deck paver installation in Clearwater FL. Slip-resistant, beautiful, and durable.",
+            "checkedAt": "2026-03-12T10:30:00Z",
+            "serp": [
+              { "rank": 1, "domain": "coastalhardscapes.com", "title": "Pool Deck Pavers Clearwater FL | Coastal Hardscapes", "url": "https://www.coastalhardscapes.com/pool-decks", "description": "Premium pool deck paver installation in Clearwater FL. Slip-resistant, beautiful, and durable." },
+              { "rank": 2, "domain": "sunstatepavers.com", "title": "Pool Deck Pavers Clearwater | Sun State Pavers", "url": "https://www.sunstatepavers.com/pool-decks", "description": "Pool deck paver installation in Clearwater FL." },
+              { "rank": 3, "domain": "angi.com", "title": "Pool Deck Installation Clearwater FL | Angi", "url": "https://www.angi.com/pool-deck/clearwater", "description": "Find pool deck contractors in Clearwater FL." },
+              { "rank": 4, "domain": "thumbtack.com", "title": "Pool Deck Pavers Clearwater, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/clearwater/pool-deck", "description": "Compare pool deck paver quotes in Clearwater." },
+              { "rank": 5, "domain": "homeadvisor.com", "title": "Pool Deck Clearwater FL | HomeAdvisor", "url": "https://www.homeadvisor.com/pool-deck/clearwater", "description": "Find pool deck contractors in Clearwater FL." }
+            ]
+          }
+        }
+      ],
+      "recommendations": []
+    },
+    {
+      "id": "client-003",
+      "name": "Green Horizons",
+      "website": "https://www.greenhorizonslawn.com",
+      "domain": "greenhorizonslawn.com",
+      "city": "St. Petersburg",
+      "state": "FL",
+      "keywords": [
+        {
+          "id": "kw-014",
+          "keyword": "lawn care St Petersburg FL",
+          "service": "lawn care",
+          "area": "St. Petersburg",
+          "rankings": {
+            "position": 11,
+            "url": "https://www.greenhorizonslawn.com/lawn-care",
+            "snippet": "Professional lawn care services in St. Petersburg FL.",
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Care St Petersburg FL | LawnLove", "url": "https://lawnlove.com/st-petersburg-fl/lawn-care", "description": "Top-rated lawn care in St. Petersburg FL." },
+              { "rank": 2, "domain": "lawnstarter.com", "title": "Lawn Care in St. Petersburg, FL | LawnStarter", "url": "https://www.lawnstarter.com/st-petersburg-fl-lawn-care", "description": "Affordable lawn care in St. Petersburg FL." },
+              { "rank": 3, "domain": "angi.com", "title": "Best Lawn Care in St. Petersburg FL | Angi", "url": "https://www.angi.com/lawn-care/st-petersburg-fl", "description": "Find lawn care pros in St. Petersburg FL." },
+              { "rank": 11, "domain": "greenhorizonslawn.com", "title": "Lawn Care St Petersburg FL | Green Horizons", "url": "https://www.greenhorizonslawn.com/lawn-care", "description": "Professional lawn care services in St. Petersburg FL. Serving all of Pinellas County." }
+            ]
+          }
+        },
+        {
+          "id": "kw-015",
+          "keyword": "lawn mowing St Pete",
+          "service": "lawn mowing",
+          "area": "St. Pete",
+          "rankings": {
+            "position": 18,
+            "url": "https://www.greenhorizonslawn.com/mowing",
+            "snippet": "Reliable lawn mowing services in St. Pete FL.",
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Mowing St Pete FL | LawnLove", "url": "https://lawnlove.com/st-pete/lawn-mowing", "description": "Book lawn mowing in St. Pete FL." },
+              { "rank": 2, "domain": "thumbtack.com", "title": "Lawn Mowing St Pete, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/st-pete/lawn-mowing", "description": "Compare lawn mowing quotes in St. Pete." },
+              { "rank": 18, "domain": "greenhorizonslawn.com", "title": "Lawn Mowing St Pete FL | Green Horizons", "url": "https://www.greenhorizonslawn.com/mowing", "description": "Reliable lawn mowing services in St. Pete FL. Starting at $30." }
+            ]
+          }
+        },
+        {
+          "id": "kw-016",
+          "keyword": "landscaping St Petersburg FL",
+          "service": "landscaping",
+          "area": "St. Petersburg",
+          "rankings": {
+            "position": 24,
+            "url": null,
+            "snippet": null,
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "angi.com", "title": "Best Landscaping in St. Petersburg FL | Angi", "url": "https://www.angi.com/landscaping/st-petersburg-fl", "description": "Find landscaping pros in St. Petersburg FL." },
+              { "rank": 2, "domain": "thumbtack.com", "title": "Landscaping St Petersburg, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/st-petersburg/landscaping", "description": "Compare landscaping quotes in St. Petersburg." }
+            ]
+          }
+        },
+        {
+          "id": "kw-017",
+          "keyword": "yard maintenance St Pete FL",
+          "service": "yard maintenance",
+          "area": "St. Pete",
+          "rankings": {
+            "position": 33,
+            "url": null,
+            "snippet": null,
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Yard Maintenance St Pete FL | LawnLove", "url": "https://lawnlove.com/st-pete/yard-maintenance", "description": "Book yard maintenance in St. Pete FL." },
+              { "rank": 2, "domain": "thumbtack.com", "title": "Yard Maintenance St Pete, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/st-pete/yard-maintenance", "description": "Find yard maintenance services in St. Pete." }
+            ]
+          }
+        },
+        {
+          "id": "kw-018",
+          "keyword": "lawn service Pinellas County",
+          "service": "lawn service",
+          "area": "Pinellas County",
+          "rankings": {
+            "position": 45,
+            "url": null,
+            "snippet": null,
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Service Pinellas County FL | LawnLove", "url": "https://lawnlove.com/pinellas-county/lawn-service", "description": "Top-rated lawn service in Pinellas County." },
+              { "rank": 2, "domain": "lawnstarter.com", "title": "Lawn Service Pinellas County FL | LawnStarter", "url": "https://www.lawnstarter.com/pinellas-county-lawn-service", "description": "Affordable lawn service in Pinellas County." }
+            ]
+          }
+        },
+        {
+          "id": "kw-019",
+          "keyword": "grass cutting St Petersburg",
+          "service": "grass cutting",
+          "area": "St. Petersburg",
+          "rankings": {
+            "position": 7,
+            "url": "https://www.greenhorizonslawn.com/grass-cutting",
+            "snippet": "Professional grass cutting in St. Petersburg FL. Consistent and reliable.",
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Grass Cutting St Petersburg FL | LawnLove", "url": "https://lawnlove.com/st-petersburg/grass-cutting", "description": "Get grass cutting in St. Petersburg FL." },
+              { "rank": 2, "domain": "thumbtack.com", "title": "Grass Cutting St Petersburg, FL — Thumbtack", "url": "https://www.thumbtack.com/fl/st-petersburg/grass-cutting", "description": "Compare grass cutting in St. Petersburg." },
+              { "rank": 3, "domain": "angi.com", "title": "Best Grass Cutting in St. Petersburg FL | Angi", "url": "https://www.angi.com/grass-cutting/st-petersburg", "description": "Find grass cutting pros in St. Petersburg FL." },
+              { "rank": 4, "domain": "lawnstarter.com", "title": "Grass Cutting St Petersburg FL | LawnStarter", "url": "https://www.lawnstarter.com/st-petersburg-grass-cutting", "description": "Affordable grass cutting in St. Petersburg." },
+              { "rank": 5, "domain": "yelp.com", "title": "Best Grass Cutting in St. Petersburg, FL — Yelp", "url": "https://www.yelp.com/search?find_desc=grass+cutting&find_loc=St.+Petersburg%2C+FL", "description": "Top rated grass cutting in St. Petersburg FL." },
+              { "rank": 6, "domain": "trugreen.com", "title": "Grass Cutting St Petersburg | TruGreen", "url": "https://www.trugreen.com/grass-cutting/st-petersburg", "description": "TruGreen grass cutting in St. Petersburg FL." },
+              { "rank": 7, "domain": "greenhorizonslawn.com", "title": "Grass Cutting St Petersburg FL | Green Horizons", "url": "https://www.greenhorizonslawn.com/grass-cutting", "description": "Professional grass cutting in St. Petersburg FL. Consistent and reliable." }
+            ]
+          }
+        },
+        {
+          "id": "kw-020",
+          "keyword": "lawn care services St Pete FL",
+          "service": "lawn care",
+          "area": "St. Pete",
+          "rankings": {
+            "position": 15,
+            "url": "https://www.greenhorizonslawn.com",
+            "snippet": "Complete lawn care services in St. Pete FL. Mowing, edging, fertilization and more.",
+            "checkedAt": "2026-03-12T11:00:00Z",
+            "serp": [
+              { "rank": 1, "domain": "lawnlove.com", "title": "Lawn Care Services St Pete FL | LawnLove", "url": "https://lawnlove.com/st-pete/lawn-care-services", "description": "Top-rated lawn care services in St. Pete FL." },
+              { "rank": 2, "domain": "lawnstarter.com", "title": "Lawn Care Services St Pete FL | LawnStarter", "url": "https://www.lawnstarter.com/st-pete-lawn-care-services", "description": "Book lawn care services in St. Pete FL." },
+              { "rank": 15, "domain": "greenhorizonslawn.com", "title": "Lawn Care Services St Pete FL | Green Horizons", "url": "https://www.greenhorizonslawn.com", "description": "Complete lawn care services in St. Pete FL." }
+            ]
+          }
+        },
+        {
+          "id": "kw-021",
+          "keyword": "lawn fertilization St Pete",
+          "service": "lawn fertilization",
+          "area": "St. Pete",
+          "rankings": {
+            "position": null,
+            "url": null,
+            "snippet": null,
+            "checkedAt": null,
+            "serp": []
+          }
+        }
+      ],
+      "recommendations": []
+    }
+  ]
+}
