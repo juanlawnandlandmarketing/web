@@ -3,7 +3,7 @@
 /* ── State ───────────────────────────────────────────────── */
 const S = {
   clients: [],
-  view: 'weekly',
+  view: 'dashboard',
   clientId: null,
   search: '',
   sort: 'value',
