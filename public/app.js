@@ -16,6 +16,8 @@ const S = {
   weekly: null,
   weeklyLoading: false,
   weeklyRunning: false,
+  connections: null,
+  connectionsLoading: false,
   selectedYear: new Date().getFullYear(),
   selectedWeek: getIsoWeek(new Date()).week,
 };
@@ -35,6 +37,7 @@ const api = {
   weekly(year, week){return this.get(`/api/weekly?year=${year}&week_number=${week}`);},
   saveWeekly(year, week, body){return this.post(`/api/weekly?year=${year}&week_number=${week}`, body);},
   runWeekly(year, week){return this.post('/api/weekly/run', { year, week_number: week });},
+  connections(){return this.get('/api/connections');},
 };
 
 /* ── Helpers ──────────────────────────────────────────────── */
@@ -318,6 +321,7 @@ function navigate(view,clientId){
   else if(view==='detail'){const c=S.clients.find(x=>x.id===clientId);bc.innerHTML=`<a class="bc-item" href="#" onclick="navigate('dashboard');return false">Dashboard</a><span class="bc-sep">›</span><span class="bc-item">${c?h(c.name):''}</span>`;}
   render();
   if (view === 'weekly') loadWeekly();
+  if (view === 'connections') loadConnections();
 }
 
 /* ── Render Router ────────────────────────────────────────── */
@@ -542,6 +546,8 @@ function renderWeekly() {
                 const trend = row.trend || {};
                 const outputs = row.outputs || {};
                 const score = health.technical_seo_score;
+                const trendSource = trend.raw_dataforseo_json?.source || '';
+                const trendConnected = trendSource === 'dataforseo_labs_ranked_keywords';
                 return `<tr>
                   <td>
                     <div class="client-name">${h(row.client_name)}</div>
@@ -564,8 +570,8 @@ function renderWeekly() {
                   <td class="num">${Number(health.critical_error_count || 0) ? `<span class="issue-count">${health.critical_error_count}</span>` : '0'}</td>
                   <td class="num">
                     <div class="trend-stack">
-                      <strong>${trend.ranking_keywords || '-'}</strong>
-                      <span>${trend.raw_dataforseo_json?.source === 'placeholder' || !trend.ranking_keywords ? 'not connected' : `${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} kw`}</span>
+                      <strong>${trendConnected ? (trend.ranking_keywords || 0) : '-'}</strong>
+                      <span>${trendConnected ? `${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} kw` : 'not connected'}</span>
                     </div>
                   </td>
                   <td>
@@ -944,6 +950,10 @@ async function submitAddKeywords(clientId){
 function getLastCrawlTime() {
   let latest = null;
   for (const c of S.clients) {
+    const trendTime = c.weeklyTrend?.raw_dataforseo_json?.fetched_at;
+    const healthTime = c.weeklyHealth?.last_crawled_at || c.weeklyHealth?.created_at;
+    if (trendTime && (!latest || trendTime > latest)) latest = trendTime;
+    if (healthTime && (!latest || healthTime > latest)) latest = healthTime;
     for (const kw of (c.keywords || [])) {
       const t = kw.rankings?.checkedAt;
       if (t && (!latest || t > latest)) latest = t;
@@ -952,10 +962,58 @@ function getLastCrawlTime() {
   return latest ? timeAgo(latest) : 'Never';
 }
 
+async function loadConnections(force) {
+  if (S.connections && !force) return;
+  S.connectionsLoading = true;
+  if (S.view === 'connections') render();
+  try {
+    S.connections = await api.connections();
+  } catch (e) {
+    S.connections = { dataforseo: { connected: false, configured: false, status: 'error', message: e.message } };
+  }
+  S.connectionsLoading = false;
+  if (S.view === 'connections') render();
+}
+
+function connectionStatus(status) {
+  if (status === 'connected') return 'connected';
+  if (status === 'available') return 'available';
+  return 'not_connected';
+}
+
+function cardHtml(i) {
+  const status = connectionStatus(i.status);
+  const label = status === 'connected' ? 'Connected' : status === 'available' ? 'Available' : 'Not Connected';
+  return `<div class="connection-card ${status}">
+    <div class="conn-header">
+      <div class="conn-icon">${i.icon}</div>
+      <div>
+        <div class="conn-name">${h(i.name)}</div>
+        <div class="conn-desc">${h(i.desc)}</div>
+      </div>
+      <div class="conn-status ${status === 'not_connected' ? 'planned' : status}">${label}</div>
+    </div>
+    <div class="conn-detail">${h(i.detail || i.requirements || '')}</div>
+    <div class="conn-meta">
+      <span>${i.lastUsed ? `Last used: ${h(i.lastUsed)}` : h(i.requirements || '')}</span>
+      <span>${h(i.cost || '')}</span>
+    </div>
+  </div>`;
+}
+
 /* ── Connections View ─────────────────────────────────────── */
 function renderConnections() {
+  const dfs = S.connections?.dataforseo || null;
+  const dfsConnected = Boolean(dfs?.connected);
+  const dfsConfigured = Boolean(dfs?.configured);
+  const dfsDetail = dfsConnected
+    ? 'Live API verified. Weekly Ops can pull ranked keywords, traffic estimates, and technical crawl data.'
+    : dfsConfigured
+      ? `Credentials found, but the live API check failed: ${dfs?.message || 'unknown error'}`
+      : 'Add DATAFORSEO_USERNAME and DATAFORSEO_PASSWORD in Vercel to activate real SEO data.';
+
   var integrations = [
-    { name:'DataForSEO', desc:'SERP rankings, keyword volume, backlinks, on-page audits', status:'connected', icon:'🔍', detail:'SERP API · Keywords API · Backlinks API · On-Page API', lastUsed:getLastCrawlTime(), cost:'$0.002/SERP query · $0.075/volume batch · $0.02/backlink check' },
+    { name:'DataForSEO', desc:'SERP rankings, keyword volume, backlinks, on-page audits', status:dfsConnected?'connected':'not_connected', icon:'🔍', detail:dfsDetail, lastUsed:getLastCrawlTime(), cost:'SERP · Labs · On-Page API' },
     { name:'Ground Control', desc:'Client management — add/remove clients, manage client data', status:'connected', icon:'🎮', detail:'Clients sync from groundcontrol.agency', lastUsed:'—', cost:'Free (internal)' },
     { name:'Google Search Console', desc:'Real impressions, clicks, CTR, actual search queries, indexing status', status:'not_connected', icon:'📊', detail:'Would provide: real click data (not estimates), actual queries users search, index coverage, Core Web Vitals, crawl errors', requirements:'OAuth2 connection per client property, or API key with domain verification' },
     { name:'Google Analytics 4', desc:'Actual traffic, conversions, bounce rate, user behavior', status:'not_connected', icon:'📈', detail:'Would provide: real organic traffic numbers, conversion tracking, landing page performance, user flow, goal completions', requirements:'GA4 API access via service account or OAuth2 per client property' },
@@ -968,7 +1026,7 @@ function renderConnections() {
   var available = integrations.filter(function(i){return i.status==='available';});
   var notConnected = integrations.filter(function(i){return i.status==='not_connected';});
 
-  var html = '<div class="page-header"><div><h1 class="page-title">Connections</h1><p class="page-subtitle">Data sources powering the SEO Command Center.</p></div></div>';
+  var html = `<div class="page-header"><div><h1 class="page-title">Connections</h1><p class="page-subtitle">Data sources powering the SEO Command Center.</p></div><div class="page-actions"><button class="btn btn-ghost" onclick="loadConnections(true)" ${S.connectionsLoading?'disabled':''}>${S.connectionsLoading?'<span class="loading-spinner"></span> Checking...':'Check Connections'}</button></div></div>`;
 
   html += '<div class="section"><div class="section-header"><h2 class="section-title" style="color:var(--green)">✓ Active Connections</h2></div><div class="connections-grid">';
   connected.forEach(function(i){ html += cardHtml(i); });
@@ -1019,5 +1077,5 @@ async function init(){
 window.navigate=navigate;window.showAddClientModal=showAddClientModal;window.submitAddClient=submitAddClient;
 window.showAddKeywordsModal=showAddKeywordsModal;window.submitAddKeywords=submitAddKeywords;window.previewKeywords=previewKeywords;
 window.checkRankings=checkRankings;window.runAudit=runAudit;window.deleteClient=deleteClient;window.deleteKeyword=deleteKeyword;window.toggleSerp=toggleSerp;
-window.runWeeklyUpdate=runWeeklyUpdate;window.saveWeeklyClient=saveWeeklyClient;
+window.runWeeklyUpdate=runWeeklyUpdate;window.saveWeeklyClient=saveWeeklyClient;window.loadConnections=loadConnections;
 document.addEventListener('DOMContentLoaded',init);

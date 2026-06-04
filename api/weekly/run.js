@@ -1,4 +1,5 @@
 const { corsHeaders } = require('../lib/data');
+const { fetchRankedKeywordsTrend, getCredentials } = require('../lib/dataforseo');
 const { insert, patch, select, upsert } = require('../lib/supabase');
 
 function intParam(value, fallback) {
@@ -58,7 +59,7 @@ function copyHealthForWeek(source, clientId) {
   };
 }
 
-function emptyTrend(clientId) {
+function emptyTrend(clientId, note = 'Real DataForSEO trend data is not connected yet.') {
   return {
     client_id: clientId,
     ranking_keywords: 0,
@@ -72,7 +73,19 @@ function emptyTrend(clientId) {
     biggest_losses: [],
     raw_dataforseo_json: {
       source: 'not_connected',
-      note: 'Real DataForSEO trend data is not connected yet.',
+      note,
+    },
+  };
+}
+
+function failedTrend(clientId, error) {
+  return {
+    ...emptyTrend(clientId, error.message),
+    raw_dataforseo_json: {
+      source: 'dataforseo_error',
+      note: error.message,
+      details: error.details || null,
+      failed_at: new Date().toISOString(),
     },
   };
 }
@@ -96,7 +109,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const clients = await select('clients', {
-      select: 'id,client_name,domain,status',
+      select: 'id,client_name,domain,website_url,status,dataforseo_location_code,dataforseo_language_code',
       status: 'eq.active',
       order: 'client_name.asc',
     });
@@ -111,7 +124,7 @@ module.exports = async function handler(req, res) {
 
     let completed = 0;
 
-    const [currentHealthRows, latestHealthRows] = await Promise.all([
+    const [currentHealthRows, latestHealthRows, previousTrendRows] = await Promise.all([
       select('technical_health_snapshots', {
         select: '*',
         year: `eq.${year}`,
@@ -122,13 +135,29 @@ module.exports = async function handler(req, res) {
         select: '*',
         order: 'created_at.desc',
       }),
+      select('dataforseo_trend_snapshots', {
+        select: '*',
+        order: 'created_at.desc',
+      }),
     ]);
     const currentHealthByClient = latestByClient(currentHealthRows);
     const latestHealthByClient = latestByClient(latestHealthRows);
+    const previousTrendByClient = latestByClient(previousTrendRows);
+    const dataForSeoConfigured = getCredentials().configured;
 
     for (const client of clients) {
       const health = copyHealthForWeek(currentHealthByClient.get(client.id) || latestHealthByClient.get(client.id), client.id);
-      const trend = emptyTrend(client.id);
+      let trend;
+
+      if (dataForSeoConfigured) {
+        try {
+          trend = await fetchRankedKeywordsTrend(client, previousTrendByClient.get(client.id));
+        } catch (error) {
+          trend = failedTrend(client.id, error);
+        }
+      } else {
+        trend = emptyTrend(client.id, 'Set DATAFORSEO_USERNAME and DATAFORSEO_PASSWORD in Vercel to enable real trend data.');
+      }
 
       await upsert('technical_health_snapshots', [{
         ...health,
@@ -170,7 +199,9 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       run: finishedRun,
-      note: 'Weekly update saved with the latest real technical snapshots. DataForSEO trend data is still marked not connected.',
+      note: dataForSeoConfigured
+        ? 'Weekly update saved with real DataForSEO trend snapshots and latest technical health.'
+        : 'Weekly update saved, but DataForSEO trend data is not connected because credentials are missing.',
     });
   } catch (error) {
     if (run?.id) {

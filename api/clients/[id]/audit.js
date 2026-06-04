@@ -1,4 +1,5 @@
 const { corsHeaders } = require('../../lib/data');
+const { dataForSeoFetch, normalizeDomain } = require('../../lib/dataforseo');
 const { select, upsert } = require('../../lib/supabase');
 
 function currentIsoWeek() {
@@ -9,15 +10,6 @@ function currentIsoWeek() {
   const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
   const week = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
   return { year: date.getUTCFullYear(), week_number: week };
-}
-
-function normalizeTarget(client) {
-  const raw = client.website_url || client.domain || '';
-  try {
-    return new URL(raw.startsWith('http') ? raw : `https://${raw}`).hostname.replace(/^www\./, '');
-  } catch (_) {
-    return raw.replace(/^https?:\/\/(www\.)?/, '').split('/')[0];
-  }
 }
 
 function percent(value, fallback = 0) {
@@ -60,23 +52,8 @@ function dashboardClient(client, health) {
 }
 
 async function runDataForSeoCrawl(target) {
-  const username = process.env.DATAFORSEO_USERNAME;
-  const password = process.env.DATAFORSEO_PASSWORD;
-
-  if (!username || !password) {
-    const error = new Error('DataForSEO credentials are not configured');
-    error.statusCode = 500;
-    throw error;
-  }
-
-  const headers = {
-    Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString('base64')}`,
-    'Content-Type': 'application/json',
-  };
-
-  const taskResponse = await fetch('https://api.dataforseo.com/v3/on_page/task_post', {
+  const taskData = await dataForSeoFetch('/on_page/task_post', {
     method: 'POST',
-    headers,
     body: JSON.stringify([{
       target,
       max_crawl_pages: 20,
@@ -84,14 +61,6 @@ async function runDataForSeoCrawl(target) {
       enable_javascript: false,
     }]),
   });
-
-  const taskData = await taskResponse.json().catch(() => null);
-  if (!taskResponse.ok) {
-    const error = new Error(taskData?.status_message || 'DataForSEO crawl task failed');
-    error.statusCode = taskResponse.status;
-    error.details = taskData;
-    throw error;
-  }
 
   const task = taskData?.tasks?.[0];
   const taskId = task?.id;
@@ -103,17 +72,9 @@ async function runDataForSeoCrawl(target) {
 
   await new Promise((resolve) => setTimeout(resolve, 9000));
 
-  const summaryResponse = await fetch(`https://api.dataforseo.com/v3/on_page/summary/${taskId}`, {
+  const summaryData = await dataForSeoFetch(`/on_page/summary/${taskId}`, {
     method: 'GET',
-    headers,
   });
-  const summaryData = await summaryResponse.json().catch(() => null);
-  if (!summaryResponse.ok) {
-    const error = new Error(summaryData?.status_message || 'DataForSEO crawl summary failed');
-    error.statusCode = summaryResponse.status;
-    error.details = summaryData;
-    throw error;
-  }
 
   const result = summaryData?.tasks?.[0]?.result?.[0] || null;
   const pageMetrics = result?.page_metrics || {};
@@ -164,7 +125,7 @@ module.exports = async function handler(req, res) {
 
     if (!client) return res.status(404).json({ error: 'Client not found' });
 
-    const target = normalizeTarget(client);
+    const target = normalizeDomain(client.website_url || client.domain);
     if (!target) return res.status(400).json({ error: 'Client has no crawlable domain' });
 
     const defaults = currentIsoWeek();
