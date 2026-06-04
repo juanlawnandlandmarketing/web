@@ -11,6 +11,8 @@ function firstByClient(rows) {
 
 function supabaseClientToDashboardClient(client, health, trend) {
   const raw = health?.raw_audit_json || {};
+  const trendRaw = trend?.raw_dataforseo_json || {};
+  const rankedKeywords = Array.isArray(trendRaw.sample) ? trendRaw.sample : [];
 
   return {
     id: client.id,
@@ -19,7 +21,22 @@ function supabaseClientToDashboardClient(client, health, trend) {
     domain: client.domain,
     city: client.domain || 'Lawn & Land',
     state: '',
-    keywords: [],
+    keywords: rankedKeywords.map((item, index) => ({
+      id: `${client.id}-dfs-${index}`,
+      keyword: item.keyword,
+      clientId: client.id,
+      rankings: {
+        position: Number(item.rank || 0),
+        previousPosition: null,
+        checkedAt: trendRaw.fetched_at || trend?.created_at || null,
+        searchVolume: Number(item.search_volume || 0),
+        cpc: Number(item.cpc || 0),
+        monthlyTraffic: Number(item.estimated_traffic || 0),
+        trafficValue: Number(item.estimated_value || 0),
+        url: item.url || null,
+        serp: [],
+      },
+    })),
     weeklyHealth: health || null,
     weeklyTrend: trend || null,
     audit: health ? {
