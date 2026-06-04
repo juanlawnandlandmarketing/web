@@ -164,6 +164,113 @@ function fmtScore(value) {
   return value || value === 0 ? Math.round(Number(value)) : '-';
 }
 
+function pctScore(value) {
+  return value || value === 0 ? `${Math.round(Number(value))}%` : '-';
+}
+
+function issueSeverity(value, warningAt = 70, criticalAt = 50) {
+  if (value === null || value === undefined || value === '') return 'unknown';
+  const n = Number(value);
+  if (n < criticalAt) return 'critical';
+  if (n < warningAt) return 'warning';
+  return 'good';
+}
+
+function buildClientIssues(c) {
+  const m = techMetrics(c);
+  const raw = c.weeklyHealth?.raw_audit_json || {};
+  const dirtyPages = Math.max(0, Number(m.pages || 0) - Number(m.clean || 0));
+  const issues = [];
+
+  if (m.critical > 0) {
+    issues.push({
+      severity: 'critical',
+      title: `${m.critical} critical technical issue${m.critical === 1 ? '' : 's'}`,
+      metric: `${m.critical} open`,
+      why: 'These are the highest-risk crawl findings in the latest technical snapshot.',
+      fix: 'Review the flagged pages first, resolve broken links, missing indexable elements, bad redirects, or crawl-blocking problems, then rerun the weekly update.',
+      scope: `${dirtyPages || m.critical} affected page${dirtyPages === 1 ? '' : 's'} indicated by the clean-page gap`,
+    });
+  }
+
+  if (m.metadata !== null && m.metadata !== undefined && Number(m.metadata) < 70) {
+    const sev = issueSeverity(m.metadata, 70, 50);
+    issues.push({
+      severity: sev,
+      title: 'Metadata hygiene needs work',
+      metric: pctScore(m.metadata),
+      why: 'Low metadata hygiene usually means weak or missing title tags, meta descriptions, or page-level SEO structure.',
+      fix: 'Audit titles and descriptions on service and service-area pages. Rewrite duplicates, add missing descriptions, and align titles to the target service plus city.',
+      scope: `${m.pages || 0} crawled page${Number(m.pages) === 1 ? '' : 's'}`,
+    });
+  }
+
+  if (raw.seo_quality_score !== null && raw.seo_quality_score !== undefined && Number(raw.seo_quality_score) < 85) {
+    issues.push({
+      severity: issueSeverity(raw.seo_quality_score, 85, 70),
+      title: 'SEO quality below target',
+      metric: pctScore(raw.seo_quality_score),
+      why: 'The page set is passing the crawl, but the on-page SEO quality is not strong enough for a clean weekly pass.',
+      fix: 'Tighten H1/H2 structure, add service-specific copy where pages are thin, improve internal links to money pages, and confirm each page has a clear local intent.',
+      scope: `${m.pages || 0} crawled page${Number(m.pages) === 1 ? '' : 's'}`,
+    });
+  }
+
+  if (m.speed !== null && m.speed !== undefined && Number(m.speed) < 80) {
+    issues.push({
+      severity: issueSeverity(m.speed, 80, 60),
+      title: 'Speed score below target',
+      metric: pctScore(m.speed),
+      why: 'Slow pages weaken conversion and can drag organic performance, especially on mobile.',
+      fix: 'Compress oversized images, defer non-critical scripts, reduce third-party embeds, and rerun PageSpeed after changes.',
+      scope: c.domain || 'Client site',
+    });
+  }
+
+  if (m.sitemap !== null && m.sitemap !== undefined && Number(m.sitemap) < 90) {
+    issues.push({
+      severity: issueSeverity(m.sitemap, 90, 70),
+      title: 'Sitemap/indexing signal needs review',
+      metric: pctScore(m.sitemap),
+      why: 'Weak sitemap signals can mean important URLs are missing, stale, or harder for Google to discover.',
+      fix: 'Check sitemap.xml, robots.txt, canonical tags, and whether priority service pages are indexable.',
+      scope: c.domain || 'Client site',
+    });
+  }
+
+  if (!issues.length) {
+    issues.push({
+      severity: 'good',
+      title: 'No critical technical items in the latest snapshot',
+      metric: 'Clean',
+      why: 'The current crawl snapshot does not show urgent technical blockers.',
+      fix: 'Keep this client in maintenance mode: verify weekly output completion, watch rankings, and only escalate if scores drop.',
+      scope: `${m.clean || 0}/${m.pages || 0} clean pages`,
+    });
+  }
+
+  return issues.sort((a, b) => {
+    const order = { critical: 0, warning: 1, unknown: 2, good: 3 };
+    return (order[a.severity] ?? 9) - (order[b.severity] ?? 9);
+  });
+}
+
+function renderIssueCard(issue, index) {
+  return `
+    <div class="issue-card ${issue.severity}">
+      <div class="issue-rank">${index + 1}</div>
+      <div class="issue-body">
+        <div class="issue-topline">
+          <h3>${h(issue.title)}</h3>
+          <span class="issue-pill ${issue.severity}">${h(issue.metric)}</span>
+        </div>
+        <p>${h(issue.why)}</p>
+        <div class="issue-fix"><strong>Fix:</strong> ${h(issue.fix)}</div>
+        <div class="issue-scope">${h(issue.scope)}</div>
+      </div>
+    </div>`;
+}
+
 function distBar(m) {
   const t=m.total||1;
   const p=v=>((v/t)*100).toFixed(1);
@@ -574,8 +681,13 @@ function renderDetail(){
   const c=S.clients.find(x=>x.id===S.clientId);
   if(!c)return'<div class="empty-state"><h3>Client not found</h3></div>';
   const m=clientMetrics(c);
+  const tech=techMetrics(c);
+  const issues=buildClientIssues(c);
+  const criticalIssues=issues.filter((issue)=>issue.severity==='critical').length;
+  const warningIssues=issues.filter((issue)=>issue.severity==='warning').length;
   const kws=[...(c.keywords||[])];
   const audit=c.audit||{};
+  const raw=c.weeklyHealth?.raw_audit_json||{};
 
   // Categorize keywords
   const wins=kws.filter(k=>(k.rankings?.position||0)>=1&&(k.rankings?.position||0)<=3).sort((a,b)=>(a.rankings.position)-(b.rankings.position));
@@ -589,77 +701,91 @@ function renderDetail(){
       <div class="detail-info">
         <h1>${h(c.name)}</h1>
         <div class="detail-meta">
-          <span>${h(c.city)}, ${h(c.state)}</span>
+          <span>${h(c.domain || clientSubtitle(c))}</span>
           ${c.website?`<a href="${h(c.website)}" target="_blank">${h(c.domain)}</a>`:''}
+          <span>Last crawl: ${timeAgo(tech.crawledAt)}</span>
         </div>
       </div>
       <div class="detail-actions">
-        <button class="btn btn-primary" onclick="checkRankings('${c.id}')" ${S.checking?'disabled':''}>
-          ${S.checking?'<span class="loading-spinner"></span> Checking…':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Check Rankings'}
-        </button>
-        <button class="btn btn-outline" onclick="runAudit('${c.id}')" ${S.auditing?'disabled':''}>
-          ${S.auditing?'<span class="loading-spinner"></span> Auditing…':'Site Audit'}
-        </button>
-        <button class="btn btn-outline" onclick="showAddKeywordsModal('${c.id}')">Add Keywords</button>
+        <a class="btn btn-primary" href="${h(c.website || `https://${c.domain}`)}" target="_blank">Open Site</a>
         <a class="btn btn-ghost" href="https://groundcontrol.agency" target="_blank" style="font-size:12px">Manage in Ground Control ↗</a>
       </div>
     </div>
 
     <div class="stats-row">
       <div class="stat-card highlight">
-        <div class="stat-label">Traffic Value</div>
-        <div class="stat-value">${fmtMoney(m.totalValue)}<span style="font-size:14px;font-weight:400">/mo</span></div>
+        <div class="stat-label">Technical Score</div>
+        <div class="stat-value">${fmtScore(tech.score)}</div>
+        <div class="stat-helper">Verified SEO: ${fmtScore(tech.verified)}</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Est. Traffic</div>
-        <div class="stat-value">${fmt(m.totalTraffic)}<span style="font-size:14px;font-weight:400">/mo</span></div>
+        <div class="stat-label">Critical Items</div>
+        <div class="stat-value">${tech.critical}</div>
+        <div class="stat-helper">${criticalIssues} critical groups · ${warningIssues} warning groups</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Page 1</div>
-        <div class="stat-value">${m.t10}<span style="font-size:14px;font-weight:400;color:var(--text-dim)"> / ${m.total}</span></div>
+        <div class="stat-label">Pages Crawled</div>
+        <div class="stat-value">${tech.pages || '-'}</div>
+        <div class="stat-helper">${tech.clean || 0} clean · ${Math.max(0, (tech.pages || 0) - (tech.clean || 0))} need review</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Avg Position</div>
-        <div class="stat-value">${m.avg?m.avg.toFixed(1):'—'}</div>
+        <div class="stat-label">Metadata Hygiene</div>
+        <div class="stat-value">${pctScore(tech.metadata)}</div>
+        <div class="stat-helper">Page titles, descriptions, headings</div>
       </div>
-      ${m.health>0?`<div class="stat-card">
-        <div class="stat-label">Health Score</div>
-        <div class="stat-value">${m.health}</div>
-        <div class="stat-helper">On-page: ${m.onpageScore} · Authority: ${m.blRank}</div>
-      </div>`:''}
     </div>
 
-    ${audit.backlinks?`
     <div class="section">
-      <div class="section-header"><h2 class="section-title">Site Intelligence</h2><div class="table-actions"><span style="font-size:12px;color:var(--text-dim)">Audited ${timeAgo(audit.auditedAt)}</span></div></div>
+      <div class="section-header">
+        <h2 class="section-title">Critical Fix Queue</h2>
+        <div style="font-size:13px;color:var(--text-muted)">Prioritized from the latest real technical snapshot.</div>
+      </div>
+      <div class="issue-list">
+        ${issues.map(renderIssueCard).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><h2 class="section-title">Technical Snapshot</h2><div class="table-actions"><span style="font-size:12px;color:var(--text-dim)">Source: ${h(raw.source || 'Supabase technical health')}</span></div></div>
       <div class="intel-cards">
         <div class="intel-card">
-          <div class="intel-label">Domain Authority</div>
-          <div class="intel-value">${audit.backlinks.rank}</div>
+          <div class="intel-label">SEO Quality</div>
+          <div class="intel-value">${pctScore(raw.seo_quality_score)}</div>
         </div>
         <div class="intel-card">
-          <div class="intel-label">Backlinks</div>
-          <div class="intel-value">${audit.backlinks.total}</div>
+          <div class="intel-label">Speed</div>
+          <div class="intel-value">${pctScore(tech.speed)}</div>
         </div>
         <div class="intel-card">
-          <div class="intel-label">Referring Domains</div>
-          <div class="intel-value">${audit.backlinks.referringDomains}</div>
-        </div>
-        ${audit.onpage?`
-        <div class="intel-card">
-          <div class="intel-label">On-Page Score</div>
-          <div class="intel-value">${Math.round(audit.onpage.score)}</div>
+          <div class="intel-label">Sitemap</div>
+          <div class="intel-value">${pctScore(tech.sitemap)}</div>
         </div>
         <div class="intel-card">
-          <div class="intel-label">Pages Crawled</div>
-          <div class="intel-value">${audit.onpage.pagesCrawled}</div>
+          <div class="intel-label">Clean Rate</div>
+          <div class="intel-value">${tech.pages ? pctScore((tech.clean / tech.pages) * 100) : '-'}</div>
         </div>
         <div class="intel-card">
-          <div class="intel-label">Broken Links</div>
-          <div class="intel-value">${audit.onpage.brokenLinks}</div>
-        </div>`:''}
+          <div class="intel-label">Crawl Status</div>
+          <div class="intel-value small">${h(c.weeklyHealth?.crawl_status || 'unknown')}</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Imported</div>
+          <div class="intel-value small">${timeAgo(raw.imported_at || c.weeklyHealth?.created_at)}</div>
+        </div>
       </div>
-    </div>`:''}
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Work Plan</h2>
+        <div style="font-size:13px;color:var(--text-muted)">Simple operating order for this client.</div>
+      </div>
+      <div class="work-plan">
+        <div class="work-step"><span>1</span><div><strong>Fix critical technical blockers</strong><p>Start with the critical queue above before content or reporting work.</p></div></div>
+        <div class="work-step"><span>2</span><div><strong>Clean metadata and on-page quality</strong><p>Rewrite missing or weak titles/descriptions and tighten local service intent.</p></div></div>
+        <div class="work-step"><span>3</span><div><strong>Re-run the weekly update</strong><p>Confirm scores improve and the clean page count moves up.</p></div></div>
+      </div>
+    </div>
 
     ${opportunities.length>0?`
     <div class="section">
@@ -707,9 +833,9 @@ function renderDetail(){
     </div>`:''}
 
     <div class="ai-panel">
-      <div class="ai-panel-header"><span style="font-size:20px">⚡</span><h3>AI Recommendations</h3></div>
+      <div class="ai-panel-header"><span style="font-size:20px">⚡</span><h3>Client Notes</h3></div>
       <div class="ai-panel-placeholder">
-        ${m.totalOpp>0?`<strong>${opportunities.length} opportunity keyword${opportunities.length===1?'':'s'}</strong> are ranking #11-20. These are your fastest path to more traffic. Focus content optimization and link building on these keywords first.`:'Weekly AI-generated recommendations will appear here. Run a ranking check to see opportunities.'}
+        URL-level affected-page details are not in this current seed yet. This page uses the real per-client technical snapshot we have now. The next upgrade is importing crawl exports or DataForSEO page-level items so each issue can show exact URLs.
       </div>
     </div>`;
 }
