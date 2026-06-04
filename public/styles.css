@@ -643,6 +643,135 @@ input, textarea, select { font-family: inherit; }
   flex-wrap: wrap;
 }
 
+/* ── Client Issue Queue ───────────────────────────────────── */
+.issue-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.issue-card {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.issue-card.critical { border-color: rgba(232,69,69,0.32); background: rgba(232,69,69,0.06); }
+.issue-card.warning { border-color: rgba(245,200,66,0.28); background: rgba(245,200,66,0.05); }
+.issue-card.good { border-color: rgba(172,231,29,0.22); background: rgba(172,231,29,0.05); }
+.issue-rank {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--bg-content);
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-secondary);
+}
+.issue-body {
+  min-width: 0;
+}
+.issue-topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.issue-topline h3 {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.25;
+}
+.issue-body p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+.issue-pill {
+  flex-shrink: 0;
+  min-width: 52px;
+  text-align: center;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.issue-pill.critical { background: var(--tier5-bg); color: var(--tier5); border: 1px solid rgba(232,69,69,0.24); }
+.issue-pill.warning { background: var(--tier3-bg); color: var(--tier3); border: 1px solid rgba(245,200,66,0.24); }
+.issue-pill.good { background: var(--tier1-bg); color: var(--tier1); border: 1px solid rgba(172,231,29,0.24); }
+.issue-pill.unknown { background: var(--tier-none-bg); color: var(--tier-none); border: 1px solid var(--border); }
+.issue-fix {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.18);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.issue-fix strong {
+  color: var(--green);
+}
+.issue-scope {
+  margin-top: 10px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.work-plan {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.work-step {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.work-step span {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--green-dim);
+  color: var(--green);
+  font-family: var(--font-label);
+  font-weight: 800;
+}
+.work-step strong {
+  display: block;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+.work-step p {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 /* ── SERP Expand ───────────────────────────────────────────── */
 .serp-row { background: var(--bg-content); }
 .serp-row td { padding: 0 !important; }
@@ -996,6 +1125,13 @@ select.field-input {
   font-size: 24px;
   color: var(--text);
 }
+.intel-value.small {
+  font-family: var(--font-label);
+  font-size: 15px;
+  font-style: normal;
+  line-height: 1.25;
+  word-break: break-word;
+}
 
 /* ── Table Scroll ──────────────────────────────────────────── */
 .table-scroll { overflow-x: auto; }
@@ -1112,6 +1248,7 @@ select.field-input {
   .mobile-menu-btn { display: flex; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .field-row { grid-template-columns: 1fr; }
+  .work-plan { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .content { padding: 20px 16px; }
@@ -1121,4 +1258,6 @@ select.field-input {
   .data-table { font-size: 13px; }
   .data-table thead th,
   .data-table tbody td { padding: 10px 12px; }
+  .issue-card { grid-template-columns: 1fr; }
+  .issue-topline { flex-direction: column; }
 }
