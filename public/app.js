@@ -12,6 +12,7 @@ const S = {
   loading: false,
   checking: false,
   auditing: false,
+  auditingClientId: null,
   weekly: null,
   weeklyLoading: false,
   weeklyRunning: false,
@@ -707,6 +708,9 @@ function renderDetail(){
         </div>
       </div>
       <div class="detail-actions">
+        <button class="btn btn-primary" onclick="runAudit('${c.id}')" ${S.auditingClientId===c.id ? 'disabled' : ''}>
+          ${S.auditingClientId===c.id ? '<span class="loading-spinner"></span> Crawling...' : 'Run Technical Crawl'}
+        </button>
         <a class="btn btn-primary" href="${h(c.website || `https://${c.domain}`)}" target="_blank">Open Site</a>
         <a class="btn btn-ghost" href="https://groundcontrol.agency" target="_blank" style="font-size:12px">Manage in Ground Control ↗</a>
       </div>
@@ -879,10 +883,10 @@ async function checkRankings(id){
 }
 
 async function runAudit(id){
-  S.auditing=true;render();
-  try{const d=await api.runAudit(id);const i=S.clients.findIndex(c=>c.id===id);if(i>=0&&d.client)S.clients[i]=d.client;toast(d.note||'Site audit complete!');}
+  S.auditing=true;S.auditingClientId=id;render();
+  try{const d=await api.runAudit(id);const i=S.clients.findIndex(c=>c.id===id);if(i>=0&&d.client)S.clients[i]={...S.clients[i],...d.client,weeklyTrend:S.clients[i].weeklyTrend};toast(d.note||'Technical crawl complete!');}
   catch(e){toast('Failed: '+e.message,'error');}
-  S.auditing=false;render();
+  S.auditing=false;S.auditingClientId=null;render();
 }
 
 async function deleteClient(id){if(!confirm('Delete this client and all data?'))return;try{await api.deleteClient(id);S.clients=S.clients.filter(c=>c.id!==id);toast('Client deleted');navigate('dashboard');}catch(e){toast('Failed: '+e.message,'error');}}
