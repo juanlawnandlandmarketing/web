@@ -16,52 +16,63 @@ function currentIsoWeek() {
   return { year: date.getUTCFullYear(), week_number: week };
 }
 
-function mockHealth(client, index) {
-  const pagesCrawled = 40 + (index * 7);
-  const critical = index % 4;
-  const cleanPages = Math.max(0, pagesCrawled - critical - 5);
-  const healthScore = Math.round((cleanPages / pagesCrawled) * 100);
-  const verifiedSeoScore = Math.max(0, healthScore - (critical * 3));
-  const technicalSeoScore = Math.round((healthScore * 0.55) + (verifiedSeoScore * 0.45));
+function latestByClient(rows) {
+  const map = new Map();
+  for (const row of rows || []) {
+    if (!map.has(row.client_id)) map.set(row.client_id, row);
+  }
+  return map;
+}
+
+function copyHealthForWeek(source, clientId) {
+  if (!source) {
+    return {
+      client_id: clientId,
+      pages_crawled: 0,
+      clean_pages: 0,
+      critical_error_count: 0,
+      crawl_status: 'pending',
+      raw_audit_json: {
+        source: 'not_connected',
+        note: 'No real technical SEO snapshot has been imported for this client yet.',
+      },
+    };
+  }
 
   return {
-    client_id: client.id,
-    health_score: healthScore,
-    verified_seo_score: verifiedSeoScore,
-    technical_seo_score: technicalSeoScore,
-    previous_technical_seo_score: Math.max(0, technicalSeoScore - 2 + (index % 3)),
-    score_change: technicalSeoScore - Math.max(0, technicalSeoScore - 2 + (index % 3)),
-    pages_crawled: pagesCrawled,
-    clean_pages: cleanPages,
-    critical_error_count: critical,
-    last_crawled_at: new Date().toISOString(),
-    crawl_status: 'partial',
-    raw_audit_json: {
-      source: 'placeholder',
-      note: 'Replace with technical SEO crawler output.',
+    client_id: clientId,
+    health_score: source.health_score,
+    verified_seo_score: source.verified_seo_score,
+    technical_seo_score: source.technical_seo_score,
+    previous_technical_seo_score: source.previous_technical_seo_score,
+    score_change: source.score_change,
+    pages_crawled: source.pages_crawled || 0,
+    clean_pages: source.clean_pages || 0,
+    critical_error_count: source.critical_error_count || 0,
+    last_crawled_at: source.last_crawled_at || source.created_at || new Date().toISOString(),
+    crawl_status: source.crawl_status || 'success',
+    raw_audit_json: source.raw_audit_json || {
+      source: 'imported_snapshot',
+      note: 'Copied from latest available real technical SEO snapshot.',
     },
   };
 }
 
-function mockTrend(client, index) {
-  const ranking = 18 + (index * 5);
-  const top3 = Math.max(0, Math.floor(ranking * 0.12));
-  const top10 = Math.max(top3, Math.floor(ranking * 0.34));
-
+function emptyTrend(clientId) {
   return {
-    client_id: client.id,
-    ranking_keywords: ranking,
-    top_3_keywords: top3,
-    top_10_keywords: top10,
-    top_100_keywords: ranking + 12,
-    keyword_change: (index % 5) - 2,
-    estimated_traffic: ranking * 18,
-    estimated_value: ranking * 42,
+    client_id: clientId,
+    ranking_keywords: 0,
+    top_3_keywords: 0,
+    top_10_keywords: 0,
+    top_100_keywords: 0,
+    keyword_change: 0,
+    estimated_traffic: null,
+    estimated_value: null,
     biggest_wins: [],
     biggest_losses: [],
     raw_dataforseo_json: {
-      source: 'placeholder',
-      note: 'Replace with DataForSEO trend response.',
+      source: 'not_connected',
+      note: 'Real DataForSEO trend data is not connected yet.',
     },
   };
 }
@@ -100,9 +111,24 @@ module.exports = async function handler(req, res) {
 
     let completed = 0;
 
-    for (const [index, client] of clients.entries()) {
-      const health = mockHealth(client, index);
-      const trend = mockTrend(client, index);
+    const [currentHealthRows, latestHealthRows] = await Promise.all([
+      select('technical_health_snapshots', {
+        select: '*',
+        year: `eq.${year}`,
+        week_number: `eq.${weekNumber}`,
+        order: 'created_at.desc',
+      }),
+      select('technical_health_snapshots', {
+        select: '*',
+        order: 'created_at.desc',
+      }),
+    ]);
+    const currentHealthByClient = latestByClient(currentHealthRows);
+    const latestHealthByClient = latestByClient(latestHealthRows);
+
+    for (const client of clients) {
+      const health = copyHealthForWeek(currentHealthByClient.get(client.id) || latestHealthByClient.get(client.id), client.id);
+      const trend = emptyTrend(client.id);
 
       await upsert('technical_health_snapshots', [{
         ...health,
@@ -144,7 +170,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       run: finishedRun,
-      note: 'Weekly update saved. Technical crawl and DataForSEO are placeholder hooks until the live integrations are connected.',
+      note: 'Weekly update saved with the latest real technical snapshots. DataForSEO trend data is still marked not connected.',
     });
   } catch (error) {
     if (run?.id) {

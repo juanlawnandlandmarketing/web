@@ -131,6 +131,39 @@ function portfolioMetrics(clients) {
   return{clients:clients.length,keywords:kw,traffic,value,top10:t10,opportunities:opp};
 }
 
+function techMetrics(c) {
+  const health = c.weeklyHealth || {};
+  const audit = c.audit?.onpage || {};
+  const raw = health.raw_audit_json || {};
+  const score = Number(health.technical_seo_score ?? audit.score ?? 0);
+  const verified = Number(health.verified_seo_score ?? audit.verifiedSeoScore ?? 0);
+  const healthScore = Number(health.health_score ?? 0);
+  const pages = Number(health.pages_crawled ?? audit.pagesCrawled ?? 0);
+  const clean = Number(health.clean_pages ?? audit.cleanPages ?? 0);
+  const critical = Number(health.critical_error_count ?? audit.brokenLinks ?? 0);
+  const metadata = raw.metadata_hygiene_score ?? audit.metadataHygieneScore ?? null;
+  const speed = raw.speed_score ?? audit.speedScore ?? null;
+  const sitemap = raw.sitemap_score ?? audit.sitemapScore ?? null;
+  return { score, verified, healthScore, pages, clean, critical, metadata, speed, sitemap, crawledAt: health.last_crawled_at || c.audit?.auditedAt || health.created_at || null };
+}
+
+function portfolioTechMetrics(clients) {
+  const rows = clients.map(techMetrics).filter((m) => m.score || m.pages);
+  const sum = (field) => rows.reduce((total, row) => total + Number(row[field] || 0), 0);
+  return {
+    clients: clients.length,
+    withSnapshots: rows.length,
+    avgScore: rows.length ? Math.round(sum('score') / rows.length) : 0,
+    pages: sum('pages'),
+    clean: sum('clean'),
+    critical: sum('critical'),
+  };
+}
+
+function fmtScore(value) {
+  return value || value === 0 ? Math.round(Number(value)) : '-';
+}
+
 function distBar(m) {
   const t=m.total||1;
   const p=v=>((v/t)*100).toFixed(1);
@@ -166,8 +199,9 @@ function _escModal(e){if(e.key==='Escape')closeModal();}
 
 /* ── Navigation ───────────────────────────────────────────── */
 function navigate(view,clientId){
+  if (view === 'clients') view = 'dashboard';
   S.view=view;S.clientId=clientId||null;S.expandedKw=null;S.search='';
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view||(view==='detail'&&n.dataset.view==='clients')));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view||(view==='detail'&&n.dataset.view==='dashboard')));
   const bc=$('#breadcrumb');
   if(view==='dashboard')bc.innerHTML='<span class="bc-item">Dashboard</span>';
   else if(view==='weekly')bc.innerHTML='<span class="bc-item">Weekly Ops</span>';
@@ -195,14 +229,16 @@ function render(){
 /* ── Dashboard ────────────────────────────────────────────── */
 function renderDashboard(){
   const ps=portfolioMetrics(S.clients);
+  const ts=portfolioTechMetrics(S.clients);
+  const hasKeywordData = ps.keywords > 0;
   const filtered=S.clients.filter(c=>!S.search||c.name.toLowerCase().includes(S.search.toLowerCase()));
-  const sorted=sortClients(filtered);
+  const sorted=hasKeywordData ? sortClients(filtered) : [...filtered].sort((a,b)=>techMetrics(b).score-techMetrics(a).score||a.name.localeCompare(b.name));
 
   return`
     <div class="page-header">
       <div>
         <h1 class="page-title">SEO Command Center</h1>
-        <p class="page-subtitle">Strategic ranking intelligence across ${ps.clients} clients.</p>
+        <p class="page-subtitle">Real technical SEO intelligence across ${ps.clients} active Lawn & Land clients.</p>
       </div>
       <div class="last-crawl-notice">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -212,24 +248,24 @@ function renderDashboard(){
 
     <div class="stats-row">
       <div class="stat-card highlight">
-        <div class="stat-label">Monthly Traffic Value</div>
-        <div class="stat-value">${fmtMoney(ps.value)}</div>
-        <div class="stat-helper">Estimated organic value</div>
+        <div class="stat-label">Avg Technical Score</div>
+        <div class="stat-value">${ts.avgScore || '-'}</div>
+        <div class="stat-helper">${ts.withSnapshots}/${ts.clients} clients with real snapshots</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Keywords Tracked</div>
-        <div class="stat-value">${ps.keywords}</div>
-        <div class="stat-helper">Across all clients</div>
+        <div class="stat-label">Pages Crawled</div>
+        <div class="stat-value">${fmt(ts.pages)}</div>
+        <div class="stat-helper">Latest technical crawl set</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Est. Monthly Traffic</div>
-        <div class="stat-value">${fmt(ps.traffic)}</div>
-        <div class="stat-helper">From tracked keywords</div>
+        <div class="stat-label">Clean Pages</div>
+        <div class="stat-value">${fmt(ts.clean)}</div>
+        <div class="stat-helper">${ts.pages ? pct(ts.clean, ts.pages) : 0}% of crawled pages</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Page 1 Rankings</div>
-        <div class="stat-value">${ps.top10}</div>
-        <div class="stat-helper">${ps.keywords?Math.round(ps.top10/ps.keywords*100):0}% of tracked</div>
+        <div class="stat-label">Critical Issues</div>
+        <div class="stat-value">${ts.critical}</div>
+        <div class="stat-helper">Across current snapshots</div>
       </div>
     </div>
 
@@ -255,27 +291,28 @@ function renderDashboard(){
           <table class="data-table">
             <thead><tr>
               <th>Client</th>
-              <th class="num">Keywords</th>
-              <th class="num">Traffic Value</th>
-              <th class="num">Page 1</th>
-              <th class="num">Opportunities</th>
-              <th>Distribution</th>
-              <th class="num">Health</th>
-              <th class="num">Checked</th>
+              <th class="num">Tech Score</th>
+              <th class="num">Verified SEO</th>
+              <th class="num">Pages</th>
+              <th class="num">Clean</th>
+              <th class="num">Critical</th>
+              <th class="num">Metadata</th>
+              <th class="num">Speed</th>
+              <th class="num">Crawled</th>
             </tr></thead>
             <tbody>${sorted.map(c=>{
-              const m=clientMetrics(c);
-              const lastCheck=(c.keywords||[]).reduce((l,k)=>{const t=k.rankings?.checkedAt;return t&&t>(l||'')?t:l;},null);
-              const healthClass=m.health>=80?'good':m.health>=50?'ok':m.health>0?'poor':'none';
+              const m=techMetrics(c);
+              const healthClass=scoreClass(m.score);
               return`<tr onclick="navigate('detail','${c.id}')">
                 <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(clientSubtitle(c))}</div></td>
-                <td class="num">${m.total}</td>
-                <td class="num" style="font-weight:600;color:var(--green)">${m.totalValue>0?fmtMoney(m.totalValue):'—'}</td>
-                <td class="num"><span class="rank-badge t2">${m.t10}</span></td>
-                <td class="num">${m.totalOpp>0?`<span class="opp-badge">${m.totalOpp}</span>`:'—'}</td>
-                <td style="min-width:100px">${distBar(m)}</td>
-                <td class="num">${m.health>0?`<span class="health-badge ${healthClass}">${m.health}</span>`:'—'}</td>
-                <td class="num" style="white-space:nowrap">${timeAgo(lastCheck)}</td>
+                <td class="num">${m.score || m.score === 0 ? `<span class="health-badge ${healthClass}">${fmtScore(m.score)}</span>`:'-'}</td>
+                <td class="num">${fmtScore(m.verified)}</td>
+                <td class="num">${m.pages || '-'}</td>
+                <td class="num">${m.clean || '-'}</td>
+                <td class="num">${m.critical ? `<span class="issue-count">${m.critical}</span>` : '0'}</td>
+                <td class="num">${m.metadata || m.metadata === 0 ? fmtScore(m.metadata) : '-'}</td>
+                <td class="num">${m.speed || m.speed === 0 ? fmtScore(m.speed) : '-'}</td>
+                <td class="num" style="white-space:nowrap">${timeAgo(m.crawledAt)}</td>
               </tr>`}).join('')}
             </tbody>
           </table>
@@ -381,6 +418,9 @@ function renderWeekly() {
                 <th>Client</th>
                 <th>SEO Complete</th>
                 <th class="num">Tech Score</th>
+                <th class="num">Verified</th>
+                <th class="num">Pages</th>
+                <th class="num">Critical</th>
                 <th class="num">Trend</th>
                 <th>Blog</th>
                 <th class="num">PRs</th>
@@ -406,10 +446,18 @@ function renderWeekly() {
                     </label>
                   </td>
                   <td class="num">${score || score === 0 ? `<span class="health-badge ${scoreClass(score)}">${Math.round(score)}</span>` : '-'}</td>
+                  <td class="num">${health.verified_seo_score || health.verified_seo_score === 0 ? Math.round(Number(health.verified_seo_score)) : '-'}</td>
                   <td class="num">
                     <div class="trend-stack">
-                      <strong>${trend.ranking_keywords || 0}</strong>
-                      <span>${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} kw</span>
+                      <strong>${health.pages_crawled || 0}</strong>
+                      <span>${health.clean_pages || 0} clean</span>
+                    </div>
+                  </td>
+                  <td class="num">${Number(health.critical_error_count || 0) ? `<span class="issue-count">${health.critical_error_count}</span>` : '0'}</td>
+                  <td class="num">
+                    <div class="trend-stack">
+                      <strong>${trend.ranking_keywords || '-'}</strong>
+                      <span>${trend.raw_dataforseo_json?.source === 'placeholder' || !trend.ranking_keywords ? 'not connected' : `${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} kw`}</span>
                     </div>
                   </td>
                   <td>

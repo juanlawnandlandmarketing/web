@@ -946,6 +946,21 @@ select.field-input {
 .health-badge.poor { background: var(--tier5-bg); color: var(--tier5); border: 1px solid rgba(232,69,69,0.2); }
 .health-badge.none { background: var(--tier-none-bg); color: var(--tier-none); }
 
+.issue-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-label);
+  font-weight: 700;
+  font-size: 12px;
+  background: var(--tier5-bg);
+  color: var(--tier5);
+  border: 1px solid rgba(232,69,69,0.2);
+}
+
 /* ── Change Indicators ─────────────────────────────────────── */
 .change { font-size: 11px; font-weight: 600; margin-left: 4px; }
 .change.up { color: var(--tier1); }

@@ -1,7 +1,17 @@
 const { readData, writeData, generateId, corsHeaders } = require('../lib/data');
 const { select } = require('../lib/supabase');
 
-function supabaseClientToDashboardClient(client) {
+function firstByClient(rows) {
+  const map = new Map();
+  for (const row of rows || []) {
+    if (!map.has(row.client_id)) map.set(row.client_id, row);
+  }
+  return map;
+}
+
+function supabaseClientToDashboardClient(client, health, trend) {
+  const raw = health?.raw_audit_json || {};
+
   return {
     id: client.id,
     name: client.client_name,
@@ -10,6 +20,26 @@ function supabaseClientToDashboardClient(client) {
     city: client.domain || 'Lawn & Land',
     state: '',
     keywords: [],
+    weeklyHealth: health || null,
+    weeklyTrend: trend || null,
+    audit: health ? {
+      auditedAt: health.last_crawled_at || health.created_at,
+      onpage: {
+        score: Number(health.technical_seo_score || health.health_score || 0),
+        pagesCrawled: Number(health.pages_crawled || 0),
+        cleanPages: Number(health.clean_pages || 0),
+        brokenLinks: Number(health.critical_error_count || 0),
+        metadataHygieneScore: raw.metadata_hygiene_score ?? null,
+        speedScore: raw.speed_score ?? null,
+        sitemapScore: raw.sitemap_score ?? null,
+        verifiedSeoScore: health.verified_seo_score ?? null,
+      },
+      backlinks: {
+        rank: Math.round(Number(health.verified_seo_score || health.technical_seo_score || 0)),
+        total: 0,
+        referringDomains: 0,
+      },
+    } : null,
     recommendations: [],
   };
 }
@@ -29,7 +59,23 @@ module.exports = async function handler(req, res) {
         order: 'client_name.asc',
       });
 
-      return res.status(200).json(clients.map(supabaseClientToDashboardClient));
+      const [healthRows, trendRows] = await Promise.all([
+        select('technical_health_snapshots', {
+          select: '*',
+          order: 'created_at.desc',
+        }),
+        select('dataforseo_trend_snapshots', {
+          select: '*',
+          order: 'created_at.desc',
+        }),
+      ]);
+
+      const healthByClient = firstByClient(healthRows);
+      const trendByClient = firstByClient(trendRows);
+
+      return res.status(200).json(clients.map((client) => (
+        supabaseClientToDashboardClient(client, healthByClient.get(client.id), trendByClient.get(client.id))
+      )));
     } catch (error) {
       const data = readData();
       return res.status(200).json(data.clients);
