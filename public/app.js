@@ -45,6 +45,7 @@ const fmtMoney=n=>n>=1000?'$'+(n/1000).toFixed(1)+'k':'$'+n.toFixed(0);
 function tier(pos){if(!pos||pos===0)return'tn';if(pos<=3)return't1';if(pos<=10)return't2';if(pos<=20)return't3';if(pos<=50)return't4';return't5';}
 function tierLabel(pos){if(!pos||pos===0)return'—';return'#'+pos;}
 function timeAgo(iso){if(!iso)return'Never';const d=new Date(iso),now=new Date(),diff=Math.floor((now-d)/1000);if(diff<60)return'just now';if(diff<3600)return Math.floor(diff/60)+'m ago';if(diff<86400)return Math.floor(diff/3600)+'h ago';return d.toLocaleDateString();}
+function clientSubtitle(c){return [c.city,c.state].filter(Boolean).join(', ')||c.domain||'';}
 
 function getIsoWeek(input) {
   const date = new Date(Date.UTC(input.getFullYear(), input.getMonth(), input.getDate()));
@@ -267,7 +268,7 @@ function renderDashboard(){
               const lastCheck=(c.keywords||[]).reduce((l,k)=>{const t=k.rankings?.checkedAt;return t&&t>(l||'')?t:l;},null);
               const healthClass=m.health>=80?'good':m.health>=50?'ok':m.health>0?'poor':'none';
               return`<tr onclick="navigate('detail','${c.id}')">
-                <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(c.city)}, ${h(c.state)}</div></td>
+                <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(clientSubtitle(c))}</div></td>
                 <td class="num">${m.total}</td>
                 <td class="num" style="font-weight:600;color:var(--green)">${m.totalValue>0?fmtMoney(m.totalValue):'—'}</td>
                 <td class="num"><span class="rank-badge t2">${m.t10}</span></td>

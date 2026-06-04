@@ -1,4 +1,18 @@
 const { readData, writeData, generateId, corsHeaders } = require('../lib/data');
+const { select } = require('../lib/supabase');
+
+function supabaseClientToDashboardClient(client) {
+  return {
+    id: client.id,
+    name: client.client_name,
+    website: client.website_url,
+    domain: client.domain,
+    city: client.domain || 'Lawn & Land',
+    state: '',
+    keywords: [],
+    recommendations: [],
+  };
+}
 
 module.exports = async function handler(req, res) {
   corsHeaders(res);
@@ -8,8 +22,18 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method === 'GET') {
-    const data = readData();
-    return res.status(200).json(data.clients);
+    try {
+      const clients = await select('clients', {
+        select: 'id,client_name,domain,website_url,status',
+        status: 'eq.active',
+        order: 'client_name.asc',
+      });
+
+      return res.status(200).json(clients.map(supabaseClientToDashboardClient));
+    } catch (error) {
+      const data = readData();
+      return res.status(200).json(data.clients);
+    }
   }
 
   if (req.method === 'POST') {
