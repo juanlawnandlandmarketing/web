@@ -90,6 +90,18 @@ function failedTrend(clientId, error) {
   };
 }
 
+function normalizeAction(value) {
+  const action = String(value || 'full').toLowerCase();
+  if (['full', 'technical', 'rankings'].includes(action)) return action;
+  return 'full';
+}
+
+function actionLabel(action) {
+  if (action === 'technical') return 'Technical update';
+  if (action === 'rankings') return 'Local + search update';
+  return 'Weekly update';
+}
+
 module.exports = async function handler(req, res) {
   corsHeaders(res);
 
@@ -104,6 +116,9 @@ module.exports = async function handler(req, res) {
   const defaults = currentIsoWeek();
   const year = intParam(req.body?.year || req.query.year, defaults.year);
   const weekNumber = intParam(req.body?.week_number || req.query.week_number, defaults.week_number);
+  const action = normalizeAction(req.body?.action || req.query.action);
+  const runTechnical = action === 'full' || action === 'technical';
+  const runRankings = action === 'full' || action === 'rankings';
 
   let run;
 
@@ -146,30 +161,34 @@ module.exports = async function handler(req, res) {
     const dataForSeoConfigured = getCredentials().configured;
 
     for (const client of clients) {
-      const health = copyHealthForWeek(currentHealthByClient.get(client.id) || latestHealthByClient.get(client.id), client.id);
-      let trend;
-
-      if (dataForSeoConfigured) {
-        try {
-          trend = await fetchRankedKeywordsTrend(client, previousTrendByClient.get(client.id));
-        } catch (error) {
-          trend = failedTrend(client.id, error);
-        }
-      } else {
-        trend = emptyTrend(client.id, 'Set DATAFORSEO_USERNAME and DATAFORSEO_PASSWORD in Vercel to enable real trend data.');
+      if (runTechnical) {
+        const health = copyHealthForWeek(currentHealthByClient.get(client.id) || latestHealthByClient.get(client.id), client.id);
+        await upsert('technical_health_snapshots', [{
+          ...health,
+          year,
+          week_number: weekNumber,
+        }], 'client_id,year,week_number');
       }
 
-      await upsert('technical_health_snapshots', [{
-        ...health,
-        year,
-        week_number: weekNumber,
-      }], 'client_id,year,week_number');
+      if (runRankings) {
+        let trend;
 
-      await upsert('dataforseo_trend_snapshots', [{
-        ...trend,
-        year,
-        week_number: weekNumber,
-      }], 'client_id,year,week_number');
+        if (dataForSeoConfigured) {
+          try {
+            trend = await fetchRankedKeywordsTrend(client, previousTrendByClient.get(client.id));
+          } catch (error) {
+            trend = failedTrend(client.id, error);
+          }
+        } else {
+          trend = emptyTrend(client.id, 'Set DATAFORSEO_USERNAME and DATAFORSEO_PASSWORD in Vercel to enable real trend data.');
+        }
+
+        await upsert('dataforseo_trend_snapshots', [{
+          ...trend,
+          year,
+          week_number: weekNumber,
+        }], 'client_id,year,week_number');
+      }
 
       await upsert('weekly_execution', [{
         client_id: client.id,
@@ -199,9 +218,9 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({
       run: finishedRun,
-      note: dataForSeoConfigured
-        ? 'Weekly update saved with real DataForSEO trend snapshots and latest technical health.'
-        : 'Weekly update saved, but DataForSEO trend data is not connected because credentials are missing.',
+      note: runRankings && !dataForSeoConfigured
+        ? `${actionLabel(action)} saved, but DataForSEO trend data is not connected because credentials are missing.`
+        : `${actionLabel(action)} saved.`,
     });
   } catch (error) {
     if (run?.id) {

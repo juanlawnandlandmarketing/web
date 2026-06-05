@@ -279,6 +279,23 @@ input, textarea, select { font-family: inherit; }
   flex-wrap: wrap;
 }
 
+.dashboard-actions,
+.weekly-run-actions,
+.update-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dashboard-actions {
+  justify-content: flex-end;
+}
+
+.weekly-run-actions {
+  align-items: flex-end;
+}
+
 .mini-field {
   display: flex;
   flex-direction: column;
