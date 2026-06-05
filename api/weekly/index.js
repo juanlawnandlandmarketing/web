@@ -1,5 +1,5 @@
-const { corsHeaders } = require('../lib/data');
-const { select, upsert } = require('../lib/supabase');
+const { corsHeaders } = require('../../lib/data');
+const { select, upsert } = require('../../lib/supabase');
 
 function intParam(value, fallback) {
   const parsed = Number.parseInt(value, 10);

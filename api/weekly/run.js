@@ -1,6 +1,6 @@
-const { corsHeaders } = require('../lib/data');
-const { fetchRankedKeywordsTrend, getCredentials } = require('../lib/dataforseo');
-const { insert, patch, select, upsert } = require('../lib/supabase');
+const { corsHeaders } = require('../../lib/data');
+const { fetchRankedKeywordsTrend, getCredentials } = require('../../lib/dataforseo');
+const { insert, patch, select, upsert } = require('../../lib/supabase');
 
 function intParam(value, fallback) {
   const parsed = Number.parseInt(value, 10);
