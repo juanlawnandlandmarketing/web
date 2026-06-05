@@ -383,6 +383,7 @@ function navigate(view,clientId){
   else if(view==='weekly')bc.innerHTML=`<span class="bc-item">${h((FULFILLMENT_CATEGORIES[S.fulfillmentCategory] || FULFILLMENT_CATEGORIES.weekly).label)}</span>`;
   else if(view==='rankings')bc.innerHTML='<span class="bc-item">Rankings</span>';
   else if(view==='connections')bc.innerHTML='<span class="bc-item">Connections</span>';
+  else if(view==='documentation')bc.innerHTML='<span class="bc-item">Documentation</span>';
   else if(view==='detail'){const c=S.clients.find(x=>x.id===clientId);bc.innerHTML=`<a class="bc-item" href="#" onclick="navigate('dashboard');return false">Dashboard</a><span class="bc-sep">›</span><span class="bc-item">${c?h(c.name):''}</span>`;}
   render();
   if (view === 'weekly') loadWeekly();
@@ -397,6 +398,7 @@ function render(){
     case'weekly':el.innerHTML=renderWeekly();break;
     case'rankings':el.innerHTML=renderRankings();break;
     case'connections':el.innerHTML=renderConnections();break;
+    case'documentation':el.innerHTML=renderDocumentation();break;
     case'detail':el.innerHTML=renderDetail();break;
     default:el.innerHTML=renderDashboard();
   }
@@ -883,6 +885,107 @@ function setFulfillmentCategory(category) {
   if (!FULFILLMENT_CATEGORIES[category]) return;
   S.fulfillmentCategory = category;
   render();
+}
+
+/* ── Documentation View ───────────────────────────────────── */
+function renderDocumentation() {
+  return `
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Documentation</h1>
+        <p class="page-subtitle">How to use the SEO Command Center for dashboard checks, fulfillment tracking, rankings, and updates.</p>
+      </div>
+    </div>
+
+    <div class="documentation-grid">
+      <section class="doc-panel doc-panel-wide">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Start Here</span>
+          <h2>Daily Workflow</h2>
+        </div>
+        <ol class="doc-steps">
+          <li><strong>Open Dashboard.</strong><span>Check technical score, fulfillment percentage, critical issues, last crawl date, and overall client health.</span></li>
+          <li><strong>Run only the update you need.</strong><span>Use Technical Update for crawl and site-health data. Use Local + Search for DataForSEO ranking data. Use Weekly Update when both should refresh together.</span></li>
+          <li><strong>Work the fulfillment tabs.</strong><span>Open One-Time, Monthly, or Weekly Fulfillment from the left menu and mark each client/task checkbox when the work is complete.</span></li>
+          <li><strong>Review client details.</strong><span>Click any client row to inspect that client's health, fulfillment progress, critical fixes, rankings, and next work plan.</span></li>
+        </ol>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Dashboard</span>
+          <h2>Client Overview</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>Technical Score</strong><span>Shows the current site-health score from the latest technical crawl data.</span></li>
+          <li><strong>Fulfillment</strong><span>Shows the overall completion percentage for each client across One-Time, Monthly, and Weekly work.</span></li>
+          <li><strong>Critical Issues</strong><span>Highlights urgent technical items that should be reviewed first.</span></li>
+          <li><strong>Client Row</strong><span>Click a row to open the individual client page.</span></li>
+        </ul>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Fulfillment</span>
+          <h2>Completion Tracking</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>One-Time Fulfillment</strong><span>Use this for setup and launch tasks that only need to be completed once.</span></li>
+          <li><strong>Monthly Fulfillment</strong><span>Use the month selector, then mark each monthly deliverable complete for each client.</span></li>
+          <li><strong>Weekly Fulfillment</strong><span>Use the week selector, then mark recurring weekly tasks complete for each client.</span></li>
+          <li><strong>Progress Bars</strong><span>Percentages update from saved checkbox data for the selected view and client.</span></li>
+        </ul>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Updates</span>
+          <h2>Run Buttons</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>Run Technical Update</strong><span>Refreshes technical crawl health only. Use it when you need updated site issues and scores.</span></li>
+          <li><strong>Run Local + Search</strong><span>Refreshes ranking visibility through DataForSEO only. Use it when Rankings needs fresh data.</span></li>
+          <li><strong>Run Weekly Update</strong><span>Runs the full weekly refresh, including technical and local/search updates.</span></li>
+        </ul>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Rankings</span>
+          <h2>Search Visibility</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>Rankings Tab</strong><span>Shows keyword positions, search volume, estimated traffic, and value across clients.</span></li>
+          <li><strong>Data Source</strong><span>Ranking data comes from DataForSEO after the Local + Search update runs successfully.</span></li>
+          <li><strong>Empty Rankings</strong><span>If rankings are blank, confirm DataForSEO is connected, redeploy after env var changes, then run Local + Search.</span></li>
+        </ul>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Connections</span>
+          <h2>Configuration Checks</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>Connected</strong><span>The platform can reach that service with the current environment variables.</span></li>
+          <li><strong>Not Configured</strong><span>The required Vercel environment variables are missing or the project needs a redeploy.</span></li>
+          <li><strong>After Env Changes</strong><span>Redeploy Vercel before expecting the live dashboard to use new environment values.</span></li>
+        </ul>
+      </section>
+
+      <section class="doc-panel">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Changes</span>
+          <h2>Code vs. Data</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>GitHub PR Needed</strong><span>Required for app design, navigation, buttons, logic, API routes, and styling changes.</span></li>
+          <li><strong>No PR Needed</strong><span>Saved fulfillment checkbox data can be updated directly through the live API/Supabase.</span></li>
+          <li><strong>Deploy Needed</strong><span>Required after merged code changes or Vercel environment variable updates.</span></li>
+        </ul>
+      </section>
+    </div>
+  `;
 }
 
 /* ── Rankings View ────────────────────────────────────────── */
