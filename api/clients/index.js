@@ -1,5 +1,5 @@
-const { readData, writeData, generateId, corsHeaders } = require('../lib/data');
-const { select } = require('../lib/supabase');
+const { readData, writeData, generateId, corsHeaders } = require('../../lib/data');
+const { select } = require('../../lib/supabase');
 
 function firstByClient(rows) {
   const map = new Map();

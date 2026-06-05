@@ -1,6 +1,6 @@
-const { corsHeaders } = require('../../lib/data');
-const { dataForSeoFetch, normalizeDomain } = require('../../lib/dataforseo');
-const { select, upsert } = require('../../lib/supabase');
+const { corsHeaders } = require('../../../lib/data');
+const { dataForSeoFetch, normalizeDomain } = require('../../../lib/dataforseo');
+const { select, upsert } = require('../../../lib/supabase');
 
 function currentIsoWeek() {
   const now = new Date();

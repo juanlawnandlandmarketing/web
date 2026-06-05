@@ -1,4 +1,4 @@
-const { readData, corsHeaders } = require('../../../lib/data');
+const { readData, corsHeaders } = require('../../../../lib/data');
 
 module.exports = async function handler(req, res) {
   corsHeaders(res);

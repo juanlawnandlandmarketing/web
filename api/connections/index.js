@@ -1,5 +1,5 @@
-const { corsHeaders } = require('../lib/data');
-const { getConnectionStatus } = require('../lib/dataforseo');
+const { corsHeaders } = require('../../lib/data');
+const { getConnectionStatus } = require('../../lib/dataforseo');
 
 module.exports = async function handler(req, res) {
   corsHeaders(res);

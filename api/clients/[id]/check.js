@@ -1,4 +1,4 @@
-const { readData, writeData, corsHeaders } = require('../../lib/data');
+const { readData, writeData, corsHeaders } = require('../../../lib/data');
 
 const DFS_URL = 'https://api.dataforseo.com/v3/serp/google/organic/live/regular';
 const DFS_VOLUME_URL = 'https://api.dataforseo.com/v3/dataforseo_labs/google/keyword_suggestions/live';
