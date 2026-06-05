@@ -958,6 +958,22 @@ input, textarea, select { font-family: inherit; }
 .rank-badge.t5 { background: var(--tier5-bg); color: var(--tier5); border: 1px solid rgba(232,69,69,0.2); }
 .rank-badge.tn { background: var(--tier-none-bg); color: var(--tier-none); border: 1px solid rgba(138,138,154,0.15); }
 
+.rank-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text-secondary);
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
 /* ── Distribution Bar ──────────────────────────────────────── */
 .dist-bar {
   display: flex;

@@ -12,7 +12,13 @@ function firstByClient(rows) {
 function supabaseClientToDashboardClient(client, health, trend) {
   const raw = health?.raw_audit_json || {};
   const trendRaw = trend?.raw_dataforseo_json || {};
-  const rankedKeywords = Array.isArray(trendRaw.sample) ? trendRaw.sample : [];
+  const snapshots = trendRaw.ranking_snapshots || {};
+  const rankedKeywords = []
+    .concat(Array.isArray(snapshots.organic) ? snapshots.organic : [])
+    .concat(Array.isArray(snapshots.local) ? snapshots.local : []);
+  const fallbackKeywords = Array.isArray(trendRaw.sample) ? trendRaw.sample : [];
+  const keywordRows = rankedKeywords.length ? rankedKeywords : fallbackKeywords.map((row) => ({ ...row, ranking_type: 'organic' }));
+  const rankingModel = trendRaw.ranking_model || null;
 
   return {
     id: client.id,
@@ -21,24 +27,29 @@ function supabaseClientToDashboardClient(client, health, trend) {
     domain: client.domain,
     city: client.domain || 'Lawn & Land',
     state: '',
-    keywords: rankedKeywords.map((item, index) => ({
+    keywords: keywordRows.map((item, index) => ({
       id: `${client.id}-dfs-${index}`,
       keyword: item.keyword,
       clientId: client.id,
+      rankingType: item.ranking_type || item.type || 'organic',
       rankings: {
         position: Number(item.rank || 0),
-        previousPosition: null,
+        previousPosition: item.previous_rank ? Number(item.previous_rank) : null,
+        positionChange: Number(item.position_change || 0),
         checkedAt: trendRaw.fetched_at || trend?.created_at || null,
         searchVolume: Number(item.search_volume || 0),
         cpc: Number(item.cpc || 0),
         monthlyTraffic: Number(item.estimated_traffic || 0),
         trafficValue: Number(item.estimated_value || 0),
+        score: Number(item.score || 0),
         url: item.url || null,
         serp: [],
       },
     })),
     weeklyHealth: health || null,
     weeklyTrend: trend || null,
+    rankingModel,
+    rankingAlerts: Array.isArray(trendRaw.ranking_alerts) ? trendRaw.ranking_alerts : [],
     audit: health ? {
       auditedAt: health.last_crawled_at || health.created_at,
       onpage: {
