@@ -562,7 +562,7 @@ function renderFulfillmentTable(rows, categoryKey) {
   const category = FULFILLMENT_CATEGORIES[categoryKey] || FULFILLMENT_CATEGORIES.weekly;
   const progress = fulfillmentProgress(rows, categoryKey);
 
-  return `<div class="table-card weekly-table-card">
+  return `<div class="fulfillment-matrix-panel weekly-table-card">
     <div class="matrix-summary">
       <div>
         <h2 class="section-title">${h(category.label)} Matrix</h2>
@@ -577,8 +577,7 @@ function renderFulfillmentTable(rows, categoryKey) {
     ${S.weeklyLoading ? `<div class="empty-state"><div class="loading-spinner"></div><h3>Loading fulfillment data</h3></div>` : rows.length === 0 ? `
       <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No active clients found</h3><p>Run the schema and add active clients in Supabase first.</p></div>
     ` : `
-    <div class="table-scroll matrix-scroll">
-      <table class="data-table weekly-table fulfillment-table matrix-table">
+    <table class="data-table weekly-table fulfillment-table matrix-table">
         <thead>
           <tr>
             <th class="sticky-client">Client</th>
@@ -607,8 +606,7 @@ function renderFulfillmentTable(rows, categoryKey) {
             </tr>`;
           }).join('')}
         </tbody>
-      </table>
-    </div>`}
+    </table>`}
   </div>`;
 }
 

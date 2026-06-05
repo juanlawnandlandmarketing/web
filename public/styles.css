@@ -242,7 +242,7 @@ input, textarea, select { font-family: inherit; }
   padding: 32px;
   background: var(--bg-content);
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   height: calc(100vh - var(--topbar-h));
   -webkit-overflow-scrolling: touch;
 }
@@ -483,12 +483,17 @@ input, textarea, select { font-family: inherit; }
   accent-color: var(--green);
 }
 
+.fulfillment-matrix-panel {
+  min-width: max-content;
+}
+
 .matrix-summary {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 18px;
-  padding: 18px;
+  padding: 0 0 18px;
+  margin-bottom: 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -527,14 +532,13 @@ input, textarea, select { font-family: inherit; }
   background: linear-gradient(90deg, var(--green), var(--green2));
 }
 
-.matrix-scroll {
-  max-height: calc(100vh - 360px);
-  overflow: auto;
-}
-
 .matrix-table {
-  min-width: 1200px;
+  min-width: max-content;
   table-layout: fixed;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .matrix-table th,
