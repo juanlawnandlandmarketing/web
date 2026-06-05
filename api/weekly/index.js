@@ -20,6 +20,20 @@ function byClient(rows) {
   return new Map((rows || []).map((row) => [row.client_id, row]));
 }
 
+function parseOutputNotes(notes) {
+  if (!notes) return {};
+  try {
+    const parsed = JSON.parse(notes);
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj || {}, key);
+}
+
 async function loadWeekly(year, weekNumber) {
   const clients = await select('clients', {
     select: 'id,client_name,domain,website_url,status,dataforseo_location_code,dataforseo_language_code',
@@ -78,7 +92,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-      const { client_id, execution, outputs } = req.body || {};
+      const { client_id, execution, outputs, fulfillment } = req.body || {};
       if (!client_id) {
         return res.status(400).json({ error: 'client_id is required' });
       }
@@ -97,17 +111,38 @@ module.exports = async function handler(req, res) {
         }], 'client_id,year,week_number'));
       }
 
-      if (outputs) {
+      if (outputs || fulfillment) {
+        const existingRows = await select('weekly_outputs', {
+          select: '*',
+          client_id: `eq.${client_id}`,
+          year: `eq.${year}`,
+          week_number: `eq.${weekNumber}`,
+          limit: 1,
+        });
+        const existing = existingRows[0] || {};
+        const notesPayload = parseOutputNotes(existing.notes);
+
+        if (fulfillment?.category && fulfillment?.task_id) {
+          notesPayload.fulfillment = notesPayload.fulfillment || {};
+          notesPayload.fulfillment[fulfillment.category] = notesPayload.fulfillment[fulfillment.category] || {};
+          notesPayload.fulfillment[fulfillment.category][fulfillment.task_id] = Boolean(fulfillment.done);
+        }
+
+        const mergedOutputs = outputs || {};
         writes.push(upsert('weekly_outputs', [{
           client_id,
           year,
           week_number: weekNumber,
-          blog_done: Boolean(outputs.blog_done),
-          blog_url: outputs.blog_url || null,
-          prs_published_count: Number.parseInt(outputs.prs_published_count || 0, 10),
-          report_sent_count: Number.parseInt(outputs.report_sent_count || 0, 10),
-          report_notes: outputs.report_notes || null,
-          notes: outputs.notes || null,
+          blog_done: hasOwn(mergedOutputs, 'blog_done') ? Boolean(mergedOutputs.blog_done) : Boolean(existing.blog_done),
+          blog_url: hasOwn(mergedOutputs, 'blog_url') ? mergedOutputs.blog_url || null : existing.blog_url || null,
+          prs_published_count: hasOwn(mergedOutputs, 'prs_published_count')
+            ? Number.parseInt(mergedOutputs.prs_published_count || 0, 10)
+            : Number.parseInt(existing.prs_published_count || 0, 10),
+          report_sent_count: hasOwn(mergedOutputs, 'report_sent_count')
+            ? Number.parseInt(mergedOutputs.report_sent_count || 0, 10)
+            : Number.parseInt(existing.report_sent_count || 0, 10),
+          report_notes: hasOwn(mergedOutputs, 'report_notes') ? mergedOutputs.report_notes || null : existing.report_notes || null,
+          notes: fulfillment ? JSON.stringify(notesPayload) : hasOwn(mergedOutputs, 'notes') ? mergedOutputs.notes || null : existing.notes || null,
         }], 'client_id,year,week_number'));
       }
 
