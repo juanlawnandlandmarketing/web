@@ -16,6 +16,7 @@ const S = {
   weekly: null,
   weeklyLoading: false,
   weeklyRunning: false,
+  fulfillmentCategory: 'weekly',
   connections: null,
   connectionsLoading: false,
   selectedYear: new Date().getFullYear(),
@@ -134,6 +135,56 @@ function portfolioMetrics(clients) {
   for(const c of clients){const m=clientMetrics(c);kw+=m.total;traffic+=m.totalTraffic;value+=m.totalValue;t10+=m.t10;opp+=m.totalOpp;}
   return{clients:clients.length,keywords:kw,traffic,value,top10:t10,opportunities:opp};
 }
+
+const FULFILLMENT_CATEGORIES = {
+  oneTime: {
+    label: 'One-Time Fulfillment',
+    shortLabel: 'One-Time',
+    cadence: 'Setup and launch hardening',
+    description: 'Foundation tasks that should be completed once per client, then revisited only when the site or GBP setup changes.',
+    tasks: [
+      'Onsite Core Content Optimization',
+      'SEO Images Optimization',
+      'Clients Reviews Integration',
+      'Clear NAP Listings',
+      'Schema Implementation',
+      'Sitemap',
+      'Pre-Launch Website GBP Optimization',
+      'Post-Launch Website GBP Optimization',
+      'Citation Building',
+      'Robots.txt File Management',
+      'Media Room Configuration',
+      'llms.txt configuration',
+    ],
+  },
+  monthly: {
+    label: 'Monthly Fulfillment',
+    shortLabel: 'Monthly',
+    cadence: 'Recurring monthly production',
+    description: 'Monthly authority, reporting, indexing, performance, and site-health work.',
+    tasks: [
+      'Press Releases (2/Month)',
+      'Backlink Acquisition',
+      'Page Speed & Performance',
+      'Website Security',
+      'Monthly Report Tracking & Reporting',
+      'GSC Indexing Audit',
+    ],
+  },
+  weekly: {
+    label: 'Weekly Fulfillment',
+    shortLabel: 'Weekly',
+    cadence: 'Recurring weekly execution',
+    description: 'Weekly production and audit loop for content, GBP, rankings, technical health, and reviews.',
+    tasks: [
+      'Blog Content Creation (1/Week) Published + Audited',
+      'GBP Audit and Image Post',
+      'Technical SEO Audit',
+      'SEO Ranking performance (local + search)',
+      'Review Generation tracker',
+    ],
+  },
+};
 
 function techMetrics(c) {
   const health = c.weeklyHealth || {};
@@ -315,7 +366,7 @@ function navigate(view,clientId){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view||(view==='detail'&&n.dataset.view==='dashboard')));
   const bc=$('#breadcrumb');
   if(view==='dashboard')bc.innerHTML='<span class="bc-item">Dashboard</span>';
-  else if(view==='weekly')bc.innerHTML='<span class="bc-item">Weekly Ops</span>';
+  else if(view==='weekly')bc.innerHTML='<span class="bc-item">Fulfillment Ops</span>';
   else if(view==='rankings')bc.innerHTML='<span class="bc-item">Rankings</span>';
   else if(view==='connections')bc.innerHTML='<span class="bc-item">Connections</span>';
   else if(view==='detail'){const c=S.clients.find(x=>x.id===clientId);bc.innerHTML=`<a class="bc-item" href="#" onclick="navigate('dashboard');return false">Dashboard</a><span class="bc-sep">›</span><span class="bc-item">${c?h(c.name):''}</span>`;}
@@ -455,21 +506,160 @@ function scoreClass(score) {
   return 'poor';
 }
 
-function renderWeekly() {
-  const rows = weeklyRows();
+function fulfillmentStats(rows) {
   const completed = rows.filter((row) => row.execution?.completed_seo_tasks).length;
   const blogs = rows.filter((row) => row.outputs?.blog_done).length;
   const reports = rows.reduce((sum, row) => sum + Number(row.outputs?.report_sent_count || 0), 0);
+  const prs = rows.reduce((sum, row) => sum + Number(row.outputs?.prs_published_count || 0), 0);
+  const ranked = rows.filter((row) => {
+    const source = row.trend?.raw_dataforseo_json?.source || '';
+    return source === 'dataforseo_labs_ranked_keywords' && Number(row.trend?.ranking_keywords || 0) > 0;
+  }).length;
+  const critical = rows.reduce((sum, row) => sum + Number(row.health?.critical_error_count || 0), 0);
   const avgScore = rows.length
     ? Math.round(rows.reduce((sum, row) => sum + Number(row.health?.technical_seo_score || 0), 0) / rows.length)
     : 0;
+  return { completed, blogs, reports, prs, ranked, critical, avgScore };
+}
+
+function renderFulfillmentTabs(rows) {
+  const stats = fulfillmentStats(rows);
+  const meta = {
+    oneTime: `${FULFILLMENT_CATEGORIES.oneTime.tasks.length} setup tasks`,
+    monthly: `${stats.prs} PRs logged · ${stats.reports} reports`,
+    weekly: `${stats.blogs}/${rows.length || 0} blogs · ${stats.ranked}/${rows.length || 0} ranking pulls`,
+  };
+  return `<div class="fulfillment-tabs">
+    ${Object.entries(FULFILLMENT_CATEGORIES).map(([key, category]) => `
+      <button class="fulfillment-tab ${S.fulfillmentCategory === key ? 'active' : ''}" onclick="setFulfillmentCategory('${key}')">
+        <span>${h(category.shortLabel)}</span>
+        <strong>${h(category.label)}</strong>
+        <small>${h(meta[key])}</small>
+      </button>
+    `).join('')}
+  </div>`;
+}
+
+function renderFulfillmentTasks(category) {
+  return `<div class="fulfillment-task-card">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">${h(category.label)} Tasks</h2>
+        <p class="section-note">${h(category.description)}</p>
+      </div>
+      <span class="cadence-pill">${h(category.cadence)}</span>
+    </div>
+    <div class="task-chip-grid">
+      ${category.tasks.map((task, index) => `
+        <div class="task-chip">
+          <span>${index + 1}</span>
+          <strong>${h(task)}</strong>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function fulfillmentStatus(label, detail, tone = 'pending') {
+  return `<div class="fulfillment-status ${tone}">
+    <strong>${h(label)}</strong>
+    <span>${h(detail)}</span>
+  </div>`;
+}
+
+function renderOneTimeCells(row) {
+  const health = row.health || {};
+  const score = Number(health.technical_seo_score || 0);
+  const hasCrawl = Boolean(health.crawl_status || health.pages_crawled);
+  return `
+    <td>${fulfillmentStatus(score >= 70 ? 'Audit Ready' : 'Needs Review', score ? `Tech score ${Math.round(score)}` : 'No score yet', score >= 70 ? 'done' : 'pending')}</td>
+    <td>${fulfillmentStatus('NAP / Schema', 'Manual setup lane', 'pending')}</td>
+    <td>${fulfillmentStatus(hasCrawl ? 'Site Files Review' : 'Needs Crawl', hasCrawl ? 'Sitemap, robots, llms.txt' : 'Run crawl first', hasCrawl ? 'active' : 'pending')}</td>
+    <td>${fulfillmentStatus('GBP / Citations', 'Pre-launch, post-launch, citations', 'pending')}</td>
+    <td><button class="btn btn-ghost" onclick="navigate('detail','${row.id}')">Open Client</button></td>`;
+}
+
+function renderMonthlyCells(row) {
+  const outputs = row.outputs || {};
+  const prs = Number(outputs.prs_published_count || 0);
+  const reports = Number(outputs.report_sent_count || 0);
+  return `
+    <td class="num"><input class="mini-input" type="number" min="0" value="${prs}" onchange="saveWeeklyClient('${row.id}', 'outputs.prs_published_count', this.value)" /></td>
+    <td>${fulfillmentStatus('Backlinks', 'Acquisition queue', 'pending')}</td>
+    <td>${fulfillmentStatus('Performance / Security', 'Review monthly', 'pending')}</td>
+    <td class="num"><input class="mini-input" type="number" min="0" value="${reports}" onchange="saveWeeklyClient('${row.id}', 'outputs.report_sent_count', this.value)" /></td>
+    <td>${fulfillmentStatus('GSC Indexing', 'Audit required', 'pending')}</td>`;
+}
+
+function renderWeeklyCells(row) {
+  const health = row.health || {};
+  const trend = row.trend || {};
+  const outputs = row.outputs || {};
+  const trendConnected = trend.raw_dataforseo_json?.source === 'dataforseo_labs_ranked_keywords';
+  const critical = Number(health.critical_error_count || 0);
+  return `
+    <td>
+      <label class="check-row">
+        <input type="checkbox" ${outputs.blog_done ? 'checked' : ''} onchange="saveWeeklyClient('${row.id}', 'outputs.blog_done', this.checked)" />
+        <span>${outputs.blog_done ? 'Published + audited' : 'Open'}</span>
+      </label>
+    </td>
+    <td>${fulfillmentStatus('GBP Post', 'Audit + image post', 'pending')}</td>
+    <td>${fulfillmentStatus(critical ? `${critical} critical` : 'Clean', `${health.pages_crawled || 0} pages crawled`, critical ? 'risk' : 'done')}</td>
+    <td>${fulfillmentStatus(trendConnected ? `${trend.ranking_keywords || 0} keywords` : 'Not connected', trendConnected ? `${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} change` : 'Run DataForSEO weekly update', trendConnected ? 'active' : 'pending')}</td>
+    <td>${fulfillmentStatus('Reviews', 'Generation tracker', 'pending')}</td>`;
+}
+
+function renderFulfillmentTable(rows) {
+  const categoryKey = S.fulfillmentCategory;
+  const headers = {
+    oneTime: ['Setup Audit', 'Listings', 'Site Files', 'Launch Items', 'Action'],
+    monthly: ['PRs', 'Backlinks', 'Performance', 'Reports', 'Indexing'],
+    weekly: ['Blog', 'GBP', 'Technical', 'Rankings', 'Reviews'],
+  }[categoryKey];
+  const cellRenderer = {
+    oneTime: renderOneTimeCells,
+    monthly: renderMonthlyCells,
+    weekly: renderWeeklyCells,
+  }[categoryKey];
+
+  return `<div class="table-card weekly-table-card">
+    ${S.weeklyLoading ? `<div class="empty-state"><div class="loading-spinner"></div><h3>Loading fulfillment data</h3></div>` : rows.length === 0 ? `
+      <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No active clients found</h3><p>Run the schema and add active clients in Supabase first.</p></div>
+    ` : `
+    <div class="table-scroll">
+      <table class="data-table weekly-table fulfillment-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            ${headers.map((header) => `<th>${h(header)}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((row) => `<tr>
+            <td>
+              <div class="client-name">${h(row.client_name)}</div>
+              <div class="client-location">${h(row.domain || '')}</div>
+            </td>
+            ${cellRenderer(row)}
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  </div>`;
+}
+
+function renderWeekly() {
+  const rows = weeklyRows();
+  const stats = fulfillmentStats(rows);
   const run = latestWeeklyRun();
+  const category = FULFILLMENT_CATEGORIES[S.fulfillmentCategory] || FULFILLMENT_CATEGORIES.weekly;
 
   return `
     <div class="page-header weekly-header">
       <div>
-        <h1 class="page-title">Weekly SEO Command Center</h1>
-        <p class="page-subtitle">Global view for Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}</p>
+        <h1 class="page-title">Fulfillment Ops</h1>
+        <p class="page-subtitle">One-time, monthly, and weekly SEO work for Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}</p>
       </div>
       <div class="weekly-controls">
         <label class="mini-field">
@@ -494,104 +684,34 @@ function renderWeekly() {
     <div class="stats-row">
       <div class="stat-card highlight">
         <div class="stat-label">SEO Execution</div>
-        <div class="stat-value">${pct(completed, rows.length)}%</div>
-        <div class="stat-helper">${completed}/${rows.length} clients complete</div>
+        <div class="stat-value">${pct(stats.completed, rows.length)}%</div>
+        <div class="stat-helper">${stats.completed}/${rows.length} clients complete</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Avg Technical Score</div>
-        <div class="stat-value">${avgScore || '-'}</div>
+        <div class="stat-value">${stats.avgScore || '-'}</div>
         <div class="stat-helper">From selected week snapshots</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Blogs This Week</div>
-        <div class="stat-value">${blogs}/${rows.length || 0}</div>
-        <div class="stat-helper">Weekly blog production</div>
+        <div class="stat-label">Monthly Output</div>
+        <div class="stat-value">${stats.prs}</div>
+        <div class="stat-helper">Press releases logged</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Reports Sent</div>
-        <div class="stat-value">${reports}</div>
-        <div class="stat-helper">Ad hoc reports logged</div>
+        <div class="stat-label">Critical Issues</div>
+        <div class="stat-value">${stats.critical}</div>
+        <div class="stat-helper">Across technical snapshots</div>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">All SEO Clients</h2>
-        <div style="font-size:13px;color:var(--text-muted)">Manual fields save per client for the selected week.</div>
+      ${renderFulfillmentTabs(rows)}
+      ${renderFulfillmentTasks(category)}
+      <div class="section-header fulfillment-table-header">
+        <h2 class="section-title">${h(category.shortLabel)} Client Queue</h2>
+        <div style="font-size:13px;color:var(--text-muted)">Tracked against the selected week. Editable fields save per client.</div>
       </div>
-      <div class="table-card weekly-table-card">
-        ${S.weeklyLoading ? `<div class="empty-state"><div class="loading-spinner"></div><h3>Loading weekly data</h3></div>` : rows.length === 0 ? `
-          <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No active clients found</h3><p>Run the schema and add active clients in Supabase first.</p></div>
-        ` : `
-        <div class="table-scroll">
-          <table class="data-table weekly-table">
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>SEO Complete</th>
-                <th class="num">Tech Score</th>
-                <th class="num">Verified</th>
-                <th class="num">Pages</th>
-                <th class="num">Critical</th>
-                <th class="num">Trend</th>
-                <th>Blog</th>
-                <th class="num">PRs</th>
-                <th class="num">Reports</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rows.map((row) => {
-                const exec = row.execution || {};
-                const health = row.health || {};
-                const trend = row.trend || {};
-                const outputs = row.outputs || {};
-                const score = health.technical_seo_score;
-                const trendSource = trend.raw_dataforseo_json?.source || '';
-                const trendConnected = trendSource === 'dataforseo_labs_ranked_keywords';
-                return `<tr>
-                  <td>
-                    <div class="client-name">${h(row.client_name)}</div>
-                    <div class="client-location">${h(row.domain || '')}</div>
-                  </td>
-                  <td>
-                    <label class="check-row">
-                      <input type="checkbox" ${exec.completed_seo_tasks ? 'checked' : ''} onchange="saveWeeklyClient('${row.id}', 'execution.completed_seo_tasks', this.checked)" />
-                      <span>${exec.completed_seo_tasks ? 'Complete' : 'Incomplete'}</span>
-                    </label>
-                  </td>
-                  <td class="num">${score || score === 0 ? `<span class="health-badge ${scoreClass(score)}">${Math.round(score)}</span>` : '-'}</td>
-                  <td class="num">${health.verified_seo_score || health.verified_seo_score === 0 ? Math.round(Number(health.verified_seo_score)) : '-'}</td>
-                  <td class="num">
-                    <div class="trend-stack">
-                      <strong>${health.pages_crawled || 0}</strong>
-                      <span>${health.clean_pages || 0} clean</span>
-                    </div>
-                  </td>
-                  <td class="num">${Number(health.critical_error_count || 0) ? `<span class="issue-count">${health.critical_error_count}</span>` : '0'}</td>
-                  <td class="num">
-                    <div class="trend-stack">
-                      <strong>${trendConnected ? (trend.ranking_keywords || 0) : '-'}</strong>
-                      <span>${trendConnected ? `${Number(trend.keyword_change || 0) >= 0 ? '+' : ''}${trend.keyword_change || 0} kw` : 'not connected'}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <label class="check-row">
-                      <input type="checkbox" ${outputs.blog_done ? 'checked' : ''} onchange="saveWeeklyClient('${row.id}', 'outputs.blog_done', this.checked)" />
-                      <span>${outputs.blog_done ? 'Done' : 'Open'}</span>
-                    </label>
-                  </td>
-                  <td class="num">
-                    <input class="mini-input" type="number" min="0" value="${outputs.prs_published_count || 0}" onchange="saveWeeklyClient('${row.id}', 'outputs.prs_published_count', this.value)" />
-                  </td>
-                  <td class="num">
-                    <input class="mini-input" type="number" min="0" value="${outputs.report_sent_count || 0}" onchange="saveWeeklyClient('${row.id}', 'outputs.report_sent_count', this.value)" />
-                  </td>
-                </tr>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>`}
-      </div>
+      ${renderFulfillmentTable(rows)}
     </div>`;
 }
 
@@ -632,6 +752,12 @@ async function saveWeeklyClient(clientId, path, value) {
   } catch (e) {
     toast('Save failed: ' + e.message, 'error');
   }
+  render();
+}
+
+function setFulfillmentCategory(category) {
+  if (!FULFILLMENT_CATEGORIES[category]) return;
+  S.fulfillmentCategory = category;
   render();
 }
 
@@ -1077,5 +1203,5 @@ async function init(){
 window.navigate=navigate;window.showAddClientModal=showAddClientModal;window.submitAddClient=submitAddClient;
 window.showAddKeywordsModal=showAddKeywordsModal;window.submitAddKeywords=submitAddKeywords;window.previewKeywords=previewKeywords;
 window.checkRankings=checkRankings;window.runAudit=runAudit;window.deleteClient=deleteClient;window.deleteKeyword=deleteKeyword;window.toggleSerp=toggleSerp;
-window.runWeeklyUpdate=runWeeklyUpdate;window.saveWeeklyClient=saveWeeklyClient;window.loadConnections=loadConnections;
+window.runWeeklyUpdate=runWeeklyUpdate;window.saveWeeklyClient=saveWeeklyClient;window.setFulfillmentCategory=setFulfillmentCategory;window.loadConnections=loadConnections;
 document.addEventListener('DOMContentLoaded',init);
