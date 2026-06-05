@@ -149,24 +149,55 @@ function portfolioMetrics(clients) {
 function rankingSummary(c) {
   const model = c.rankingModel || c.weeklyTrend?.raw_dataforseo_json?.ranking_model || null;
   const alerts = c.rankingAlerts || c.weeklyTrend?.raw_dataforseo_json?.ranking_alerts || [];
+  const hasRealRankingData = Boolean(model && (
+    model.organic?.total ||
+    model.local?.total ||
+    model.score ||
+    model.previous_score ||
+    alerts.length
+  ));
+  if (hasRealRankingData) {
+    return {
+      score: Number(model?.score || 0),
+      previous: Number(model?.previous_score || 0),
+      change: Number(model?.score_change || 0),
+      organic: model?.organic || {},
+      local: model?.local || {},
+      alerts,
+      critical: alerts.filter((alert) => alert.severity === 'critical').length,
+      warning: alerts.filter((alert) => alert.severity === 'warning').length,
+      provisional: false,
+      sourceLabel: 'Ranking snapshot',
+    };
+  }
+
+  const tech = techMetrics(c);
+  const fulfillment = clientFulfillmentProgress(c.id);
+  const technicalScore = Number(tech.score || tech.verified || tech.healthScore || 0);
+  const fulfillmentScore = fulfillment.available ? Number(fulfillment.pct || 0) : 0;
+  const fallbackScore = Math.round((technicalScore * 0.7) + (fulfillmentScore * 0.3));
   return {
-    score: Number(model?.score || 0),
-    previous: Number(model?.previous_score || 0),
-    change: Number(model?.score_change || 0),
-    organic: model?.organic || {},
-    local: model?.local || {},
+    score: fallbackScore,
+    previous: 0,
+    change: 0,
+    organic: {},
+    local: {},
     alerts,
     critical: alerts.filter((alert) => alert.severity === 'critical').length,
     warning: alerts.filter((alert) => alert.severity === 'warning').length,
+    provisional: true,
+    sourceLabel: fulfillment.available ? 'Provisional: technical + fulfillment' : 'Provisional: technical baseline',
   };
 }
 
 function portfolioRankingMetrics(clients) {
-  const rows = clients.map(rankingSummary).filter((row) => row.score || row.alerts.length);
+  const rows = clients.map(rankingSummary);
   const avgScore = rows.length ? Math.round(rows.reduce((sum, row) => sum + row.score, 0) / rows.length) : 0;
   return {
     avgScore,
     withData: rows.length,
+    realData: rows.filter((row) => !row.provisional).length,
+    provisional: rows.filter((row) => row.provisional).length,
     alertCount: rows.reduce((sum, row) => sum + row.alerts.length, 0),
     critical: rows.reduce((sum, row) => sum + row.critical, 0),
   };
@@ -479,7 +510,7 @@ function renderDashboard(){
       <div class="stat-card highlight">
         <div class="stat-label">Ranking Score</div>
         <div class="stat-value">${rs.avgScore || '-'}</div>
-        <div class="stat-helper">${rs.withData}/${ps.clients} clients with ranking snapshots</div>
+        <div class="stat-helper">${rs.realData} real ranking · ${rs.provisional} provisional</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Ranking Alerts</div>
@@ -529,7 +560,7 @@ function renderDashboard(){
               return`<tr onclick="navigate('detail','${c.id}')">
                 <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(clientSubtitle(c))}</div></td>
                 <td class="num">${renderClientFulfillmentIndicator(c.id, true)}</td>
-                <td class="num">${r.score ? `<span class="health-badge ${scoreClass(r.score)}">${r.score}</span> ${scoreDelta(r.change)}` : '-'}</td>
+                <td class="num"><span class="health-badge ${scoreClass(r.score)}${r.provisional ? ' provisional' : ''}" title="${h(r.sourceLabel)}">${r.score}</span> ${r.provisional ? '<span class="change neutral">P</span>' : scoreDelta(r.change)}</td>
                 <td class="num">${r.alerts.length ? `<span class="issue-count">${r.alerts.length}</span>` : '0'}</td>
                 <td class="num">${m.score || m.score === 0 ? `<span class="health-badge ${healthClass}">${fmtScore(m.score)}</span>`:'-'}</td>
                 <td class="num">${fmtScore(m.verified)}</td>
@@ -1152,8 +1183,8 @@ function renderDetail(){
       </div>
       <div class="stat-card highlight">
         <div class="stat-label">Ranking Score</div>
-        <div class="stat-value">${ranking.score || '-'}</div>
-        <div class="stat-helper">${ranking.score ? `${scoreDelta(ranking.change)} week over week · ${ranking.alerts.length} alerts` : 'No ranking snapshot yet'}</div>
+        <div class="stat-value">${ranking.score}</div>
+        <div class="stat-helper">${ranking.provisional ? `${h(ranking.sourceLabel)} until ranking snapshot exists` : `${scoreDelta(ranking.change)} week over week · ${ranking.alerts.length} alerts`}</div>
       </div>
       <div class="stat-card">
         <div class="stat-label">Critical Items</div>

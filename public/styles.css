@@ -1491,6 +1491,7 @@ select.field-input {
 .health-badge.ok   { background: var(--tier3-bg); color: var(--tier3); border: 1px solid rgba(245,200,66,0.2); }
 .health-badge.poor { background: var(--tier5-bg); color: var(--tier5); border: 1px solid rgba(232,69,69,0.2); }
 .health-badge.none { background: var(--tier-none-bg); color: var(--tier-none); }
+.health-badge.provisional { border-style: dashed; }
 
 .issue-count {
   display: inline-flex;
