@@ -484,9 +484,9 @@ input, textarea, select { font-family: inherit; }
 }
 
 .fulfillment-matrix-card {
-  width: max-content;
+  width: 100%;
   min-width: 100%;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .fulfillment-toolbar-progress {
@@ -525,13 +525,18 @@ input, textarea, select { font-family: inherit; }
 }
 
 .matrix-table {
-  min-width: max-content;
+  width: 100%;
+  min-width: 0;
   table-layout: fixed;
 }
 
+.matrix-table .client-col { width: 22%; }
+.matrix-table .progress-col { width: 8%; }
+
 .matrix-table th,
 .matrix-table td {
-  min-width: 148px;
+  min-width: 0;
+  padding: 10px 6px;
   text-align: center;
   vertical-align: middle;
 }
@@ -543,18 +548,18 @@ input, textarea, select { font-family: inherit; }
 
 .matrix-table th span {
   display: block;
-  max-width: 150px;
+  max-width: 100%;
   margin: 0 auto;
   white-space: normal;
-  line-height: 1.25;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
 }
 
 .matrix-table .sticky-client {
-  position: sticky;
-  left: 0;
   z-index: 5;
-  min-width: 230px;
-  max-width: 230px;
+  width: auto;
+  min-width: 0;
+  max-width: none;
   text-align: left;
   background: var(--surface);
   box-shadow: 1px 0 0 var(--border);
@@ -586,19 +591,19 @@ input, textarea, select { font-family: inherit; }
 .matrix-check {
   display: inline-grid;
   justify-items: center;
-  gap: 6px;
-  min-width: 78px;
+  gap: 4px;
+  min-width: 0;
   color: var(--text-muted);
   font-family: var(--font-label);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
 }
 
 .matrix-check input {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   accent-color: var(--green);
 }
 
@@ -608,8 +613,8 @@ input, textarea, select { font-family: inherit; }
 
 .row-progress {
   display: grid;
-  gap: 7px;
-  min-width: 110px;
+  gap: 5px;
+  min-width: 0;
 }
 
 .row-progress strong {
