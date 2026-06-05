@@ -20,6 +20,7 @@ const S = {
   connections: null,
   connectionsLoading: false,
   selectedYear: new Date().getFullYear(),
+  selectedMonth: new Date().getMonth(),
   selectedWeek: getIsoWeek(new Date()).week,
 };
 
@@ -70,6 +71,14 @@ function weekRange(year, week) {
   sunday.setUTCDate(monday.getUTCDate() + 6);
   const fmtDate = (date) => date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', timeZone: 'UTC' });
   return `${fmtDate(monday)} - ${fmtDate(sunday)}`;
+}
+
+function monthName(monthIndex) {
+  return new Date(Date.UTC(S.selectedYear, monthIndex, 1)).toLocaleDateString(undefined, { month: 'long', timeZone: 'UTC' });
+}
+
+function weekForMonth(year, monthIndex) {
+  return getIsoWeek(new Date(year, monthIndex, 1)).week;
 }
 
 function posChange(curr, prev) {
@@ -688,17 +697,18 @@ function renderWeekly() {
   const rows = weeklyRows();
   const run = latestWeeklyRun();
   const category = FULFILLMENT_CATEGORIES[S.fulfillmentCategory] || FULFILLMENT_CATEGORIES.weekly;
+  const isWeekly = S.fulfillmentCategory === 'weekly';
+  const isMonthly = S.fulfillmentCategory === 'monthly';
   const oneTimeProgress = fulfillmentProgress(rows, 'oneTime');
   const monthlyProgress = fulfillmentProgress(rows, 'monthly');
   const weeklyProgress = fulfillmentProgress(rows, 'weekly');
   const overallProgress = fulfillmentProgress(rows);
-
-  return `
-    <div class="page-header weekly-header">
-      <div>
-        <h1 class="page-title">${h(category.label)}</h1>
-        <p class="page-subtitle">${h(category.description)} Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}</p>
-      </div>
+  const subtitle = isWeekly
+    ? `${category.description} Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}`
+    : isMonthly
+      ? `${category.description} ${monthName(S.selectedMonth)}, ${S.selectedYear}.`
+      : category.description;
+  const controls = isWeekly ? `
       <div class="weekly-controls">
         <label class="mini-field">
           <span>Year</span>
@@ -711,13 +721,27 @@ function renderWeekly() {
         <button class="btn btn-primary" onclick="runWeeklyUpdate()" ${S.weeklyRunning ? 'disabled' : ''}>
           ${S.weeklyRunning ? '<span class="loading-spinner"></span> Running...' : 'Run Weekly Update'}
         </button>
+      </div>` : isMonthly ? `
+      <div class="weekly-controls">
+        <label class="mini-field">
+          <span>Month</span>
+          <select id="fulfillmentMonth" class="field-input compact">${Array.from({ length: 12 }, (_, month) => `<option value="${month}" ${month === S.selectedMonth ? 'selected' : ''}>${monthName(month)}</option>`).join('')}</select>
+        </label>
+      </div>` : '';
+
+  return `
+    <div class="page-header weekly-header">
+      <div>
+        <h1 class="page-title">${h(category.label)}</h1>
+        <p class="page-subtitle">${h(subtitle)}</p>
       </div>
+      ${controls}
     </div>
 
-    <div class="run-status ${run?.status || 'idle'}">
+    ${isWeekly ? `<div class="run-status ${run?.status || 'idle'}">
       <span class="status-dot"></span>
       <span>${run ? `Last run ${run.status} · ${run.clients_completed || 0}/${run.clients_total || 0} clients · ${timeAgo(run.finished_at || run.started_at)}` : 'No weekly update has been run for this week yet.'}</span>
-    </div>
+    </div>` : ''}
 
     <div class="stats-row">
       <div class="stat-card highlight">
@@ -1260,8 +1284,10 @@ function bindEvents(){
   if(si){si.addEventListener('input',e=>{S.search=e.target.value;render();});const l=si.value.length;si.focus();si.setSelectionRange(l,l);}
   const wy=$('#weeklyYear');
   const ww=$('#weeklyWeek');
+  const fm=$('#fulfillmentMonth');
   if(wy)wy.addEventListener('change',e=>{S.selectedYear=Number(e.target.value);loadWeekly();});
   if(ww)ww.addEventListener('change',e=>{S.selectedWeek=Number(e.target.value);loadWeekly();});
+  if(fm)fm.addEventListener('change',e=>{S.selectedMonth=Number(e.target.value);S.selectedWeek=weekForMonth(S.selectedYear,S.selectedMonth);loadWeekly();});
 }
 
 /* ── Init ─────────────────────────────────────────────────── */
