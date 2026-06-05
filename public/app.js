@@ -16,6 +16,7 @@ const S = {
   weekly: null,
   weeklyLoading: false,
   weeklyRunning: false,
+  weeklyRunAction: null,
   fulfillmentCategory: 'weekly',
   connections: null,
   connectionsLoading: false,
@@ -38,7 +39,7 @@ const api = {
   runAudit(id){return this.post(`/api/clients/${id}/audit`);},
   weekly(year, week){return this.get(`/api/weekly?year=${year}&week_number=${week}`);},
   saveWeekly(year, week, body){return this.post(`/api/weekly?year=${year}&week_number=${week}`, body);},
-  runWeekly(year, week){return this.post('/api/weekly/run', { year, week_number: week });},
+  runWeekly(year, week, action = 'full'){return this.post('/api/weekly/run', { year, week_number: week, action });},
   connections(){return this.get('/api/connections');},
 };
 
@@ -416,9 +417,12 @@ function renderDashboard(){
         <h1 class="page-title">SEO Command Center</h1>
         <p class="page-subtitle">Real technical SEO intelligence across ${ps.clients} active Lawn & Land clients.</p>
       </div>
-      <div class="last-crawl-notice">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        <span>Last crawl: ${getLastCrawlTime()}</span>
+      <div class="dashboard-actions">
+        ${renderUpdateActions()}
+        <div class="last-crawl-notice">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Last crawl: ${getLastCrawlTime()}</span>
+        </div>
       </div>
     </div>
 
@@ -591,6 +595,20 @@ function renderClientFulfillmentIndicator(clientId, compact = false) {
   </div>`;
 }
 
+function updateButtonLabel(action, idleLabel) {
+  return S.weeklyRunning && S.weeklyRunAction === action
+    ? '<span class="loading-spinner"></span> Running...'
+    : idleLabel;
+}
+
+function renderUpdateActions() {
+  const disabled = S.weeklyRunning ? 'disabled' : '';
+  return `<div class="update-actions">
+    <button class="btn btn-outline" onclick="runWeeklyUpdate('technical')" ${disabled}>${updateButtonLabel('technical', 'Run Technical Update')}</button>
+    <button class="btn btn-outline" onclick="runWeeklyUpdate('rankings')" ${disabled}>${updateButtonLabel('rankings', 'Run Local + Search')}</button>
+  </div>`;
+}
+
 function taskShortLabel(task) {
   const labels = {
     'Onsite Core Content Optimization': 'Onsite Core',
@@ -718,9 +736,12 @@ function renderWeekly() {
           <span>Week</span>
           <select id="weeklyWeek" class="field-input compact">${Array.from({ length: 53 }, (_, i) => i + 1).map((week) => `<option value="${week}" ${week === S.selectedWeek ? 'selected' : ''}>Week ${week}</option>`).join('')}</select>
         </label>
-        <button class="btn btn-primary" onclick="runWeeklyUpdate()" ${S.weeklyRunning ? 'disabled' : ''}>
-          ${S.weeklyRunning ? '<span class="loading-spinner"></span> Running...' : 'Run Weekly Update'}
-        </button>
+        <div class="weekly-run-actions">
+          <button class="btn btn-primary" onclick="runWeeklyUpdate('full')" ${S.weeklyRunning ? 'disabled' : ''}>
+            ${updateButtonLabel('full', 'Run Weekly Update')}
+          </button>
+          ${renderUpdateActions()}
+        </div>
       </div>` : isMonthly ? `
       <div class="weekly-controls">
         <label class="mini-field">
@@ -787,17 +808,28 @@ async function loadWeekly() {
   render();
 }
 
-async function runWeeklyUpdate() {
+async function refreshClients() {
+  const data = await api.clients();
+  S.clients = data.clients || data || [];
+}
+
+async function runWeeklyUpdate(action = 'full') {
   S.weeklyRunning = true;
+  S.weeklyRunAction = action;
   render();
   try {
-    const result = await api.runWeekly(S.selectedYear, S.selectedWeek);
+    const result = await api.runWeekly(S.selectedYear, S.selectedWeek, action);
     toast(result.note || 'Weekly update saved');
-    S.weekly = await api.weekly(S.selectedYear, S.selectedWeek);
+    const [weekly] = await Promise.all([
+      api.weekly(S.selectedYear, S.selectedWeek),
+      refreshClients(),
+    ]);
+    S.weekly = weekly;
   } catch (e) {
     toast('Weekly update failed: ' + e.message, 'error');
   }
   S.weeklyRunning = false;
+  S.weeklyRunAction = null;
   render();
 }
 
@@ -1295,7 +1327,7 @@ async function init(){
   document.querySelectorAll('.nav-item[data-view]').forEach(el=>{el.addEventListener('click',e=>{e.preventDefault();if(el.classList.contains('disabled'))return;if(el.dataset.fulfillmentCategory)S.fulfillmentCategory=el.dataset.fulfillmentCategory;navigate(el.dataset.view);});});
   $('#mobileMenuBtn')?.addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
   $('#sidebarToggle')?.addEventListener('click',()=>{const sb=$('#sidebar'),mw=$('#mainWrapper');sb.style.transform='translateX(-100%)';mw.style.marginLeft='0';const btn=document.createElement('button');btn.className='btn btn-ghost';btn.style.cssText='position:fixed;left:12px;top:12px;z-index:150;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)';btn.innerHTML='☰';btn.onclick=()=>{sb.style.transform='';mw.style.marginLeft='';btn.remove();};document.body.appendChild(btn);});
-  try{const d=await api.clients();S.clients=d.clients||d||[];}catch(e){S.clients=[];console.error(e);}
+  try{await refreshClients();}catch(e){S.clients=[];console.error(e);}
   render();
   loadWeekly();
 }
