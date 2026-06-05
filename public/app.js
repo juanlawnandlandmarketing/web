@@ -549,12 +549,41 @@ function renderProgressMeter(progress) {
   </div>`;
 }
 
+function taskShortLabel(task) {
+  const labels = {
+    'Onsite Core Content Optimization': 'Onsite Core',
+    'SEO Images Optimization': 'Images',
+    'Clients Reviews Integration': 'Reviews',
+    'Clear NAP Listings': 'NAP',
+    'Schema Implementation': 'Schema',
+    'Sitemap': 'Sitemap',
+    'Pre-Launch Website GBP Optimization': 'Pre-GBP',
+    'Post-Launch Website GBP Optimization': 'Post-GBP',
+    'Citation Building': 'Citations',
+    'Robots.txt File Management': 'Robots',
+    'Media Room Configuration': 'Media Room',
+    'llms.txt configuration': 'llms.txt',
+    'Press Releases (2/Month)': 'Press Releases',
+    'Backlink Acquisition': 'Backlinks',
+    'Page Speed & Performance': 'Speed',
+    'Website Security': 'Security',
+    'Monthly Report Tracking & Reporting': 'Reports',
+    'GSC Indexing Audit': 'GSC Audit',
+    'Blog Content Creation (1/Week) Published + Audited': 'Blog',
+    'GBP Audit and Image Post': 'GBP Post',
+    'Technical SEO Audit': 'Tech Audit',
+    'SEO Ranking performance (local + search)': 'Rankings',
+    'Review Generation tracker': 'Review Tracker',
+  };
+  return labels[task] || task;
+}
+
 function renderFulfillmentCheckbox(row, categoryKey, task) {
   const id = taskId(task);
   const checked = taskDone(row, categoryKey, task);
   return `<label class="matrix-check" title="${h(task)}">
     <input type="checkbox" ${checked ? 'checked' : ''} onchange="saveFulfillmentTask('${row.id}', '${categoryKey}', '${id}', this.checked)" />
-    <span>${checked ? 'Complete' : 'Open'}</span>
+    <span>${checked ? 'Done' : 'Open'}</span>
   </label>`;
 }
 
@@ -585,10 +614,15 @@ function renderFulfillmentTable(rows, categoryKey) {
       <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No matching clients</h3><p>Try a different search.</p></div>
     ` : `
     <table class="data-table weekly-table fulfillment-table matrix-table">
+        <colgroup>
+          <col class="client-col" />
+          ${category.tasks.map(() => '<col class="task-col" />').join('')}
+          <col class="progress-col" />
+        </colgroup>
         <thead>
           <tr>
             <th class="sticky-client">Client</th>
-            ${category.tasks.map((task) => `<th><span>${h(task)}</span></th>`).join('')}
+            ${category.tasks.map((task) => `<th title="${h(task)}"><span>${h(taskShortLabel(task))}</span></th>`).join('')}
             <th>Progress</th>
           </tr>
         </thead>
