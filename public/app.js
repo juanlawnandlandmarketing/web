@@ -1220,7 +1220,6 @@ function renderConnections() {
     { name:'Google Analytics 4', desc:'Actual traffic, conversions, bounce rate, user behavior', status:'not_connected', icon:'📈', detail:'Would provide: real organic traffic numbers, conversion tracking, landing page performance, user flow, goal completions', requirements:'GA4 API access via service account or OAuth2 per client property' },
     { name:'Google Business Profile', desc:'Map Pack visibility, reviews, calls, direction requests', status:'not_connected', icon:'📍', detail:'Would provide: GBP views, search vs discovery queries, photo views, call clicks, direction requests, review monitoring, Map Pack position', requirements:'GBP API access (requires Google Business Profile API enablement + OAuth2)' },
     { name:'Google PageSpeed Insights', desc:'Core Web Vitals, performance scores, mobile usability', status:'available', icon:'⚡', detail:'Free API — no auth needed. Provides: performance score, LCP, FID, CLS, accessibility score, SEO score', requirements:'Just needs an API key (free tier: 25K queries/day)' },
-    { name:'Screaming Frog / Sitebulb', desc:'Deep technical SEO crawl data', status:'not_connected', icon:'🕷️', detail:'Would provide: full site architecture, internal linking, redirect chains, canonical issues, thin content detection', requirements:'Desktop tool — would need export integration or API bridge' },
   ];
 
   var connected = integrations.filter(function(i){return i.status==='connected';});
