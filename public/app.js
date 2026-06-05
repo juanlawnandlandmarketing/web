@@ -458,6 +458,7 @@ function renderDashboard(){
           <table class="data-table">
             <thead><tr>
               <th>Client</th>
+              <th class="num">Fulfillment</th>
               <th class="num">Tech Score</th>
               <th class="num">Verified SEO</th>
               <th class="num">Pages</th>
@@ -472,6 +473,7 @@ function renderDashboard(){
               const healthClass=scoreClass(m.score);
               return`<tr onclick="navigate('detail','${c.id}')">
                 <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(clientSubtitle(c))}</div></td>
+                <td class="num">${renderClientFulfillmentIndicator(c.id, true)}</td>
                 <td class="num">${m.score || m.score === 0 ? `<span class="health-badge ${healthClass}">${fmtScore(m.score)}</span>`:'-'}</td>
                 <td class="num">${fmtScore(m.verified)}</td>
                 <td class="num">${m.pages || '-'}</td>
@@ -543,9 +545,40 @@ function fulfillmentProgress(rows, categoryKey = null) {
   return { done, total, pct: pct(done, total) };
 }
 
+function totalFulfillmentTaskCount() {
+  return Object.values(FULFILLMENT_CATEGORIES).reduce((sum, category) => sum + category.tasks.length, 0);
+}
+
+function clientFulfillmentRow(clientId) {
+  return S.weekly?.clients?.find((row) => row.id === clientId) || null;
+}
+
+function clientFulfillmentProgress(clientId) {
+  const row = clientFulfillmentRow(clientId);
+  const total = totalFulfillmentTaskCount();
+  if (!row) return { done: 0, total, pct: 0, available: false };
+
+  const done = Object.entries(FULFILLMENT_CATEGORIES).reduce((sum, [key, category]) => (
+    sum + category.tasks.filter((task) => taskDone(row, key, task)).length
+  ), 0);
+
+  return { done, total, pct: pct(done, total), available: true };
+}
+
 function renderProgressMeter(progress) {
   return `<div class="progress-meter" aria-label="${progress.pct}% complete">
     <span style="width:${Math.max(0, Math.min(100, progress.pct))}%"></span>
+  </div>`;
+}
+
+function renderClientFulfillmentIndicator(clientId, compact = false) {
+  const progress = clientFulfillmentProgress(clientId);
+  const label = progress.available ? `${progress.done}/${progress.total} tasks` : (S.weeklyLoading ? 'Loading tasks' : 'No checklist');
+
+  return `<div class="client-fulfillment${compact ? ' compact' : ''}${progress.available ? '' : ' muted'}">
+    <strong>${progress.available ? `${progress.pct}%` : '-'}</strong>
+    ${renderProgressMeter(progress)}
+    <span>${label}</span>
   </div>`;
 }
 
@@ -856,6 +889,7 @@ function renderDetail(){
   const kws=[...(c.keywords||[])];
   const audit=c.audit||{};
   const raw=c.weeklyHealth?.raw_audit_json||{};
+  const fulfillment = clientFulfillmentProgress(c.id);
 
   // Categorize keywords
   const wins=kws.filter(k=>(k.rankings?.position||0)>=1&&(k.rankings?.position||0)<=3).sort((a,b)=>(a.rankings.position)-(b.rankings.position));
@@ -888,6 +922,12 @@ function renderDetail(){
         <div class="stat-label">Technical Score</div>
         <div class="stat-value">${fmtScore(tech.score)}</div>
         <div class="stat-helper">Verified SEO: ${fmtScore(tech.verified)}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Fulfillment</div>
+        <div class="stat-value">${fulfillment.available ? `${fulfillment.pct}%` : '-'}</div>
+        <div class="stat-helper">${fulfillment.available ? `${fulfillment.done}/${fulfillment.total} tasks complete` : (S.weeklyLoading ? 'Loading current checklist' : 'No checklist data')}</div>
+        ${renderProgressMeter(fulfillment)}
       </div>
       <div class="stat-card">
         <div class="stat-label">Critical Items</div>
@@ -1232,7 +1272,7 @@ async function init(){
   $('#sidebarToggle')?.addEventListener('click',()=>{const sb=$('#sidebar'),mw=$('#mainWrapper');sb.style.transform='translateX(-100%)';mw.style.marginLeft='0';const btn=document.createElement('button');btn.className='btn btn-ghost';btn.style.cssText='position:fixed;left:12px;top:12px;z-index:150;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)';btn.innerHTML='☰';btn.onclick=()=>{sb.style.transform='';mw.style.marginLeft='';btn.remove();};document.body.appendChild(btn);});
   try{const d=await api.clients();S.clients=d.clients||d||[];}catch(e){S.clients=[];console.error(e);}
   render();
-  if (S.view === 'weekly') loadWeekly();
+  loadWeekly();
 }
 
 window.navigate=navigate;window.showAddClientModal=showAddClientModal;window.submitAddClient=submitAddClient;
