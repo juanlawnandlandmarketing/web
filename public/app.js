@@ -561,21 +561,28 @@ function renderFulfillmentCheckbox(row, categoryKey, task) {
 function renderFulfillmentTable(rows, categoryKey) {
   const category = FULFILLMENT_CATEGORIES[categoryKey] || FULFILLMENT_CATEGORIES.weekly;
   const progress = fulfillmentProgress(rows, categoryKey);
+  const filteredRows = rows
+    .filter((row) => !S.search || `${row.client_name || ''} ${row.domain || ''}`.toLowerCase().includes(S.search.toLowerCase()))
+    .sort((a, b) => String(a.client_name || '').localeCompare(String(b.client_name || '')));
 
-  return `<div class="fulfillment-matrix-panel weekly-table-card">
-    <div class="matrix-summary">
-      <div>
-        <h2 class="section-title">${h(category.label)} Matrix</h2>
-        <p class="section-note">${h(category.description)}</p>
+  return `<div class="table-card fulfillment-matrix-card weekly-table-card">
+    <div class="table-toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" type="text" placeholder="Search clients…" value="${h(S.search)}" id="searchInput" />
       </div>
-      <div class="matrix-progress">
+      <div class="table-actions">
+        <div class="fulfillment-toolbar-progress">
         <strong>${progress.pct}%</strong>
         <span>${progress.done}/${progress.total || 0} tasks complete</span>
-        ${renderProgressMeter(progress)}
+          ${renderProgressMeter(progress)}
+        </div>
       </div>
     </div>
     ${S.weeklyLoading ? `<div class="empty-state"><div class="loading-spinner"></div><h3>Loading fulfillment data</h3></div>` : rows.length === 0 ? `
       <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No active clients found</h3><p>Run the schema and add active clients in Supabase first.</p></div>
+    ` : filteredRows.length === 0 ? `
+      <div class="empty-state"><div class="empty-state-icon">▣</div><h3>No matching clients</h3><p>Try a different search.</p></div>
     ` : `
     <table class="data-table weekly-table fulfillment-table matrix-table">
         <thead>
@@ -586,7 +593,7 @@ function renderFulfillmentTable(rows, categoryKey) {
           </tr>
         </thead>
         <tbody>
-          ${rows.map((row) => {
+          ${filteredRows.map((row) => {
             const done = category.tasks.filter((task) => taskDone(row, categoryKey, task)).length;
             const rowProgress = { done, total: category.tasks.length, pct: pct(done, category.tasks.length) };
             return `<tr>

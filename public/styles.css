@@ -483,21 +483,13 @@ input, textarea, select { font-family: inherit; }
   accent-color: var(--green);
 }
 
-.fulfillment-matrix-panel {
-  min-width: max-content;
+.fulfillment-matrix-card {
+  width: max-content;
+  min-width: 100%;
+  overflow: visible;
 }
 
-.matrix-summary {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 0 0 18px;
-  margin-bottom: 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.matrix-progress {
+.fulfillment-toolbar-progress {
   display: grid;
   gap: 5px;
   min-width: 180px;
@@ -505,13 +497,13 @@ input, textarea, select { font-family: inherit; }
   font-family: var(--font-label);
 }
 
-.matrix-progress strong {
+.fulfillment-toolbar-progress strong {
   color: var(--green);
-  font-size: 28px;
+  font-size: 18px;
   line-height: 1;
 }
 
-.matrix-progress span {
+.fulfillment-toolbar-progress span {
   color: var(--text-muted);
   font-size: 12px;
 }
@@ -535,10 +527,6 @@ input, textarea, select { font-family: inherit; }
 .matrix-table {
   min-width: max-content;
   table-layout: fixed;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
 }
 
 .matrix-table th,
@@ -549,8 +537,6 @@ input, textarea, select { font-family: inherit; }
 }
 
 .matrix-table th {
-  position: sticky;
-  top: 0;
   z-index: 4;
   background: var(--surface);
 }
@@ -1537,8 +1523,7 @@ select.field-input {
   .mobile-menu-btn { display: flex; }
   .stats-row { grid-template-columns: repeat(2, 1fr); }
   .fulfillment-tabs { grid-template-columns: 1fr; }
-  .matrix-summary { flex-direction: column; }
-  .matrix-progress { width: 100%; text-align: left; }
+  .fulfillment-toolbar-progress { width: 100%; text-align: left; }
   .field-row { grid-template-columns: 1fr; }
   .work-plan { grid-template-columns: 1fr; }
 }
