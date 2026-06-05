@@ -363,10 +363,14 @@ function _escModal(e){if(e.key==='Escape')closeModal();}
 function navigate(view,clientId){
   if (view === 'clients') view = 'dashboard';
   S.view=view;S.clientId=clientId||null;S.expandedKw=null;S.search='';
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===view||(view==='detail'&&n.dataset.view==='dashboard')));
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    const matchesView = n.dataset.view === view || (view === 'detail' && n.dataset.view === 'dashboard');
+    const matchesFulfillment = view !== 'weekly' || !n.dataset.fulfillmentCategory || n.dataset.fulfillmentCategory === S.fulfillmentCategory;
+    n.classList.toggle('active', matchesView && matchesFulfillment);
+  });
   const bc=$('#breadcrumb');
   if(view==='dashboard')bc.innerHTML='<span class="bc-item">Dashboard</span>';
-  else if(view==='weekly')bc.innerHTML='<span class="bc-item">Fulfillment Ops</span>';
+  else if(view==='weekly')bc.innerHTML=`<span class="bc-item">${h((FULFILLMENT_CATEGORIES[S.fulfillmentCategory] || FULFILLMENT_CATEGORIES.weekly).label)}</span>`;
   else if(view==='rankings')bc.innerHTML='<span class="bc-item">Rankings</span>';
   else if(view==='connections')bc.innerHTML='<span class="bc-item">Connections</span>';
   else if(view==='detail'){const c=S.clients.find(x=>x.id===clientId);bc.innerHTML=`<a class="bc-item" href="#" onclick="navigate('dashboard');return false">Dashboard</a><span class="bc-sep">›</span><span class="bc-item">${c?h(c.name):''}</span>`;}
@@ -539,19 +543,6 @@ function fulfillmentProgress(rows, categoryKey = null) {
   return { done, total, pct: pct(done, total) };
 }
 
-function renderFulfillmentTabs(rows) {
-  return `<div class="fulfillment-tabs">
-    ${Object.entries(FULFILLMENT_CATEGORIES).map(([key, category]) => {
-      const progress = fulfillmentProgress(rows, key);
-      return `<button class="fulfillment-tab ${S.fulfillmentCategory === key ? 'active' : ''}" onclick="setFulfillmentCategory('${key}')">
-        <span>${h(category.shortLabel)}</span>
-        <strong>${h(category.label)}</strong>
-        <small>${progress.pct}% complete · ${progress.done}/${progress.total || 0}</small>
-      </button>`;
-    }).join('')}
-  </div>`;
-}
-
 function renderProgressMeter(progress) {
   return `<div class="progress-meter" aria-label="${progress.pct}% complete">
     <span style="width:${Math.max(0, Math.min(100, progress.pct))}%"></span>
@@ -633,8 +624,8 @@ function renderWeekly() {
   return `
     <div class="page-header weekly-header">
       <div>
-        <h1 class="page-title">Fulfillment Ops</h1>
-        <p class="page-subtitle">One-time, monthly, and weekly SEO work for Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}</p>
+        <h1 class="page-title">${h(category.label)}</h1>
+        <p class="page-subtitle">${h(category.description)} Week ${S.selectedWeek}, ${S.selectedYear}. ${weekRange(S.selectedYear, S.selectedWeek)}</p>
       </div>
       <div class="weekly-controls">
         <label class="mini-field">
@@ -680,7 +671,6 @@ function renderWeekly() {
     </div>
 
     <div class="section">
-      ${renderFulfillmentTabs(rows)}
       <div class="section-header fulfillment-table-header">
         <h2 class="section-title">${h(category.shortLabel)} Client Checklist</h2>
         <div style="font-size:13px;color:var(--text-muted)">Clients are rows. ${h(category.shortLabel)} tasks are columns. Every checkbox saves per client.</div>
@@ -1198,7 +1188,7 @@ function bindEvents(){
 
 /* ── Init ─────────────────────────────────────────────────── */
 async function init(){
-  document.querySelectorAll('.nav-item[data-view]').forEach(el=>{el.addEventListener('click',e=>{e.preventDefault();if(el.classList.contains('disabled'))return;navigate(el.dataset.view);});});
+  document.querySelectorAll('.nav-item[data-view]').forEach(el=>{el.addEventListener('click',e=>{e.preventDefault();if(el.classList.contains('disabled'))return;if(el.dataset.fulfillmentCategory)S.fulfillmentCategory=el.dataset.fulfillmentCategory;navigate(el.dataset.view);});});
   $('#mobileMenuBtn')?.addEventListener('click',()=>$('#sidebar').classList.toggle('open'));
   $('#sidebarToggle')?.addEventListener('click',()=>{const sb=$('#sidebar'),mw=$('#mainWrapper');sb.style.transform='translateX(-100%)';mw.style.marginLeft='0';const btn=document.createElement('button');btn.className='btn btn-ghost';btn.style.cssText='position:fixed;left:12px;top:12px;z-index:150;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)';btn.innerHTML='☰';btn.onclick=()=>{sb.style.transform='';mw.style.marginLeft='';btn.remove();};document.body.appendChild(btn);});
   try{const d=await api.clients();S.clients=d.clients||d||[];}catch(e){S.clients=[];console.error(e);}
