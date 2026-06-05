@@ -25,6 +25,15 @@ function latestByClient(rows) {
   return map;
 }
 
+function latestPreviousByClient(rows, year, weekNumber) {
+  const map = new Map();
+  for (const row of rows || []) {
+    if (Number(row.year) === Number(year) && Number(row.week_number) === Number(weekNumber)) continue;
+    if (!map.has(row.client_id)) map.set(row.client_id, row);
+  }
+  return map;
+}
+
 function copyHealthForWeek(source, clientId) {
   if (!source) {
     return {
@@ -157,7 +166,7 @@ module.exports = async function handler(req, res) {
     ]);
     const currentHealthByClient = latestByClient(currentHealthRows);
     const latestHealthByClient = latestByClient(latestHealthRows);
-    const previousTrendByClient = latestByClient(previousTrendRows);
+    const previousTrendByClient = latestPreviousByClient(previousTrendRows, year, weekNumber);
     const dataForSeoConfigured = getCredentials().configured;
 
     for (const client of clients) {

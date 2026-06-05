@@ -146,6 +146,37 @@ function portfolioMetrics(clients) {
   return{clients:clients.length,keywords:kw,traffic,value,top10:t10,opportunities:opp};
 }
 
+function rankingSummary(c) {
+  const model = c.rankingModel || c.weeklyTrend?.raw_dataforseo_json?.ranking_model || null;
+  const alerts = c.rankingAlerts || c.weeklyTrend?.raw_dataforseo_json?.ranking_alerts || [];
+  return {
+    score: Number(model?.score || 0),
+    previous: Number(model?.previous_score || 0),
+    change: Number(model?.score_change || 0),
+    organic: model?.organic || {},
+    local: model?.local || {},
+    alerts,
+    critical: alerts.filter((alert) => alert.severity === 'critical').length,
+    warning: alerts.filter((alert) => alert.severity === 'warning').length,
+  };
+}
+
+function portfolioRankingMetrics(clients) {
+  const rows = clients.map(rankingSummary).filter((row) => row.score || row.alerts.length);
+  const avgScore = rows.length ? Math.round(rows.reduce((sum, row) => sum + row.score, 0) / rows.length) : 0;
+  return {
+    avgScore,
+    withData: rows.length,
+    alertCount: rows.reduce((sum, row) => sum + row.alerts.length, 0),
+    critical: rows.reduce((sum, row) => sum + row.critical, 0),
+  };
+}
+
+function scoreDelta(value) {
+  if (!value) return '<span class="change neutral">—</span>';
+  return value > 0 ? `<span class="change up">▲${value}</span>` : `<span class="change down">▼${Math.abs(value)}</span>`;
+}
+
 const FULFILLMENT_CATEGORIES = {
   oneTime: {
     label: 'One-Time Fulfillment',
@@ -409,6 +440,7 @@ function render(){
 function renderDashboard(){
   const ps=portfolioMetrics(S.clients);
   const ts=portfolioTechMetrics(S.clients);
+  const rs=portfolioRankingMetrics(S.clients);
   const hasKeywordData = ps.keywords > 0;
   const filtered=S.clients.filter(c=>!S.search||c.name.toLowerCase().includes(S.search.toLowerCase()));
   const sorted=hasKeywordData ? sortClients(filtered) : [...filtered].sort((a,b)=>techMetrics(b).score-techMetrics(a).score||a.name.localeCompare(b.name));
@@ -444,10 +476,15 @@ function renderDashboard(){
         <div class="stat-value">${fmt(ts.clean)}</div>
         <div class="stat-helper">${ts.pages ? pct(ts.clean, ts.pages) : 0}% of crawled pages</div>
       </div>
+      <div class="stat-card highlight">
+        <div class="stat-label">Ranking Score</div>
+        <div class="stat-value">${rs.avgScore || '-'}</div>
+        <div class="stat-helper">${rs.withData}/${ps.clients} clients with ranking snapshots</div>
+      </div>
       <div class="stat-card">
-        <div class="stat-label">Critical Issues</div>
-        <div class="stat-value">${ts.critical}</div>
-        <div class="stat-helper">Across current snapshots</div>
+        <div class="stat-label">Ranking Alerts</div>
+        <div class="stat-value">${rs.alertCount}</div>
+        <div class="stat-helper">${rs.critical} critical · ${rs.alertCount - rs.critical} warnings</div>
       </div>
     </div>
 
@@ -474,6 +511,8 @@ function renderDashboard(){
             <thead><tr>
               <th>Client</th>
               <th class="num">Fulfillment</th>
+              <th class="num">Ranking Score</th>
+              <th class="num">Alerts</th>
               <th class="num">Tech Score</th>
               <th class="num">Verified SEO</th>
               <th class="num">Pages</th>
@@ -485,10 +524,13 @@ function renderDashboard(){
             </tr></thead>
             <tbody>${sorted.map(c=>{
               const m=techMetrics(c);
+              const r=rankingSummary(c);
               const healthClass=scoreClass(m.score);
               return`<tr onclick="navigate('detail','${c.id}')">
                 <td><div class="client-name">${h(c.name)}</div><div class="client-location">${h(clientSubtitle(c))}</div></td>
                 <td class="num">${renderClientFulfillmentIndicator(c.id, true)}</td>
+                <td class="num">${r.score ? `<span class="health-badge ${scoreClass(r.score)}">${r.score}</span> ${scoreDelta(r.change)}` : '-'}</td>
+                <td class="num">${r.alerts.length ? `<span class="issue-count">${r.alerts.length}</span>` : '0'}</td>
                 <td class="num">${m.score || m.score === 0 ? `<span class="health-badge ${healthClass}">${fmtScore(m.score)}</span>`:'-'}</td>
                 <td class="num">${fmtScore(m.verified)}</td>
                 <td class="num">${m.pages || '-'}</td>
@@ -961,6 +1003,19 @@ function renderDocumentation() {
         </ul>
       </section>
 
+      <section class="doc-panel doc-panel-wide">
+        <div class="doc-panel-header">
+          <span class="doc-kicker">Ranking Model</span>
+          <h2>Scores and Alerts</h2>
+        </div>
+        <ul class="doc-list">
+          <li><strong>Two Ranking Sets</strong><span>Organic SERP rankings and local/map rankings are pulled from DataForSEO and stored separately inside the weekly ranking snapshot.</span></li>
+          <li><strong>Unified Score</strong><span>The dashboard score combines organic ranking strength at 60% and local ranking strength at 40% when both datasets are available.</span></li>
+          <li><strong>Rank Weighting</strong><span>Top 3 positions carry the strongest score, positions 4-10 carry medium weight, 11-20 carry light weight, and unranked keywords count as zero.</span></li>
+          <li><strong>Drop Alerts</strong><span>Warnings trigger when a tracked keyword drops 3+ positions. Critical alerts trigger when a keyword falls out of top 3, falls off page 1, disappears, or the unified score drops 10%+ week over week.</span></li>
+        </ul>
+      </section>
+
       <section class="doc-panel">
         <div class="doc-panel-header">
           <span class="doc-kicker">Connections</span>
@@ -1013,8 +1068,10 @@ function renderRankings(){
         <table class="data-table">
           <thead><tr>
             <th style="width:50px">Pos</th>
+            <th>Type</th>
             <th>Keyword</th>
             <th>Client</th>
+            <th class="num">Change</th>
             <th class="num">Volume</th>
             <th class="num">Traffic</th>
             <th class="num">Value</th>
@@ -1022,8 +1079,10 @@ function renderRankings(){
           </tr></thead>
           <tbody>${sorted.map(k=>{const m=kwMetrics(k);return`<tr onclick="navigate('detail','${k.clientId}')">
             <td><span class="rank-badge ${tier(m.pos)}">${tierLabel(m.pos)}</span></td>
+            <td><span class="rank-type">${h(k.rankingType || 'organic')}</span></td>
             <td style="font-weight:500;color:var(--text)">${h(k.keyword)}</td>
             <td>${h(k.client)}</td>
+            <td class="num">${posChange(k.rankings?.position, k.rankings?.previousPosition)}</td>
             <td class="num">${m.vol?fmt(m.vol):'—'}</td>
             <td class="num">${m.traffic?fmt(m.traffic)+'/mo':'—'}</td>
             <td class="num" style="color:var(--green);font-weight:600">${m.value?fmtMoney(m.value)+'/mo':'—'}</td>
@@ -1049,6 +1108,7 @@ function renderDetail(){
   const audit=c.audit||{};
   const raw=c.weeklyHealth?.raw_audit_json||{};
   const fulfillment = clientFulfillmentProgress(c.id);
+  const ranking = rankingSummary(c);
 
   // Categorize keywords
   const wins=kws.filter(k=>(k.rankings?.position||0)>=1&&(k.rankings?.position||0)<=3).sort((a,b)=>(a.rankings.position)-(b.rankings.position));
@@ -1056,6 +1116,8 @@ function renderDetail(){
   const opportunities=kws.filter(k=>(k.rankings?.position||0)>=11&&(k.rankings?.position||0)<=20).sort((a,b)=>kwMetrics(b).opp-kwMetrics(a).opp);
   const deepRanked=kws.filter(k=>(k.rankings?.position||0)>20).sort((a,b)=>kwMetrics(b).vol-kwMetrics(a).vol);
   const notRanking=kws.filter(k=>!k.rankings?.position||k.rankings.position===0);
+  const organicKws=kws.filter(k=>(k.rankingType || 'organic')==='organic');
+  const localKws=kws.filter(k=>(k.rankingType || 'organic')==='local');
 
   return`
     <div class="detail-header">
@@ -1088,6 +1150,11 @@ function renderDetail(){
         <div class="stat-helper">${fulfillment.available ? `${fulfillment.done}/${fulfillment.total} tasks complete` : (S.weeklyLoading ? 'Loading current checklist' : 'No checklist data')}</div>
         ${renderProgressMeter(fulfillment)}
       </div>
+      <div class="stat-card highlight">
+        <div class="stat-label">Ranking Score</div>
+        <div class="stat-value">${ranking.score || '-'}</div>
+        <div class="stat-helper">${ranking.score ? `${scoreDelta(ranking.change)} week over week · ${ranking.alerts.length} alerts` : 'No ranking snapshot yet'}</div>
+      </div>
       <div class="stat-card">
         <div class="stat-label">Critical Items</div>
         <div class="stat-value">${tech.critical}</div>
@@ -1098,11 +1165,31 @@ function renderDetail(){
         <div class="stat-value">${tech.pages || '-'}</div>
         <div class="stat-helper">${tech.clean || 0} clean · ${Math.max(0, (tech.pages || 0) - (tech.clean || 0))} need review</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Metadata Hygiene</div>
-        <div class="stat-value">${pctScore(tech.metadata)}</div>
-        <div class="stat-helper">Page titles, descriptions, headings</div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Ranking Alerts</h2>
+        <div style="font-size:13px;color:var(--text-muted)">${ranking.critical} critical · ${ranking.warning} warning</div>
       </div>
+      ${ranking.alerts.length ? `<div class="issue-list">${ranking.alerts.slice(0, 8).map((alert, index) => `
+        <div class="issue-card ${alert.severity === 'critical' ? 'critical' : 'warning'}">
+          <div class="issue-rank">${index + 1}</div>
+          <div class="issue-body">
+            <div class="issue-topline"><span class="issue-title">${h(alert.message)}</span><span class="issue-severity">${h(alert.severity)}</span></div>
+            <div class="issue-meta">${h(alert.ranking_type || 'score')} · previous ${alert.previous_rank || alert.previous_score || '-'} · current ${alert.current_rank || alert.current_score || '-'}</div>
+          </div>
+        </div>`).join('')}</div>` : `<div class="empty-state"><h3>No ranking drops flagged</h3><p>Ranking alerts will appear here after at least two weekly Local + Search updates.</p></div>`}
+    </div>
+
+    <div class="section">
+      <div class="section-header"><h2 class="section-title">Organic SERP Rankings</h2><div style="font-size:13px;color:var(--text-muted)">${organicKws.length} keywords</div></div>
+      <div class="table-card">${renderKwTable(c, organicKws, false)}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-header"><h2 class="section-title">Local Rankings</h2><div style="font-size:13px;color:var(--text-muted)">${localKws.length} keywords</div></div>
+      <div class="table-card">${renderKwTable(c, localKws, false)}</div>
     </div>
 
     <div class="section">
@@ -1211,9 +1298,12 @@ function renderDetail(){
 }
 
 function renderKwTable(c, kws, showOpp) {
+  if (!kws.length) return '<div class="empty-state"><h3>No rankings in this set yet</h3><p>Run Local + Search after DataForSEO is connected.</p></div>';
   return`<div class="table-scroll"><table class="data-table"><thead><tr>
     <th style="width:55px">Pos</th>
+    <th>Type</th>
     <th>Keyword</th>
+    <th class="num">Change</th>
     <th class="num">Volume</th>
     <th class="num">Traffic</th>
     <th class="num">Value</th>
@@ -1224,14 +1314,16 @@ function renderKwTable(c, kws, showOpp) {
     const expanded=S.expandedKw===k.id;
     const serp=k.rankings?.serp||[];
     return`<tr onclick="toggleSerp('${k.id}')" class="${expanded?'expanded':''}">
-      <td><span class="rank-badge ${tier(km.pos)}">${tierLabel(km.pos)}</span> ${posChange(k.rankings?.position, k.rankings?.previousPosition)}</td>
+      <td><span class="rank-badge ${tier(km.pos)}">${tierLabel(km.pos)}</span></td>
+      <td><span class="rank-type">${h(k.rankingType || 'organic')}</span></td>
       <td style="font-weight:500;color:var(--text)">${h(k.keyword)}</td>
+      <td class="num">${posChange(k.rankings?.position, k.rankings?.previousPosition)}</td>
       <td class="num">${km.vol?fmt(km.vol)+'/mo':'—'}</td>
       <td class="num">${km.traffic?fmt(km.traffic)+'/mo':'—'}</td>
       <td class="num" style="color:var(--green);font-weight:600">${km.value?fmtMoney(km.value)+'/mo':'—'}</td>
       ${showOpp?`<td class="num"><span class="opp-badge">${km.opp}</span></td>`:''}
       <td><button class="btn btn-ghost" onclick="event.stopPropagation();deleteKeyword('${c.id}','${k.id}')" style="padding:2px 6px;color:var(--text-dim);font-size:14px">×</button></td>
-    </tr>${expanded&&serp.length>0?`<tr class="serp-row"><td colspan="${showOpp?7:6}">
+    </tr>${expanded&&serp.length>0?`<tr class="serp-row"><td colspan="${showOpp?9:8}">
       <div class="serp-content"><div class="serp-title">SERP Results — "${h(k.keyword)}"</div>
       <div class="serp-list">${serp.map(s=>`<div class="serp-item${s.domain&&c.domain&&s.domain.replace('www.','').includes(c.domain.replace('www.',''))?' is-client':''}">
         <div class="serp-rank">${s.rank}</div><div><div class="serp-domain">${h(s.domain)}</div><div class="serp-item-title">${h(s.title)}</div><div class="serp-desc">${h((s.description||'').substring(0,120))}</div></div>
