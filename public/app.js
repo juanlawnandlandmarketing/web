@@ -588,6 +588,29 @@ function latestWeeklyRun() {
   return (S.weekly?.runs || [])[0] || null;
 }
 
+function latestSuccessfulWeeklyRun() {
+  return (S.weekly?.runs || []).find((run) => run.status === 'complete') || null;
+}
+
+function renderWeeklyRunStatus(run) {
+  if (!run) {
+    return 'No weekly update has been run for this week yet.';
+  }
+
+  const total = run.clients_total || 0;
+  const completed = run.clients_completed || 0;
+  const status = run.status === 'complete' ? 'complete' : run.status === 'running' ? 'running' : 'failed';
+  const when = timeAgo(run.finished_at || run.started_at);
+  const base = `Last run ${status} · ${completed}/${total} clients · ${when}`;
+  const lastSuccessful = status === 'failed' ? latestSuccessfulWeeklyRun() : null;
+  const successNote = lastSuccessful
+    ? ` Last successful: ${lastSuccessful.clients_completed || 0}/${lastSuccessful.clients_total || 0} clients · ${timeAgo(lastSuccessful.finished_at || lastSuccessful.started_at)}.`
+    : '';
+  const errorNote = run.error_message ? ` ${run.error_message}` : '';
+
+  return `${base}.${successNote}${errorNote}`;
+}
+
 function pct(n, total) {
   if (!total) return 0;
   return Math.round((n / total) * 100);
@@ -836,7 +859,7 @@ function renderWeekly() {
 
     ${isWeekly ? `<div class="run-status ${run?.status || 'idle'}">
       <span class="status-dot"></span>
-      <span>${run ? `Last run ${run.status} · ${run.clients_completed || 0}/${run.clients_total || 0} clients · ${timeAgo(run.finished_at || run.started_at)}` : 'No weekly update has been run for this week yet.'}</span>
+      <span>${h(renderWeeklyRunStatus(run))}</span>
     </div>` : ''}
 
     <div class="stats-row">

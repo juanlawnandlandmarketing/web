@@ -1,5 +1,6 @@
 const { corsHeaders } = require('../../lib/data');
 const { select, upsert } = require('../../lib/supabase');
+const { closeStaleWeeklyRuns } = require('../../lib/weekly-runs');
 
 function intParam(value, fallback) {
   const parsed = Number.parseInt(value, 10);
@@ -35,6 +36,8 @@ function hasOwn(obj, key) {
 }
 
 async function loadWeekly(year, weekNumber) {
+  await closeStaleWeeklyRuns({ year, weekNumber });
+
   const clients = await select('clients', {
     select: 'id,client_name,domain,website_url,status,dataforseo_location_code,dataforseo_language_code',
     status: 'eq.active',
