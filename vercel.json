@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/sops/[id].js": {
+      "includeFiles": "deliverables/**/README.md"
+    }
+  },
   "headers": [
     {
       "source": "/api/(.*)",
