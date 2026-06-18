@@ -258,6 +258,73 @@ const FULFILLMENT_CATEGORIES = {
   },
 };
 
+const SEO_SYSTEM_CATEGORIES = [
+  { key: 'on-page', label: 'On-Page SEO', count: 9, purpose: 'Build and improve the pages, content, keyword targeting, internal links, metadata, and competitive positioning that make each client rank.' },
+  { key: 'off-page', label: 'Off-Page SEO', count: 10, purpose: 'Build trust signals outside the website through citations, press releases, directories, local links, and authority outreach.' },
+  { key: 'technical', label: 'Technical SEO', count: 9, purpose: 'Keep the site crawlable, indexable, structured, fast, mobile-friendly, and clean enough for SEO work to compound.' },
+  { key: 'gbp', label: 'GBP SEO', count: 8, purpose: 'Strengthen local visibility through Google Business Profile completeness, posts, reviews, photos, Q&A, and profile hygiene.' },
+  { key: 'reporting', label: 'Reporting', count: 2, purpose: 'Turn SEO activity and performance data into internal prioritization and client-facing clarity.' },
+];
+
+const SEO_SYSTEM_ITEMS = [
+  { id: 1, category: 'on-page', title: 'Keyword Research', score: 7, cadence: 'Onboarding + quarterly refresh', fulfillment: 'One-Time Fulfillment / Monthly review', source: 'deliverables/on-page/01-keyword-research/README.md', summary: 'Build a prioritized keyword map for each service and city using search volume, competition, intent, and current ranking opportunity.', human: 'Approve priority services, local terminology, and final keyword targets.', ai: 'Pull DataForSEO or SE Ranking data, score opportunities, cluster keywords, and refresh the map quarterly.' },
+  { id: 2, category: 'on-page', title: 'Service Pages', score: 6, cadence: 'Onboarding + as-needed updates', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/02-service-pages/README.md', summary: 'Document standards for core service pages: title tag, H1, meta description, body copy, FAQs, schema, and internal links.', human: 'Provide client-specific details and approve final copy before publishing.', ai: 'Draft page briefs, content, metadata, FAQ blocks, and internal-link suggestions from the keyword map.' },
+  { id: 3, category: 'on-page', title: 'Service Area Pages', score: 7, cadence: 'Onboarding + expansion campaigns', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/03-service-area-pages/README.md', summary: 'Create city and region pages that connect priority services to local search demand without thin or duplicated content.', human: 'Approve target areas and local proof points.', ai: 'Use GSC and keyword data to prioritize cities, generate briefs, draft content, and suggest supporting links.' },
+  { id: 4, category: 'on-page', title: 'Blog Content', score: 9, cadence: 'Weekly or monthly by package', fulfillment: 'Blog Content Creation (1/Week) Published + Audited', source: 'deliverables/on-page/04-blog-content/README.md; BLOG-CREATION-PROCESS.md', summary: 'Use ranking gaps, seasonal demand, and service priorities to publish locally relevant supporting content.', human: 'Review final draft, verify client accuracy, and approve publishing.', ai: 'Select topics, build briefs, draft content, inject internal links, generate alt text, and prepare publish-ready posts.' },
+  { id: 5, category: 'on-page', title: 'Internal Linking', score: 8, cadence: 'Every publish + quarterly audit', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/05-internal-linking/README.md', summary: 'Connect new and existing pages so service, city, and blog content reinforce each other.', human: 'Approve contextual links when page-builder edits are needed.', ai: 'Crawl sitemap, detect orphan pages, match related content, and generate link-placement recommendations.' },
+  { id: 6, category: 'on-page', title: 'Alt Text on Images', score: 9, cadence: 'Every upload + retroactive audit', fulfillment: 'SEO Images Optimization', source: 'deliverables/on-page/06-alt-text/README.md', summary: 'Ensure new and existing images have useful, contextual alt text that supports accessibility and SEO.', human: 'Review edge cases where visual context or brand details matter.', ai: 'Discover images, analyze visuals, generate alt text, and flag missing or weak image metadata.' },
+  { id: 7, category: 'on-page', title: 'Title Tags & Meta Descriptions', score: 7, cadence: 'Onboarding + monthly improvements', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/07-title-tags-meta/README.md; OPTIMIZATION-PROTOCOL.md', summary: 'Audit and rewrite metadata so key pages have clear keyword targeting and click-worthy search snippets.', human: 'Approve major messaging changes.', ai: 'Find weak or missing metadata, draft replacements, and prepare bulk update recommendations.' },
+  { id: 8, category: 'on-page', title: 'H1 Optimization', score: 5, cadence: 'One-time audit + launch QA', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/08-h1-optimization/README.md', summary: 'Confirm each page has a clean H1 hierarchy that matches the page target and avoids page-builder heading clutter.', human: 'Fix builder-specific heading elements in WordPress when automation cannot safely edit.', ai: 'Crawl rendered pages, detect missing/multiple H1s, and produce a fix list by URL.' },
+  { id: 9, category: 'on-page', title: 'Competitor Analysis', score: 8, cadence: 'Onboarding + quarterly', fulfillment: 'SEO Ranking performance (local + search)', source: 'deliverables/on-page/09-competitor-analysis/README.md; seo/automation/STEP_3_COMPETITOR_ANALYSIS.md', summary: 'Identify local competitors and compare keyword, content, and ranking gaps against each client.', human: 'Confirm real local competitors and decide which gaps are worth pursuing.', ai: 'Find competitors, compare rankings and content coverage, and feed gaps into blog and page priorities.' },
+  { id: 10, category: 'off-page', title: 'Citation Building - Onboarding', score: 4, cadence: 'One-time setup', fulfillment: 'Citation Building', source: 'deliverables/off-page/10-citation-building-onboarding/README.md', summary: 'Submit consistent business data to core directories and correct major NAP issues at launch.', human: 'Verify business details and handle platform-specific manual submissions.', ai: 'Prepare NAP data, directory checklist, submission packets, and completion tracking.' },
+  { id: 11, category: 'off-page', title: 'Citation Monitoring - Ongoing', score: 6, cadence: 'Quarterly', fulfillment: 'Clear NAP Listings / Monthly authority work', source: 'deliverables/off-page/11-citation-monitoring/README.md', summary: 'Monitor directories for NAP inconsistencies, duplicate listings, suppressed profiles, or missing listings.', human: 'Resolve platforms that require manual login or client verification.', ai: 'Run consistency scans, flag issues, prioritize fixes, and log recurring NAP problems.' },
+  { id: 12, category: 'off-page', title: 'Press Releases', score: 7, cadence: 'Two per month', fulfillment: 'Press Releases (2/Month)', source: 'deliverables/off-page/12-press-releases/README.md; Press_Release_Creation_Process.md; PR-OPTIMIZATION-PROCESS.md', summary: 'Create, optimize, upload, and track monthly press releases that support homepage and blog authority.', human: 'Approve sensitive angles and confirm final delivery when required.', ai: 'Generate PR drafts, optimize anchor strategy, prepare Google Docs, and track published assets.' },
+  { id: 13, category: 'off-page', title: 'Backlink - Business Directories', score: 4, cadence: 'Quarterly campaign', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/13-backlink-business-directories/README.md', summary: 'Find and pursue relevant green-industry, local, and business directory backlink opportunities.', human: 'Submit when approvals, payments, or manual accounts are needed.', ai: 'Research opportunities, score relevance, prepare submissions, and verify live links.' },
+  { id: 14, category: 'off-page', title: 'Backlink - Social Profiles', score: 5, cadence: 'One-time + audit', fulfillment: 'Backlink Acquisition / Clients Reviews Integration', source: 'deliverables/off-page/14-backlink-social-profiles/README.md', summary: 'Ensure major social profiles exist, link correctly to the website, and reinforce brand/entity consistency.', human: 'Create or access profiles when credentials are required.', ai: 'Audit profile presence, link correctness, and missing profile opportunities.' },
+  { id: 15, category: 'off-page', title: 'Backlink - Vendor Testimonials', score: 3, cadence: 'Quarterly outreach', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/15-backlink-vendor-testimonials/README.md', summary: 'Use vendor relationships to earn testimonial or partner links from suppliers and local partners.', human: 'Approve outreach targets and relationship-sensitive messaging.', ai: 'Draft testimonials, outreach emails, follow-up reminders, and link verification checks.' },
+  { id: 16, category: 'off-page', title: 'Backlink - Chamber of Commerce', score: 2, cadence: 'One-time opportunity review', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/16-backlink-chamber-of-commerce/README.md', summary: 'Document local chamber opportunities and membership links that may create strong local authority signals.', human: 'Decide if membership cost and client fit make sense.', ai: 'Find chamber options, pricing pages, requirements, and link examples.' },
+  { id: 17, category: 'off-page', title: 'Backlink - Local Sponsorships', score: 2, cadence: 'Seasonal / quarterly', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/17-backlink-local-sponsorships/README.md', summary: 'Identify community sponsorships that include local sponsor pages with business mentions or links.', human: 'Choose sponsorships and coordinate payment/client approval.', ai: 'Find events, draft outreach, track opportunities, and verify resulting links.' },
+  { id: 18, category: 'off-page', title: 'Backlink - Local Press Pitches', score: 4, cadence: 'Seasonal / as-needed', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/18-backlink-local-press/README.md', summary: 'Pitch local seasonal landscape stories that can produce mentions, citations, or backlinks.', human: 'Approve angles and manage reporter relationships.', ai: 'Generate seasonal angles, identify local media, draft pitches, and maintain placement logs.' },
+  { id: 19, category: 'off-page', title: 'Backlink - HARO / Connectively', score: 6, cadence: 'Weekly monitoring', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/19-backlink-haro/README.md', summary: 'Monitor journalist requests and respond when green-industry expertise fits the query.', human: 'Approve and submit final expert responses.', ai: 'Filter opportunities, score fit, draft responses, and track placement outcomes.' },
+  { id: 20, category: 'technical', title: 'Rank Math Setup', score: 2, cadence: 'One-time setup + audit', fulfillment: 'Schema Implementation / Onsite Core Content Optimization', source: 'deliverables/technical/20-rank-math-setup/README.md', summary: 'Standardize Rank Math configuration across client sites so baseline SEO settings are consistent.', human: 'Apply settings inside WordPress and confirm site-specific requirements.', ai: 'Audit current settings against the standard and produce a per-site fix list.' },
+  { id: 21, category: 'technical', title: 'Schema Markup', score: 6, cadence: 'Setup + page updates', fulfillment: 'Schema Implementation', source: 'deliverables/technical/21-schema-markup/README.md', summary: 'Use LocalBusiness, Service, FAQPage, and BreadcrumbList schema where appropriate.', human: 'Implement schema in Rank Math or page builders when manual setup is required.', ai: 'Detect schema gaps, generate schema recommendations, and verify output with testing tools.' },
+  { id: 22, category: 'technical', title: 'Google Search Console', score: 8, cadence: 'Monthly review', fulfillment: 'GSC Indexing Audit', source: 'deliverables/technical/22-google-search-console/README.md', summary: 'Use GSC for real query, click, impression, indexing, and coverage data.', human: 'Resolve important issues and approve priorities driven by GSC data.', ai: 'Pull monthly data, identify positions 4-20, flag indexing issues, and feed opportunities into content planning.' },
+  { id: 23, category: 'technical', title: 'XML Sitemap', score: 7, cadence: 'Setup + monthly monitoring', fulfillment: 'Sitemap', source: 'deliverables/technical/23-xml-sitemap/README.md', summary: 'Confirm sitemaps are generated, submitted, current, and free of major errors.', human: 'Fix CMS or plugin-level sitemap problems.', ai: 'Check sitemap URLs, compare sitemap pages to GSC indexing data, and flag missing or stale pages.' },
+  { id: 24, category: 'technical', title: 'robots.txt', score: 1, cadence: 'Setup + launch QA', fulfillment: 'Robots.txt File Management', source: 'deliverables/technical/24-robots-txt/README.md', summary: 'Ensure robots.txt does not block critical pages or create crawl issues.', human: 'Approve changes that affect crawling rules.', ai: 'Fetch robots.txt, detect risky disallow rules, and alert when important paths are blocked.' },
+  { id: 25, category: 'technical', title: '301 Redirects', score: 6, cadence: 'Launch + monthly audit', fulfillment: 'Technical SEO Audit', source: 'deliverables/technical/25-301-redirects/README.md', summary: 'Manage redirects for changed URLs, 404 fixes, site launches, and redirect-chain cleanup.', human: 'Implement redirects in Rank Math, hosting, or .htaccess when needed.', ai: 'Find 404s, detect chains, map old-to-new URLs, and prioritize redirect fixes.' },
+  { id: 26, category: 'technical', title: 'Page Speed / Core Web Vitals', score: 8, cadence: 'Monthly', fulfillment: 'Page Speed & Performance', source: 'deliverables/technical/26-page-speed-core-web-vitals/README.md', summary: 'Monitor PageSpeed and Core Web Vitals so slow mobile pages do not drag down SEO performance.', human: 'Handle theme, plugin, image, caching, and code-level fixes.', ai: 'Run PageSpeed checks, track trends, flag low scores, and suggest likely fixes.' },
+  { id: 27, category: 'technical', title: 'Mobile Optimization', score: 7, cadence: 'Monthly / launch QA', fulfillment: 'Technical SEO Audit', source: 'deliverables/technical/27-mobile-optimization/README.md', summary: 'Confirm key pages render cleanly on mobile and avoid usability issues that hurt search and conversions.', human: 'Fix layout/CSS/page-builder issues.', ai: 'Use GSC/mobile checks and screenshots to flag usability issues by page.' },
+  { id: 28, category: 'technical', title: 'Duplicate Content / Canonicals', score: 6, cadence: 'Quarterly', fulfillment: 'Technical SEO Audit', source: 'deliverables/technical/28-duplicate-content-canonicals/README.md', summary: 'Find duplicate pages, weak canonical setups, and keyword cannibalization risks.', human: 'Decide whether to consolidate, rewrite, noindex, or canonicalize.', ai: 'Detect duplicates, compare title/content overlap, and draft canonical/consolidation recommendations.' },
+  { id: 29, category: 'gbp', title: 'Profile Build & Completion', score: 2, cadence: 'One-time setup + quarterly audit', fulfillment: 'Pre-Launch Website GBP Optimization / Post-Launch Website GBP Optimization', source: 'deliverables/gbp/29-gbp-profile-build/README.md', summary: 'Complete every major GBP field, service, area, description, hours, phone, website, photos, and verification requirement.', human: 'Access GBP, confirm business facts, and handle verification or sensitive edits.', ai: 'Audit completeness, draft descriptions, service copy, and photo/file naming recommendations.' },
+  { id: 30, category: 'gbp', title: 'GBP Categories', score: 3, cadence: 'Onboarding + quarterly audit', fulfillment: 'Pre-Launch Website GBP Optimization / Post-Launch Website GBP Optimization', source: 'deliverables/gbp/30-gbp-categories/README.md', summary: 'Choose primary and secondary categories that match the client services and local competitors.', human: 'Approve category choices to avoid misclassification.', ai: 'Compare competitors, recommend category changes, and document rationale.' },
+  { id: 31, category: 'gbp', title: 'Weekly GBP Posts', score: 8, cadence: 'Weekly / annual scheduling', fulfillment: 'GBP Audit and Image Post', source: 'deliverables/gbp/31-gbp-weekly-posts/README.md', summary: 'Publish seasonal, promotional, and educational GBP posts to keep profiles active.', human: 'Approve unusual offers or client-specific promotions.', ai: 'Generate post copy, images, seasonal calendars, and scheduling queues.' },
+  { id: 32, category: 'gbp', title: 'Automated Review Replies', score: 9, cadence: 'Ongoing', fulfillment: 'Review Generation tracker / Clients Reviews Integration', source: 'deliverables/gbp/32-gbp-review-replies/README.md', summary: 'Reply to new reviews quickly while routing sensitive negative reviews to a human before posting.', human: 'Review and approve negative or sensitive replies.', ai: 'Draft personalized replies, auto-post safe positive replies, and flag negative reviews.' },
+  { id: 33, category: 'gbp', title: 'GBP Photo Management', score: 2, cadence: 'Monthly', fulfillment: 'GBP Audit and Image Post', source: 'deliverables/gbp/33-gbp-photo-management/README.md', summary: 'Collect, rename, optimize, and upload GBP photos that support local visibility and trust.', human: 'Collect real client photos and approve image quality.', ai: 'Rename files, organize batches, draft captions, and monitor photo freshness.' },
+  { id: 34, category: 'gbp', title: 'Q&A Management', score: 6, cadence: 'Monthly', fulfillment: 'GBP Audit and Image Post', source: 'deliverables/gbp/34-gbp-qa-management/README.md', summary: 'Seed helpful GBP questions and monitor public Q&A for new or risky questions.', human: 'Approve public answers and handle inappropriate questions.', ai: 'Generate Q&A content, detect new questions, draft answers, and flag removal candidates.' },
+  { id: 35, category: 'gbp', title: 'GBP Link on Website', score: 2, cadence: 'One-time setup + launch QA', fulfillment: 'Clients Reviews Integration / Post-Launch Website GBP Optimization', source: 'deliverables/gbp/35-gbp-link-on-website/README.md', summary: 'Make sure each client website links clearly to the correct Google Business Profile or review URL.', human: 'Edit WordPress/footer/contact areas and confirm the correct GBP URL.', ai: 'Crawl homepage/contact pages for GBP links and flag missing or incorrect links.' },
+  { id: 36, category: 'gbp', title: 'GBP Attributes', score: 3, cadence: 'Quarterly', fulfillment: 'GBP Audit and Image Post', source: 'deliverables/gbp/36-gbp-attributes/README.md', summary: 'Review available GBP attributes and keep profile details aligned with services and business changes.', human: 'Apply attributes in the GBP dashboard.', ai: 'Maintain audit reminders and document attribute changes by client.' },
+  { id: 37, category: 'reporting', title: 'Internal Monthly Scorecard', score: 9, cadence: 'Monthly', fulfillment: 'Monthly Report Tracking & Reporting', source: 'deliverables/reporting/37-internal-monthly-scorecard/README.md', summary: 'Create an internal view of which clients are improving, stalling, or need immediate SEO attention.', human: 'Review priorities and decide what gets escalated.', ai: 'Pull rankings, GSC, GBP, backlinks, output counts, and technical data into a clear scorecard.' },
+  { id: 38, category: 'reporting', title: 'Client Monthly Report', score: 7, cadence: 'Monthly', fulfillment: 'Monthly Report Tracking & Reporting; seo/SEO_REPORT_PROTOCOL.md', source: 'deliverables/reporting/38-client-monthly-report/README.md', summary: 'Give clients a plain-English monthly report covering work completed, rankings, traffic signals, and next focus.', human: 'Personalize, approve, and send client-facing reports.', ai: 'Compile data, draft narrative, format summaries, and prepare client-ready report language.' },
+];
+
+const SEO_SYSTEM_MASTER_SOPS = [
+  { title: 'Blog Creation Process', source: 'BLOG-CREATION-PROCESS.md', use: 'Source-of-truth workflow for creating, optimizing, publishing, and verifying blog posts.' },
+  { title: 'Publishing Tracker Optimization Protocol', source: 'OPTIMIZATION-PROTOCOL.md', use: 'Required process for any article coming from the L&L Content Engine publishing tracker.' },
+  { title: 'Press Release Creation Process', source: 'Press_Release_Creation_Process.md', use: 'Source-of-truth workflow for press release creation, optimization, upload, tracking, and delivery.' },
+  { title: 'Press Release Optimization Process', source: 'PR-OPTIMIZATION-PROCESS.md', use: 'Supporting protocol for PR optimization and delivery quality checks.' },
+  { title: 'SEO Report Protocol', source: 'seo/SEO_REPORT_PROTOCOL.md', use: 'Required process for client-facing SEO performance reports and report revisions.' },
+  { title: 'Local SEO Report Process', source: 'seo/LOCAL_SEO_REPORT_PROCESS.md', use: 'Local ranking, heatmap, and performance reporting workflow.' },
+  { title: 'SEO Onboarding Master', source: 'seo/ONBOARDING_MASTER.md', use: 'Client onboarding foundation for SEO strategy, data collection, and setup.' },
+  { title: 'SEO Automation Pipeline', source: 'seo/automation/STEP_1...STEP_7', use: 'Client classification, info collection, competitor research, keyword clustering, site architecture, briefs, and monthly measurement.' },
+  { title: 'Signal Genesis Media Room Setup', source: 'seo/sops/SIGNAL_GENESYS_MEDIA_ROOM_SETUP.md', use: 'Media room setup SOP for PR and authority infrastructure.' },
+];
+
+const SEO_SYSTEM_FULFILLMENT_MAP = [
+  { label: 'One-Time Fulfillment', source: 'Dashboard sidebar', focus: 'Foundation and launch setup', tasks: ['Onsite core content', 'image optimization', 'reviews integration', 'NAP cleanup', 'schema', 'sitemap', 'GBP launch work', 'citations', 'robots.txt', 'media room', 'llms.txt'] },
+  { label: 'Weekly Fulfillment', source: 'Dashboard sidebar', focus: 'Recurring production and monitoring', tasks: ['Blog publishing', 'GBP post/image work', 'technical audit', 'local + organic rankings', 'review generation tracking'] },
+  { label: 'Monthly Fulfillment', source: 'Dashboard sidebar', focus: 'Authority, reporting, indexing, and health', tasks: ['Two press releases', 'backlink acquisition', 'page speed', 'security', 'monthly report tracking', 'GSC indexing audit'] },
+];
+
 function techMetrics(c) {
   const health = c.weeklyHealth || {};
   const audit = c.audit?.onpage || {};
@@ -444,6 +511,7 @@ function navigate(view,clientId){
   if(view==='dashboard')bc.innerHTML='<span class="bc-item">Dashboard</span>';
   else if(view==='weekly')bc.innerHTML=`<span class="bc-item">${h((FULFILLMENT_CATEGORIES[S.fulfillmentCategory] || FULFILLMENT_CATEGORIES.weekly).label)}</span>`;
   else if(view==='rankings')bc.innerHTML='<span class="bc-item">Rankings</span>';
+  else if(view==='aiSeoSystem')bc.innerHTML='<span class="bc-item">AI-Driven SEO Fulfillment System</span>';
   else if(view==='connections')bc.innerHTML='<span class="bc-item">Connections</span>';
   else if(view==='documentation')bc.innerHTML='<span class="bc-item">Documentation</span>';
   else if(view==='detail'){const c=S.clients.find(x=>x.id===clientId);bc.innerHTML=`<a class="bc-item" href="#" onclick="navigate('dashboard');return false">Dashboard</a><span class="bc-sep">›</span><span class="bc-item">${c?h(c.name):''}</span>`;}
@@ -459,6 +527,7 @@ function render(){
     case'dashboard':el.innerHTML=renderDashboard();break;
     case'weekly':el.innerHTML=renderWeekly();break;
     case'rankings':el.innerHTML=renderRankings();break;
+    case'aiSeoSystem':el.innerHTML=renderAiSeoSystem();break;
     case'connections':el.innerHTML=renderConnections();break;
     case'documentation':el.innerHTML=renderDocumentation();break;
     case'detail':el.innerHTML=renderDetail();break;
@@ -958,6 +1027,180 @@ function setFulfillmentCategory(category) {
   if (!FULFILLMENT_CATEGORIES[category]) return;
   S.fulfillmentCategory = category;
   render();
+}
+
+/* ── AI-Driven SEO Fulfillment System ─────────────────────── */
+function seoCategoryMeta(key) {
+  return SEO_SYSTEM_CATEGORIES.find((category) => category.key === key) || SEO_SYSTEM_CATEGORIES[0];
+}
+
+function readinessLabel(score) {
+  if (score >= 9) return 'Near-full automation';
+  if (score >= 7) return 'Highly automatable';
+  if (score >= 5) return 'Partial automation';
+  if (score >= 3) return 'Mostly human';
+  return 'Manual heavy';
+}
+
+function readinessClass(score) {
+  if (score >= 9) return 'excellent';
+  if (score >= 7) return 'good';
+  if (score >= 5) return 'partial';
+  if (score >= 3) return 'low';
+  return 'manual';
+}
+
+function renderSeoSystemCard(item) {
+  const category = seoCategoryMeta(item.category);
+  return `<article class="seo-process-card">
+    <div class="seo-process-topline">
+      <span class="process-number">${String(item.id).padStart(2, '0')}</span>
+      <span class="process-category">${h(category.label)}</span>
+      <span class="readiness-badge ${readinessClass(item.score)}">${item.score}/10 · ${h(readinessLabel(item.score))}</span>
+    </div>
+    <h3>${h(item.title)}</h3>
+    <p class="process-summary">${h(item.summary)}</p>
+    <div class="process-detail-grid">
+      <div><strong>Human role</strong><span>${h(item.human)}</span></div>
+      <div><strong>Koga/Kai role</strong><span>${h(item.ai)}</span></div>
+    </div>
+    <div class="process-meta-row">
+      <span>${h(item.cadence)}</span>
+      <span>${h(item.fulfillment)}</span>
+      <span>${h(item.source)}</span>
+    </div>
+  </article>`;
+}
+
+function renderAiSeoSystem() {
+  const filteredItems = SEO_SYSTEM_ITEMS.filter((item) => {
+    if (!S.search) return true;
+    const haystack = `${item.title} ${item.summary} ${item.fulfillment} ${item.source} ${seoCategoryMeta(item.category).label}`.toLowerCase();
+    return haystack.includes(S.search.toLowerCase());
+  });
+  const averageScore = Math.round(SEO_SYSTEM_ITEMS.reduce((sum, item) => sum + item.score, 0) / SEO_SYSTEM_ITEMS.length);
+  const highAutomation = SEO_SYSTEM_ITEMS.filter((item) => item.score >= 7).length;
+  const masterSopCount = SEO_SYSTEM_MASTER_SOPS.length;
+
+  return `
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">AI-Driven SEO Fulfillment System</h1>
+        <p class="page-subtitle">Documentation-only operating map for how SEO fulfillment should be done by the team, Koga, and Kai.</p>
+      </div>
+    </div>
+
+    <div class="seo-system-hero">
+      <div>
+        <span class="doc-kicker">Build & Implement</span>
+        <h2>One place for the SEO playbook, fulfillment map, and process library.</h2>
+        <p>This tab consolidates the LawnLab SEO Playbook, LawnLab SEO Checklist, and Koga's existing markdown SOPs into a scannable dashboard reference. No database. No task state. Just the operating system.</p>
+      </div>
+      <div class="seo-system-stats">
+        <div><strong>${SEO_SYSTEM_ITEMS.length}</strong><span>documented process cards</span></div>
+        <div><strong>${SEO_SYSTEM_CATEGORIES.length}</strong><span>fulfillment categories</span></div>
+        <div><strong>${highAutomation}</strong><span>high automation candidates</span></div>
+        <div><strong>${averageScore}/10</strong><span>avg automation readiness</span></div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card highlight">
+        <div class="stat-label">Primary Goal</div>
+        <div class="stat-value small">Documented</div>
+        <div class="stat-helper">Short summaries and source locations first</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Source Model</div>
+        <div class="stat-value small">LawnLab</div>
+        <div class="stat-helper">Playbook + 38-item checklist</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Master SOPs</div>
+        <div class="stat-value">${masterSopCount}</div>
+        <div class="stat-helper">Existing Koga markdown docs referenced</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Database</div>
+        <div class="stat-value small">None</div>
+        <div class="stat-helper">This tab is static documentation</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Fulfillment Map</h2>
+        <p class="section-subtitle">How the existing sidebar fulfillment tasks connect back to the process documentation.</p>
+      </div>
+      <div class="fulfillment-map-grid">
+        ${SEO_SYSTEM_FULFILLMENT_MAP.map((group) => `
+          <section class="fulfillment-map-card">
+            <span class="doc-kicker">${h(group.source)}</span>
+            <h3>${h(group.label)}</h3>
+            <p>${h(group.focus)}</p>
+            <div class="mini-chip-list">${group.tasks.map((task) => `<span>${h(task)}</span>`).join('')}</div>
+          </section>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Process Library</h2>
+        <p class="section-subtitle">Short cards first. Each card names the human role, AI role, source SOP location, cadence, fulfillment task, and automation readiness.</p>
+      </div>
+      <div class="table-toolbar seo-system-toolbar">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input class="search-input" type="text" placeholder="Search processes, fulfillment tasks, or source docs..." value="${h(S.search)}" id="searchInput" />
+        </div>
+        <div style="font-size:13px;color:var(--text-dim)">${filteredItems.length}/${SEO_SYSTEM_ITEMS.length} processes</div>
+      </div>
+      ${SEO_SYSTEM_CATEGORIES.map((category) => {
+        const items = filteredItems.filter((item) => item.category === category.key);
+        if (!items.length) return '';
+        return `<section class="seo-category-section">
+          <div class="seo-category-header">
+            <div>
+              <span class="doc-kicker">${items.length} processes</span>
+              <h3>${h(category.label)}</h3>
+            </div>
+            <p>${h(category.purpose)}</p>
+          </div>
+          <div class="seo-process-grid">${items.map(renderSeoSystemCard).join('')}</div>
+        </section>`;
+      }).join('')}
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Master SOP References</h2>
+        <p class="section-subtitle">These are the deeper process files Koga should follow when the work moves from documentation to execution.</p>
+      </div>
+      <div class="master-sop-grid">
+        ${SEO_SYSTEM_MASTER_SOPS.map((sop) => `
+          <article class="master-sop-card">
+            <h3>${h(sop.title)}</h3>
+            <p>${h(sop.use)}</p>
+            <span>${h(sop.source)}</span>
+          </article>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Build Roadmap</h2>
+        <p class="section-subtitle">The tab stays documentation-only now, but the process map makes future automation obvious.</p>
+      </div>
+      <div class="roadmap-strip">
+        <div><strong>1. Document</strong><span>Summaries, source docs, categories, cadence, and fulfillment mapping.</span></div>
+        <div><strong>2. Standardize</strong><span>Fill the placeholder markdown files with the approved SOP for each deliverable.</span></div>
+        <div><strong>3. Assist</strong><span>Add prompts, scripts, and Koga/Kai instructions for repeatable AI-assisted work.</span></div>
+        <div><strong>4. Automate</strong><span>Only after the SOP is stable, wire selected processes into APIs, runs, and dashboards.</span></div>
+      </div>
+    </div>
+  `;
 }
 
 /* ── Documentation View ───────────────────────────────────── */
