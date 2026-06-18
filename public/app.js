@@ -1120,11 +1120,6 @@ function renderAiSeoSystem() {
         <div class="stat-value">${masterSopCount}</div>
         <div class="stat-helper">Existing Koga markdown docs referenced</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-label">Database</div>
-        <div class="stat-value small">None</div>
-        <div class="stat-helper">This tab is static documentation</div>
-      </div>
     </div>
 
     <div class="section">
