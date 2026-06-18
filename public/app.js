@@ -41,6 +41,7 @@ const api = {
   saveWeekly(year, week, body){return this.post(`/api/weekly?year=${year}&week_number=${week}`, body);},
   runWeekly(year, week, action = 'full'){return this.post('/api/weekly/run', { year, week_number: week, action });},
   connections(){return this.get('/api/connections');},
+  sop(id){return this.get(`/api/sops/${id}`);},
 };
 
 /* ── Helpers ──────────────────────────────────────────────── */
@@ -489,8 +490,8 @@ function sortClients(arr) {
 function toast(msg,type='success'){const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;$('#toastRoot').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateY(8px)';setTimeout(()=>el.remove(),300);},3500);}
 
 /* ── Modal ────────────────────────────────────────────────── */
-function openModal(title,body,footer){
-  $('#modalRoot').innerHTML=`<div class="modal-overlay" id="modalOverlay"><div class="modal"><div class="modal-header"><h2>${title}</h2><button class="modal-close" id="modalClose">×</button></div><div class="modal-body">${body}</div>${footer?`<div class="modal-footer">${footer}</div>`:''}</div></div>`;
+function openModal(title,body,footer,modalClass=''){
+  $('#modalRoot').innerHTML=`<div class="modal-overlay" id="modalOverlay"><div class="modal ${h(modalClass)}"><div class="modal-header"><h2>${title}</h2><button class="modal-close" id="modalClose">×</button></div><div class="modal-body">${body}</div>${footer?`<div class="modal-footer">${footer}</div>`:''}</div></div>`;
   $('#modalOverlay').addEventListener('click',e=>{if(e.target.id==='modalOverlay')closeModal();});
   $('#modalClose').addEventListener('click',closeModal);
   document.addEventListener('keydown',_escModal);
@@ -1050,9 +1051,154 @@ function readinessClass(score) {
   return 'manual';
 }
 
+function inlineMarkdown(text) {
+  return h(text)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
+
+function renderMarkdownTable(rows) {
+  const parsedRows = rows
+    .filter((row) => !/^\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(row.trim()))
+    .map((row) => row.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim()));
+  if (!parsedRows.length) return '';
+  const [head, ...body] = parsedRows;
+  return `<div class="sop-table-wrap"><table class="sop-table">
+    <thead><tr>${head.map((cell) => `<th>${inlineMarkdown(cell)}</th>`).join('')}</tr></thead>
+    <tbody>${body.map((row) => `<tr>${row.map((cell) => `<td>${inlineMarkdown(cell)}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`;
+}
+
+function renderSopMarkdown(markdown) {
+  const lines = String(markdown || '').replace(/\r\n/g, '\n').split('\n');
+  let html = '';
+  let list = null;
+  const closeList = () => {
+    if (!list) return;
+    html += `</${list}>`;
+    list = null;
+  };
+  const isBlockStart = (line) => /^(#{1,4})\s+/.test(line) || /^(-|\d+\.)\s+/.test(line) || /^-\s+\[[ x]\]\s+/i.test(line) || /^\*\*[^*]+:\*\*/.test(line) || line.trim() === '---' || /^\|.+\|$/.test(line.trim());
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      closeList();
+      continue;
+    }
+
+    if (trimmed === '---') {
+      closeList();
+      html += '<hr>';
+      continue;
+    }
+
+    if (/^\|.+\|$/.test(trimmed) && /^\|\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test((lines[i + 1] || '').trim())) {
+      closeList();
+      const rows = [trimmed, lines[i + 1].trim()];
+      i += 2;
+      while (i < lines.length && /^\|.+\|$/.test(lines[i].trim())) {
+        rows.push(lines[i].trim());
+        i += 1;
+      }
+      i -= 1;
+      html += renderMarkdownTable(rows);
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      closeList();
+      const level = Math.min(heading[1].length + 1, 5);
+      html += `<h${level}>${inlineMarkdown(heading[2])}</h${level}>`;
+      continue;
+    }
+
+    const definition = trimmed.match(/^\*\*([^*]+):\*\*\s*(.*)$/);
+    if (definition) {
+      closeList();
+      html += `<p class="sop-def"><strong>${inlineMarkdown(definition[1])}</strong><span>${inlineMarkdown(definition[2])}</span></p>`;
+      continue;
+    }
+
+    const checklist = trimmed.match(/^-\s+\[([ x])\]\s+(.+)$/i);
+    if (checklist) {
+      if (list !== 'ul') {
+        closeList();
+        html += '<ul>';
+        list = 'ul';
+      }
+      html += `<li class="sop-check-item"><input type="checkbox" disabled ${checklist[1].toLowerCase() === 'x' ? 'checked' : ''}> <span>${inlineMarkdown(checklist[2])}</span></li>`;
+      continue;
+    }
+
+    const bullet = trimmed.match(/^-\s+(.+)$/);
+    if (bullet) {
+      if (list !== 'ul') {
+        closeList();
+        html += '<ul>';
+        list = 'ul';
+      }
+      html += `<li>${inlineMarkdown(bullet[1])}</li>`;
+      continue;
+    }
+
+    const numbered = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (numbered) {
+      if (list !== 'ol') {
+        closeList();
+        html += '<ol>';
+        list = 'ol';
+      }
+      html += `<li>${inlineMarkdown(numbered[1])}</li>`;
+      continue;
+    }
+
+    closeList();
+    const paragraph = [trimmed];
+    while (i + 1 < lines.length && lines[i + 1].trim() && !isBlockStart(lines[i + 1].trim())) {
+      paragraph.push(lines[i + 1].trim());
+      i += 1;
+    }
+    html += `<p>${inlineMarkdown(paragraph.join(' '))}</p>`;
+  }
+
+  closeList();
+  return html;
+}
+
+async function openSeoSop(id) {
+  const item = SEO_SYSTEM_ITEMS.find((process) => process.id === id);
+  if (!item?.sopStatus) {
+    toast('This SOP has not been documented yet.', 'error');
+    return;
+  }
+
+  openModal('Loading SOP', '<div class="loading-state"><span class="loading-spinner"></span> Loading SOP...</div>', '', 'sop-modal');
+
+  try {
+    const sop = await api.sop(id);
+    const body = `
+      <article class="sop-reader">
+        <div class="sop-reader-meta">
+          <span>Process ${String(sop.id).padStart(2, '0')}</span>
+          <span>${h(sop.source)}</span>
+        </div>
+        ${renderSopMarkdown(sop.markdown)}
+      </article>
+    `;
+    openModal(h(sop.title), body, '<button class="btn btn-primary" onclick="closeModal()">Done</button>', 'sop-modal');
+  } catch (error) {
+    openModal('SOP unavailable', `<p class="modal-error">${h(error.message || 'Could not load this SOP.')}</p>`, '<button class="btn btn-primary" onclick="closeModal()">Close</button>');
+  }
+}
+
 function renderSeoSystemCard(item) {
   const category = seoCategoryMeta(item.category);
   const sopStatus = item.sopStatus ? `<span>${h(item.sopStatus)}</span>` : '';
+  const sopAction = item.sopStatus ? `<button class="btn btn-primary sop-view-btn" type="button" onclick="openSeoSop(${item.id})">View SOP</button>` : '';
   return `<article class="seo-process-card">
     <div class="seo-process-topline">
       <span class="process-number">${String(item.id).padStart(2, '0')}</span>
@@ -1071,6 +1217,7 @@ function renderSeoSystemCard(item) {
       <span>${h(item.fulfillment)}</span>
       <span>${h(item.source)}</span>
     </div>
+    ${sopAction}
   </article>`;
 }
 
@@ -1802,4 +1949,5 @@ window.navigate=navigate;window.showAddClientModal=showAddClientModal;window.sub
 window.showAddKeywordsModal=showAddKeywordsModal;window.submitAddKeywords=submitAddKeywords;window.previewKeywords=previewKeywords;
 window.checkRankings=checkRankings;window.runAudit=runAudit;window.deleteClient=deleteClient;window.deleteKeyword=deleteKeyword;window.toggleSerp=toggleSerp;
 window.runWeeklyUpdate=runWeeklyUpdate;window.saveWeeklyClient=saveWeeklyClient;window.saveFulfillmentTask=saveFulfillmentTask;window.setFulfillmentCategory=setFulfillmentCategory;window.loadConnections=loadConnections;
+window.openSeoSop=openSeoSop;
 document.addEventListener('DOMContentLoaded',init);
