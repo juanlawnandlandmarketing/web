@@ -267,7 +267,7 @@ const SEO_SYSTEM_CATEGORIES = [
 ];
 
 const SEO_SYSTEM_ITEMS = [
-  { id: 1, category: 'on-page', title: 'Keyword Research', score: 7, cadence: 'Onboarding + quarterly refresh', fulfillment: 'One-Time Fulfillment / Monthly review', source: 'deliverables/on-page/01-keyword-research/README.md', summary: 'Build a prioritized keyword map for each service and city using search volume, competition, intent, and current ranking opportunity.', human: 'Approve priority services, local terminology, and final keyword targets.', ai: 'Pull DataForSEO or SE Ranking data, score opportunities, cluster keywords, and refresh the map quarterly.' },
+  { id: 1, category: 'on-page', title: 'Keyword Research', score: 7, cadence: 'Onboarding + quarterly refresh', fulfillment: 'One-Time Fulfillment / Monthly review', source: 'deliverables/on-page/01-keyword-research/README.md; seo/automation/STEP_4_KEYWORD_CLUSTERING.md', sopStatus: 'SOP documented', summary: 'Build an approved keyword map that scores service x city demand, clusters search intent, maps targets to pages, and seeds rank tracking.', human: 'Confirm services and service areas, exclude bad-fit targets, approve top priorities, and sign off on the final keyword map.', ai: 'Pull DataForSEO, SE Ranking, and GSC data, score opportunities, cluster keywords, map them to URLs, and refresh the map quarterly.' },
   { id: 2, category: 'on-page', title: 'Service Pages', score: 6, cadence: 'Onboarding + as-needed updates', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/02-service-pages/README.md', summary: 'Document standards for core service pages: title tag, H1, meta description, body copy, FAQs, schema, and internal links.', human: 'Provide client-specific details and approve final copy before publishing.', ai: 'Draft page briefs, content, metadata, FAQ blocks, and internal-link suggestions from the keyword map.' },
   { id: 3, category: 'on-page', title: 'Service Area Pages', score: 7, cadence: 'Onboarding + expansion campaigns', fulfillment: 'Onsite Core Content Optimization', source: 'deliverables/on-page/03-service-area-pages/README.md', summary: 'Create city and region pages that connect priority services to local search demand without thin or duplicated content.', human: 'Approve target areas and local proof points.', ai: 'Use GSC and keyword data to prioritize cities, generate briefs, draft content, and suggest supporting links.' },
   { id: 4, category: 'on-page', title: 'Blog Content', score: 9, cadence: 'Weekly or monthly by package', fulfillment: 'Blog Content Creation (1/Week) Published + Audited', source: 'deliverables/on-page/04-blog-content/README.md; BLOG-CREATION-PROCESS.md', summary: 'Use ranking gaps, seasonal demand, and service priorities to publish locally relevant supporting content.', human: 'Review final draft, verify client accuracy, and approve publishing.', ai: 'Select topics, build briefs, draft content, inject internal links, generate alt text, and prepare publish-ready posts.' },
@@ -1052,6 +1052,7 @@ function readinessClass(score) {
 
 function renderSeoSystemCard(item) {
   const category = seoCategoryMeta(item.category);
+  const sopStatus = item.sopStatus ? `<span>${h(item.sopStatus)}</span>` : '';
   return `<article class="seo-process-card">
     <div class="seo-process-topline">
       <span class="process-number">${String(item.id).padStart(2, '0')}</span>
@@ -1065,6 +1066,7 @@ function renderSeoSystemCard(item) {
       <div><strong>Koga/Kai role</strong><span>${h(item.ai)}</span></div>
     </div>
     <div class="process-meta-row">
+      ${sopStatus}
       <span>${h(item.cadence)}</span>
       <span>${h(item.fulfillment)}</span>
       <span>${h(item.source)}</span>
