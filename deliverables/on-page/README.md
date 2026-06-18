@@ -6,7 +6,7 @@ This folder contains automation builds for all **9 On-Page SEO** deliverables.
 |---|------------|-----------------|--------|
 | 01 | [Keyword Research](./01-keyword-research/) | 7/10 | ✅ Documented |
 | 02 | [Service Pages](./02-service-pages/) | 6/10 | ✅ Documented |
-| 03 | [Service Area Pages](./03-service-area-pages/) | 7/10 | 🔲 Not started |
+| 03 | [Service Area Pages](./03-service-area-pages/) | 6/10 | ✅ Documented |
 | 04 | [Blog Content](./04-blog-content/) | 9/10 | 🔲 Not started |
 | 05 | [Internal Linking](./05-internal-linking/) | 8/10 | 🔲 Not started |
 | 06 | [Alt Text on Images](./06-alt-text/) | 9/10 | 🔲 Not started |
