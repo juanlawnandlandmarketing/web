@@ -4,7 +4,7 @@
 **Category:** On-Page SEO
 **Fulfillment Connection:** Onsite Core Content Optimization
 **Cadence:** Onboarding, launch rebuilds, service-area expansion campaigns, and as-needed optimization updates
-**Automation Readiness Score:** 6/10 - Partial automation possible
+**Automation Readiness Score:** 7/10 - Highly automatable
 **Status:** Documented
 
 ---
@@ -435,7 +435,7 @@ Optimization can include metadata rewrites, stronger service links, local proof 
 
 ## Process Difference From Service Pages
 
-The two processes should share the same automation readiness score because the production workflow is almost the same:
+The two processes should share the same automation readiness score because the build and SEO analysis workflow is almost the same:
 
 | Area | Service Pages | Service Area Pages |
 |---|---|---|
@@ -446,7 +446,7 @@ The two processes should share the same automation readiness score because the p
 | Main risk | Generic service copy or cannibalization | Thin swapped-city pages or fake local claims |
 | Main links out | Related services, service areas, blogs, contact | Service pages, nearby cities, blogs, contact |
 | Human gate | Service accuracy and claims | Service coverage, city accuracy, local proof |
-| Automation score | 6/10 | 6/10 |
+| Automation score | 7/10 | 7/10 |
 
 ## Automation Plan
 
