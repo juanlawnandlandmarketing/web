@@ -4,7 +4,7 @@ This folder contains automation builds for all **9 Technical SEO** deliverables.
 
 | # | Deliverable | Automation Score | Status |
 |---|------------|-----------------|--------|
-| 20 | [Rank Math Setup](./20-rank-math-setup/) | 2/10 | 🔲 Not started |
+| 20 | [Rank Math Setup](./20-rank-math-setup/) | 2/10 | ✅ Documented |
 | 21 | [Schema Markup](./21-schema-markup/) | 6/10 | 🔲 Not started |
 | 22 | [Google Search Console](./22-google-search-console/) | 8/10 | 🔲 Not started |
 | 23 | [XML Sitemap](./23-xml-sitemap/) | 7/10 | 🔲 Not started |
