@@ -129,17 +129,13 @@ Use these ClickUp tasks as the operational source for this SOP. If ClickUp and t
 | [`1. Business Directory Management (Whitespark)`](https://app.clickup.com/t/868eegcgc) | Ongoing Whitespark directory management workflow after onboarding. |
 | [`Comunicate with Whitespark Support`](https://app.clickup.com/t/868eh6p21) | Support escalation path for Whitespark questions, stuck orders, or listing issues. |
 
-Training video references and audit:
+Training video reference:
 
-| Video / Source | Link | Related to Process 10? | Decision |
+| Video | Link | Applies To | Notes |
 |---|---|---|
-| Citation / Whitespark Loom | Not found in ClickUp API data | Yes, if supplied | Add the verified Loom URL here when it is available. |
-| Creating Effective SEO Reports for Clients | <https://www.loom.com/share/7bb777b1b77e4789b620bf40c6e2497e> | No | Do not use for Process 10. This belongs with reporting. |
-| Creating an SEO Report for Green Dream Lounge | <https://www.loom.com/share/79d3c3dc63884e7b94733f874fb1245e> | No | Do not use for Process 10. This belongs with reporting/Looker Studio. |
-| How to Compress Images Using Imagify | <https://www.loom.com/share/8d620b5b4ba248f5934bae8e3cf0a99b?sid=8c9c6007-06a6-4b6d-b623-e439e41c044d> | No | Do not use for Process 10. This is image-compression training and Imagify is no longer part of the current workflow. |
-| `10. Pre Launch Website GBP Optimization` task video note | No Loom URL exposed in ClickUp API data | Possibly adjacent, not confirmed | Do not use for Process 10 unless the actual URL is supplied and the video covers citation/NAP/Whitespark onboarding. |
+| Whitespark citation process Loom | Needed | Citation onboarding and Whitespark order submission | Add the verified Loom URL here. Do not use reporting, Looker Studio, Imagify, or unrelated GBP videos for this process. |
 
-No verified citation onboarding, Whitespark order submission, or citation-building Loom URL was exposed in the ClickUp task bodies, comments, attachments, checklists, custom fields, or rich embed payloads. The unrelated Loom links are listed above so they are visible and intentionally excluded rather than silently ignored.
+No verified citation onboarding, Whitespark order submission, or citation-building Loom URL was exposed in the ClickUp task bodies, comments, attachments, checklists, custom fields, rich embed payloads, adjacent SEO SOP lists, Company Resources video list, or Drive searches. This SOP needs the actual Whitespark citation-process Loom URL before the video can be linked.
 
 ## Workflow
 
