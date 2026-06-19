@@ -25,13 +25,17 @@ The goal is simple:
 
 Citation building appears in the fulfillment map as a one-time onboarding task and connects to several related workflows:
 
+- ClickUp task `12. Citation Building` is the primary task source for this onboarding SOP.
+- ClickUp subtask `White spark order submit (Pending for a launch)` is the core Whitespark submission task.
+- ClickUp task `5. Clear NAP Listings` and subtask `Verify NAP in Whitespark for SAE Clients` define the NAP verification path that supports citation onboarding.
+- ClickUp task `1. Business Directory Management (Whitespark)` is the ongoing Whitespark management workflow that citation onboarding hands into after launch.
 - GBP profile setup needs accurate business name, phone, website, hours, services, and service area details.
 - Service-area work depends on truthful service coverage.
 - Competitor analysis may reveal directory pressure or authority gaps.
 - Business-directory backlinks may overlap with citation opportunities.
 - Ongoing citation monitoring needs a clean baseline to compare against.
 
-The missing piece is a standalone citation onboarding process that defines the business data packet, directory priority, submission rules, documentation format, and human approval gates.
+The missing piece is a standalone citation onboarding process that turns those ClickUp tasks into one clear SOP: business data packet, Whitespark order preparation, directory priority, submission rules, documentation format, video/training references, and human approval gates.
 
 ## Target State
 
@@ -111,6 +115,26 @@ Prioritize citation sources by trust, relevance, and maintenance value.
 
 Citation building and backlink building overlap, but they are not identical. Citation onboarding focuses on business identity consistency. Backlink campaigns focus on authority and relationship opportunities.
 
+## ClickUp Source Tasks and Training References
+
+Use these ClickUp tasks as the operational source for this SOP. If ClickUp and this document conflict, update this SOP so the dashboard stays aligned with the current fulfillment process.
+
+| Source | Role in Process 10 |
+|---|---|
+| [`12. Citation Building`](https://app.clickup.com/t/868eeg12f) | Parent one-time fulfillment task for citation onboarding. |
+| [`White spark order submit (Pending for a launch)`](https://app.clickup.com/t/868ehby11) | Whitespark order/submission task for launch-ready citation work. |
+| [`5. Clear NAP Listings`](https://app.clickup.com/t/868eeg0qb) | NAP cleanup workflow that feeds the citation source-of-truth check. |
+| [`Verify NAP in Whitespark for SAE Clients`](https://app.clickup.com/t/868egzacu) | Whitespark-specific NAP verification task. |
+| [`Verify NAP in website and GBP`](https://app.clickup.com/t/868egz6r4) | Website and GBP consistency check before citation submission. |
+| [`1. Business Directory Management (Whitespark)`](https://app.clickup.com/t/868eegcgc) | Ongoing Whitespark directory management workflow after onboarding. |
+| [`Comunicate with Whitespark Support`](https://app.clickup.com/t/868eh6p21) | Support escalation path for Whitespark questions, stuck orders, or listing issues. |
+
+Training video references:
+
+| Video | Applies To | Notes |
+|---|---|---|
+| Citation / Whitespark Loom | Citation onboarding and Whitespark order submission | Add the verified Loom URL here once attached or supplied. The ClickUp audit did not expose a Loom URL inside the Process 10 citation/Whitespark tasks, task comments, attachments, checklists, or custom fields. Do not use the old Imagify Loom for this process. |
+
 ## Workflow
 
 ### 1. Lock the NAP Source of Truth
@@ -131,7 +155,7 @@ Confirm:
 - GBP profile URL.
 - Social URLs.
 
-If the website, GBP, client notes, and existing listings disagree, stop and resolve the conflict before submitting new citations.
+Use `Verify NAP in website and GBP` and `Verify NAP in Whitespark for SAE Clients` as the operational checks for this step. If the website, GBP, client notes, Whitespark, and existing listings disagree, stop and resolve the conflict before submitting new citations.
 
 ### 2. Build the Citation Packet
 
@@ -217,6 +241,8 @@ For each approved platform, prepare:
 Keep descriptions consistent, but avoid pasting identical keyword-stuffed text everywhere. The business identity should be stable; profile copy can be lightly adapted to the platform.
 
 ### 6. Submit or Assign Manual Steps
+
+For Whitespark orders, use the `White spark order submit (Pending for a launch)` task as the submission path. Treat the order as launch-ready only after the NAP source of truth is locked, the citation packet is complete, and any payment, access, or verification blocker has a human owner.
 
 Classify each listing before action:
 
@@ -389,6 +415,11 @@ The process is complete when:
 
 | Source | Relevant Rules |
 |---|---|
+| ClickUp `12. Citation Building` | Primary fulfillment task this SOP is based on. |
+| ClickUp `White spark order submit (Pending for a launch)` | Whitespark submission task that drives the order workflow. |
+| ClickUp `5. Clear NAP Listings` | NAP cleanup and consistency workflow that supports citation onboarding. |
+| ClickUp `Verify NAP in Whitespark for SAE Clients` | Whitespark-specific NAP verification task. |
+| ClickUp `1. Business Directory Management (Whitespark)` | Ongoing directory management workflow after onboarding. |
 | `deliverables/off-page/11-citation-monitoring/README.md` | Ongoing NAP consistency monitoring should use the onboarding baseline. |
 | `deliverables/off-page/13-backlink-business-directories/README.md` | Business-directory backlink work overlaps with citation opportunities but has a different goal. |
 | `deliverables/on-page/09-competitor-analysis/README.md` | Competitor gaps may reveal directories or local authority sources worth reviewing. |
