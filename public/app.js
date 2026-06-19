@@ -279,7 +279,7 @@ const SEO_SYSTEM_ITEMS = [
   { id: 9, category: 'on-page', title: 'Competitor Analysis', score: 8, cadence: 'Onboarding + quarterly', fulfillment: 'SEO Ranking performance (local + search)', source: 'deliverables/on-page/09-competitor-analysis/README.md; deliverables/on-page/01-keyword-research/README.md; deliverables/on-page/02-service-pages/README.md; deliverables/on-page/03-service-area-pages/README.md; deliverables/on-page/04-blog-content/README.md; BLOG-CREATION-PROCESS.md; OPTIMIZATION-PROTOCOL.md', sopStatus: 'SOP documented', summary: 'Identify true local SEO competitors, compare ranking/page/content gaps, reject bad-fit SERP noise, and route approved opportunities into the right SEO process.', human: 'Confirm real local competitors, reject directories or bad-fit targets, approve strategic gaps, and decide which opportunities match client services, markets, and scope.', ai: 'Pull local SERPs and keyword gaps, classify competitor types, compare content and page coverage, score opportunities, and feed findings into page, blog, link, metadata, GBP, and authority work.' },
   { id: 10, category: 'off-page', title: 'Citation Building - Onboarding', score: 4, cadence: 'One-time setup', fulfillment: 'Citation Building', source: 'deliverables/off-page/10-citation-building-onboarding/README.md; ClickUp: 12. Citation Building; White spark order submit; 5. Clear NAP Listings; Business Directory Management (Whitespark); deliverables/off-page/11-citation-monitoring/README.md; deliverables/off-page/13-backlink-business-directories/README.md; deliverables/on-page/09-competitor-analysis/README.md; deliverables/gbp/29-gbp-profile-build/README.md; deliverables/gbp/35-gbp-link-on-website/README.md', sopStatus: 'SOP documented', summary: 'Build the onboarding citation baseline from the ClickUp citation and Whitespark tasks by locking approved NAP data, preparing the Whitespark order path, tracking blockers, and handing clean records into monitoring.', human: 'Approve the NAP source of truth, handle Whitespark/accounts, payments, verification, duplicate claims, and final submissions where platforms require manual ownership.', ai: 'Compare website/GBP/client/Whitespark data, prepare citation packets, find existing listings and duplicates, tier directories, draft submission notes, and verify public listing URLs.' },
   { id: 11, category: 'off-page', title: 'Citation Monitoring - Ongoing', score: 6, cadence: 'Quarterly', fulfillment: 'Clear NAP Listings / Business Directory Management (Whitespark)', source: 'deliverables/off-page/11-citation-monitoring/README.md; ClickUp: Business Directory Management (Whitespark); Clear NAP Listings; Verify NAP in Whitespark; Verify NAP in website and GBP; Bing places; Yelp; Facebook Profile; deliverables/off-page/10-citation-building-onboarding/README.md', sopStatus: 'SOP documented', summary: 'Monitor the ongoing citation baseline from the ClickUp Whitespark and NAP tasks, checking website, GBP, Whitespark, Bing, Yelp, Facebook, old NAP variants, duplicates, blockers, and support follow-ups.', human: 'Handle logged-in directory edits, GBP/Whitespark actions, verification, duplicate suppression, paid decisions, and support emails that require account or client context.', ai: 'Compare approved NAP against website, GBP, Whitespark, and public listings; detect drift or duplicates; prepare issue logs, support notes, and quarterly follow-up summaries.' },
-  { id: 12, category: 'off-page', title: 'Press Releases', score: 7, cadence: 'Two per month', fulfillment: 'Press Releases (2/Month)', source: 'deliverables/off-page/12-press-releases/README.md; Press_Release_Creation_Process.md; PR-OPTIMIZATION-PROCESS.md', summary: 'Create, optimize, upload, and track monthly press releases that support homepage and blog authority.', human: 'Approve sensitive angles and confirm final delivery when required.', ai: 'Generate PR drafts, optimize anchor strategy, prepare Google Docs, and track published assets.' },
+  { id: 12, category: 'off-page', title: 'Press Releases', score: 7, cadence: 'Two per month', fulfillment: 'Press Releases (2/Month)', source: 'deliverables/off-page/12-press-releases/README.md; ClickUp: 2. Press Releases (2/Month); Upload the press releases; Press Releases updated; Loom: Tutorial: Adding Press Releases to Signal Genesys; Press_Release_Creation_Process.md; PR-OPTIMIZATION-PROCESS.md; Signal-GeNeSYS-Press-Release-Template.md', sopStatus: 'SOP documented', summary: 'Create or optimize two monthly press releases per SEO client, store and track them correctly, upload them into Signal GeNeSYS, and verify the Media Room workflow.', human: 'Approve weak or sensitive news angles, handle Signal GeNeSYS login and brand selection when needed, choose images, and confirm publish or schedule decisions.', ai: 'Draft or optimize PRs against the Signal GeNeSYS template, validate structure and links, prepare Docs, tracker rows, upload packets, completion notes, and Media Room verification.' },
   { id: 13, category: 'off-page', title: 'Backlink - Business Directories', score: 4, cadence: 'Quarterly campaign', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/13-backlink-business-directories/README.md', summary: 'Find and pursue relevant green-industry, local, and business directory backlink opportunities.', human: 'Submit when approvals, payments, or manual accounts are needed.', ai: 'Research opportunities, score relevance, prepare submissions, and verify live links.' },
   { id: 14, category: 'off-page', title: 'Backlink - Social Profiles', score: 5, cadence: 'One-time + audit', fulfillment: 'Backlink Acquisition / Clients Reviews Integration', source: 'deliverables/off-page/14-backlink-social-profiles/README.md', summary: 'Ensure major social profiles exist, link correctly to the website, and reinforce brand/entity consistency.', human: 'Create or access profiles when credentials are required.', ai: 'Audit profile presence, link correctness, and missing profile opportunities.' },
   { id: 15, category: 'off-page', title: 'Backlink - Vendor Testimonials', score: 3, cadence: 'Quarterly outreach', fulfillment: 'Backlink Acquisition', source: 'deliverables/off-page/15-backlink-vendor-testimonials/README.md', summary: 'Use vendor relationships to earn testimonial or partner links from suppliers and local partners.', human: 'Approve outreach targets and relationship-sensitive messaging.', ai: 'Draft testimonials, outreach emails, follow-up reminders, and link verification checks.' },
@@ -1053,8 +1053,16 @@ function readinessClass(score) {
 
 function inlineMarkdown(text) {
   return h(text)
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
+
+function renderLoomEmbed(url) {
+  const match = String(url || '').match(/^https:\/\/www\.loom\.com\/share\/([A-Za-z0-9]+)(\?[^ ]*)?$/);
+  if (!match) return '';
+  const embedUrl = `https://www.loom.com/embed/${match[1]}${match[2] || ''}`;
+  return `<div class="sop-video-embed"><iframe src="${h(embedUrl)}" allowfullscreen title="Loom training video"></iframe></div>`;
 }
 
 function renderMarkdownTable(rows) {
@@ -1078,7 +1086,7 @@ function renderSopMarkdown(markdown) {
     html += `</${list}>`;
     list = null;
   };
-  const isBlockStart = (line) => /^(#{1,4})\s+/.test(line) || /^(-|\d+\.)\s+/.test(line) || /^-\s+\[[ x]\]\s+/i.test(line) || /^\*\*[^*]+:\*\*/.test(line) || line.trim() === '---' || /^\|.+\|$/.test(line.trim());
+  const isBlockStart = (line) => /^(#{1,4})\s+/.test(line) || /^::loom\s+https:\/\/www\.loom\.com\/share\//.test(line) || /^(-|\d+\.)\s+/.test(line) || /^-\s+\[[ x]\]\s+/i.test(line) || /^\*\*[^*]+:\*\*/.test(line) || line.trim() === '---' || /^\|.+\|$/.test(line.trim());
 
   for (let i = 0; i < lines.length; i += 1) {
     const line = lines[i];
@@ -1092,6 +1100,13 @@ function renderSopMarkdown(markdown) {
     if (trimmed === '---') {
       closeList();
       html += '<hr>';
+      continue;
+    }
+
+    const loom = trimmed.match(/^::loom\s+(https:\/\/www\.loom\.com\/share\/\S+)$/);
+    if (loom) {
+      closeList();
+      html += renderLoomEmbed(loom[1]);
       continue;
     }
 

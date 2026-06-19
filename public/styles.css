@@ -1244,6 +1244,33 @@ input, textarea, select { font-family: inherit; }
   border-top: 1px solid var(--border);
 }
 
+.sop-reader a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+.sop-reader a:hover {
+  text-decoration: underline;
+}
+
+.sop-video-embed {
+  position: relative;
+  width: 100%;
+  margin: 18px 0 22px;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-content);
+}
+
+.sop-video-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .sop-check-item {
   display: flex;
   gap: 8px;
