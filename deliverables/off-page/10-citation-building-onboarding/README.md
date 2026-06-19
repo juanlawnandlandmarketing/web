@@ -129,11 +129,13 @@ Use these ClickUp tasks as the operational source for this SOP. If ClickUp and t
 | [`1. Business Directory Management (Whitespark)`](https://app.clickup.com/t/868eegcgc) | Ongoing Whitespark directory management workflow after onboarding. |
 | [`Comunicate with Whitespark Support`](https://app.clickup.com/t/868eh6p21) | Support escalation path for Whitespark questions, stuck orders, or listing issues. |
 
-Training video references:
+Training video reference:
 
-| Video | Applies To | Notes |
+| Video | Link | Applies To | Notes |
 |---|---|---|
-| Citation / Whitespark Loom | Citation onboarding and Whitespark order submission | Add the verified Loom URL here once attached or supplied. The ClickUp audit did not expose a Loom URL inside the Process 10 citation/Whitespark tasks, task comments, attachments, checklists, or custom fields. Do not use the old Imagify Loom for this process. |
+| Whitespark citation process Loom | Needed | Citation onboarding and Whitespark order submission | Add the verified Loom URL here. Do not use reporting, Looker Studio, Imagify, or unrelated GBP videos for this process. |
+
+No verified citation onboarding, Whitespark order submission, or citation-building Loom URL was exposed in the ClickUp task bodies, comments, attachments, checklists, custom fields, rich embed payloads, adjacent SEO SOP lists, Company Resources video list, or Drive searches. This SOP needs the actual Whitespark citation-process Loom URL before the video can be linked.
 
 ## Workflow
 
