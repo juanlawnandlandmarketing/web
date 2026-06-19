@@ -6,7 +6,7 @@ For GBP product description and image prompt creation, use [GBP Products Process
 
 | # | Deliverable | Automation Score | Status |
 |---|------------|-----------------|--------|
-| 29 | [GBP Profile Build & Completion](./29-gbp-profile-build/) | 2/10 | 🔲 Not started |
+| 29 | [GBP Profile Build & Completion](./29-gbp-profile-build/) | 2/10 | ✅ Documented |
 | 30 | [GBP Categories](./30-gbp-categories/) | 3/10 | 🔲 Not started |
 | 31 | [Weekly GBP Posts](./31-gbp-weekly-posts/) | 8/10 | 🔲 Not started |
 | 32 | [Automated Review Replies](./32-gbp-review-replies/) | 9/10 | 🔲 Not started |
