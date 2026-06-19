@@ -13,4 +13,4 @@ This folder contains automation builds for all **10 Off-Page SEO** deliverables.
 | 16 | [Backlink — Chamber of Commerce](./16-backlink-chamber-of-commerce/) | 2/10 | ✅ Documented |
 | 17 | [Backlink — Local Sponsorships](./17-backlink-local-sponsorships/) | 2/10 | ✅ Documented |
 | 18 | [Backlink — Local Press Pitches](./18-backlink-local-press/) | 4/10 | ✅ Documented |
-| 19 | [Backlink — HARO / Connectively](./19-backlink-haro/) | 6/10 | 🔲 Not started |
+| 19 | [Backlink — HARO / Connectively](./19-backlink-haro/) | 6/10 | ✅ Documented |
