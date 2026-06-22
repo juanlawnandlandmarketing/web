@@ -36,7 +36,7 @@ Ordered by automation readiness (highest first):
 | 09 | [Competitor Analysis](./on-page/09-competitor-analysis/) | ✅ 8/10 | 🔲 Not started |
 | 22 | [Google Search Console](./technical/22-google-search-console/) | ✅ 8/10 | 🔲 Not started |
 | 26 | [Page Speed / Core Web Vitals](./technical/26-page-speed-core-web-vitals/) | ✅ 8/10 | 🔲 Not started |
-| 31 | [Weekly GBP Posts](./gbp/31-gbp-weekly-posts/) | ✅ 8/10 | 🔲 Not started |
+| 31 | [Weekly GBP Posts](./gbp/31-gbp-weekly-posts/) | ✅ 8/10 | ✅ Documented |
 
 ---
 
