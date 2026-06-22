@@ -29,7 +29,7 @@ Ordered by automation readiness (highest first):
 | # | Deliverable | Score | Status |
 |---|------------|-------|--------|
 | 04 | [Blog Content](./on-page/04-blog-content/) | 🚀 9/10 | 🔨 **In Progress** |
-| 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | 🔲 Not started |
+| 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | ✅ Documented |
 | 37 | [Internal Monthly Scorecard](./reporting/37-internal-monthly-scorecard/) | 🚀 9/10 | 🔲 Not started |
 | 06 | [Alt Text on Images](./on-page/06-alt-text/) | 🚀 9/10 | 🔲 Not started |
 | 05 | [Internal Linking](./on-page/05-internal-linking/) | ✅ 8/10 | 🔲 Not started |
