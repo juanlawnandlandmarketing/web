@@ -119,16 +119,27 @@ Use these ClickUp tasks as the operational source for Process 11.
 | [`Verify NAP in website and GBP`](https://app.clickup.com/t/868egz6r4) | Website and GBP consistency check. |
 | [`12. Citation Building`](https://app.clickup.com/t/868eeg12f) | Process 10 onboarding source that creates the baseline for ongoing monitoring. |
 
-SOP video audit:
+## Process 11 Training Videos
 
-| Video Found | Related to Process 11? | Decision |
-|---|---|---|
-| Loom for creating SEO reports | No | Do not include in Process 11. It belongs with reporting. |
-| Loom for Looker Studio report building | No | Do not include in Process 11. It belongs with reporting. |
-| Loom for Imagify image compression | No | Do not include in Process 11. It is outdated and unrelated to citation monitoring. |
-| `10. Pre Launch Website GBP Optimization` task says "Video explaining all the process" but no Loom URL was exposed in ClickUp API data | Possibly GBP setup, not citation monitoring | Do not include unless a real URL is supplied and the video covers citation/NAP monitoring. |
+Use these supplied Looms as the manual training references for citation monitoring, Whitespark status review, priority profile checks, and email follow-up. These videos support the human workflow only; they do not change Process 11's `0/10 - 100% manual` automation status.
 
-No citation-monitoring, NAP-monitoring, Whitespark-monitoring, Bing Places, Yelp, or Facebook profile Loom was found in the ClickUp task bodies, comments, attachments, checklists, custom fields, or rich embed payloads. For now, Process 11 should not include a video reference. If a true Whitespark/citation-monitoring Loom is supplied later, add it to this section and reference the specific workflow step it supports.
+| Video | Process 11 Usage |
+|---|---|
+| [Process 11 training video 1](https://www.loom.com/share/9fda577259e442018385ef090afc1c53) | Manual citation monitoring reference. |
+| [Process 11 training video 2](https://www.loom.com/share/559a9ad11a34457a90d481916aee5cd5?sid=d6007076-3e8c-489e-8217-53349c61bcb6) | Manual Whitespark/listing review reference. |
+| [Process 11 training video 3](https://www.loom.com/share/c6a5c4f490274af68ab3dc493095d1a2?sid=c05bdd1b-7cb9-4105-86de-c5ebd71c8aaa) | Manual NAP/profile verification reference. |
+| [Process 11 training video 4](https://www.loom.com/share/42a43367e22243e5a3cf4723f189604b?sid=a0470b8e-7496-44b5-a913-0a96418da941) | Manual support/follow-up reference. |
+| [Process 11 training video 5](https://www.loom.com/share/8ebce3a5cddc45ac956f440788c2eef1) | Manual completion and tracking reference. |
+
+::loom https://www.loom.com/share/9fda577259e442018385ef090afc1c53
+
+::loom https://www.loom.com/share/559a9ad11a34457a90d481916aee5cd5?sid=d6007076-3e8c-489e-8217-53349c61bcb6
+
+::loom https://www.loom.com/share/c6a5c4f490274af68ab3dc493095d1a2?sid=c05bdd1b-7cb9-4105-86de-c5ebd71c8aaa
+
+::loom https://www.loom.com/share/42a43367e22243e5a3cf4723f189604b?sid=a0470b8e-7496-44b5-a913-0a96418da941
+
+::loom https://www.loom.com/share/8ebce3a5cddc45ac956f440788c2eef1
 
 ## Monitored Source Types
 
@@ -370,8 +381,14 @@ For each monitoring run, produce:
     "follow_up_date": "YYYY-MM-DD"
   },
   "video_references": {
-    "included": false,
-    "reason": "No directly relevant citation-monitoring Loom found."
+    "included": true,
+    "urls": [
+      "https://www.loom.com/share/9fda577259e442018385ef090afc1c53",
+      "https://www.loom.com/share/559a9ad11a34457a90d481916aee5cd5?sid=d6007076-3e8c-489e-8217-53349c61bcb6",
+      "https://www.loom.com/share/c6a5c4f490274af68ab3dc493095d1a2?sid=c05bdd1b-7cb9-4105-86de-c5ebd71c8aaa",
+      "https://www.loom.com/share/42a43367e22243e5a3cf4723f189604b?sid=a0470b8e-7496-44b5-a913-0a96418da941",
+      "https://www.loom.com/share/8ebce3a5cddc45ac956f440788c2eef1"
+    ]
   }
 }
 ```
