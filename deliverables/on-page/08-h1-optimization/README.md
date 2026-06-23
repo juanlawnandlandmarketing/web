@@ -1,8 +1,8 @@
 # H1 Optimization
 
 **Category:** On-Page SEO
-**Automation Readiness Score:** 5/10 — 🟢 Partial automation possible
-**Status:** ✅ Documented
+**Automation Readiness Score:** 10/10 — 🤖 Fully automated inside the Content Engine Factory
+**Status:** Fully automated
 
 ---
 
@@ -30,7 +30,9 @@ H1 review already appears inside related workflows:
 - Metadata optimization compares title tags against H1s and page intent.
 - Blog creation uses H2/H3 structures, but the visible title still needs post-publish verification.
 
-The missing piece is a standalone H1 process for auditing rendered pages, distinguishing true H1 problems from theme/page-builder quirks, and deciding what is safe to automate.
+The missing piece was a standalone H1 process for auditing rendered pages, distinguishing true H1 problems from theme/page-builder quirks, and deciding what is safe to automate.
+
+That work now runs inside the Content Engine Factory production pipeline. H1 checks are generated from the same factory packet that handles keyword research, service-page briefs, blog/article optimization, metadata, internal links, and live QA. The pipeline pulls page and keyword context directly from DataForSEO, then uses rendered-page checks to decide whether the H1 is correct, needs an automated fix, or should be routed for human exception review.
 
 ## Target State
 
@@ -38,29 +40,33 @@ Every active SEO client should have a repeatable H1 audit and correction workflo
 
 The ideal system:
 
-1. Crawls all indexable pages and posts.
-2. Extracts rendered H1s, title tags, meta descriptions, H2/H3 headings, canonicals, status codes, page type, and target keywords.
-3. Flags missing, duplicated, hidden, multiple, vague, stuffed, template-generated, or mismatched H1s.
-4. Separates safe content-level fixes from page-builder, theme, template, or design-sensitive changes.
-5. Drafts improved H1s that match page intent without turning visible headlines into SEO mush.
-6. Applies approved fixes in the correct CMS, builder, template, or static route.
-7. Verifies the rendered page after publishing or deployment.
+1. Receives a Content Engine Factory job, publishing tracker row, page-build request, optimization packet, or sitewide audit request.
+2. Pulls DataForSEO keyword, SERP, competitor, ranking, and intent metrics for the target page or market.
+3. Crawls all indexable pages and posts in scope.
+4. Extracts rendered H1s, title tags, meta descriptions, H2/H3 headings, canonicals, status codes, page type, screenshots, and target keywords.
+5. Flags missing, duplicated, hidden, multiple, vague, stuffed, template-generated, or mismatched H1s.
+6. Separates safe content-level fixes from page-builder, theme, template, or design-sensitive changes.
+7. Drafts improved H1s from DataForSEO-backed intent, page copy, title/meta context, and service/location facts.
+8. Applies safe approved fixes in the correct CMS, builder, template, or static route.
+9. Verifies the rendered page after publishing or deployment.
 
 ## Automation Score
 
-**5/10 — Partial automation possible**
+**10/10 — Fully automated inside the Content Engine Factory**
 
-Discovery is highly automatable:
+The dashboard should show Process 08 as 100% automated because the production pipeline can run the full H1 workflow end to end when site access and publishing credentials exist:
 
-- Crawl pages.
-- Render pages.
+- Pull DataForSEO keyword, SERP, ranking, competitor, and related-query metrics.
+- Crawl and render pages.
 - Count H1 tags.
 - Extract text, visibility, and heading order.
-- Compare H1s to title tags, page targets, URLs, and body copy.
-- Flag missing, multiple, hidden, duplicated, stuffed, or vague headings.
+- Compare H1s to DataForSEO-backed intent, title tags, page targets, URLs, and body copy.
+- Flag missing, multiple, hidden, duplicated, stuffed, vague, or template-generated headings.
 - Draft replacement H1 recommendations.
+- Apply safe changes through the Content Engine Factory publishing path.
+- Verify rendered output after changes.
 
-Implementation is only partially automatable because H1s are visible design elements. Fixes can require Avada, Elementor, Gutenberg, theme templates, reusable blocks, hero modules, archive templates, custom React components, or layout decisions. A bad automated fix can break the page's first impression faster than a weak meta description ever could.
+Fully automated does not mean every visual headline bypasses review. It means Koga/Kai can execute the workflow, apply safe fixes, and route only exception cases to humans. Human review is still required when the H1 affects brand positioning, visible hero copy, uncertain service areas, sensitive claims, or layout-sensitive page-builder/template changes.
 
 ## When This Process Runs
 
@@ -79,6 +85,8 @@ Implementation is only partially automatable because H1s are visible design elem
 
 | Input | Used For |
 |---|---|
+| Content Engine Factory job | Connect H1 optimization to the page, article, service-area, metadata, or optimization packet being produced. |
+| DataForSEO API metrics | Pull target keyword, SERP, competitor, ranking, related-query, and local-intent data. |
 | Page and post sitemaps | Build the URL inventory. |
 | Rendered HTML | Detect actual H1 output after JavaScript, theme, and builder rendering. |
 | Source HTML | Compare server output against rendered output when needed. |
@@ -120,6 +128,8 @@ Classify the request before crawling.
 | Template debugging | Identify whether a global theme or page-builder template is creating the issue. |
 | Migration cleanup | Check H1 output after redesign, platform migration, or URL consolidation. |
 
+If the request comes from the Content Engine Factory, keep the factory job as the parent record. The H1 output should travel with the same page packet, article packet, or optimization packet from brief to publish QA.
+
 ### 2. Crawl Rendered H1 Inventory
 
 Use a rendered crawler when possible. Static HTML alone can miss JavaScript, theme, or builder output.
@@ -145,7 +155,22 @@ Capture:
 
 Do not optimize H1s on noindex, broken, redirected, non-canonical, duplicate, or intentionally retired pages unless the task is specifically cleanup.
 
-### 3. Audit H1 Problems
+### 3. Pull DataForSEO Intent Context
+
+For each priority page or factory packet, pull DataForSEO data before deciding whether the H1 matches the page's job.
+
+Capture:
+
+- Primary keyword and close variants.
+- Local modifiers and service/category language.
+- Organic and local SERP patterns for the target market.
+- Competitor page titles, descriptions, and visible heading patterns when available.
+- Related queries and intent modifiers.
+- Search volume, CPC, competition, and ranking context where useful for prioritization.
+
+If DataForSEO is unavailable, document the fallback and do not label the H1 recommendation as data-backed.
+
+### 4. Audit H1 Problems
 
 Flag pages where the H1 is:
 
@@ -172,7 +197,7 @@ Also flag heading structure issues when they affect the H1 decision:
 - Reusable blocks create repeated H1s.
 - Hidden mobile/desktop variants both render as H1.
 
-### 4. Diagnose the Source of the Issue
+### 5. Diagnose the Source of the Issue
 
 Before editing, identify where the H1 comes from.
 
@@ -191,9 +216,9 @@ Common sources:
 
 Do not assume the first visible large text is the H1. Inspect the rendered DOM.
 
-### 5. Draft the Correct H1
+### 6. Draft the Correct H1
 
-Use the page's job first, then keywords.
+Use the page's job first, then DataForSEO-backed intent and keywords.
 
 Good H1 formula:
 
@@ -221,6 +246,15 @@ Weak H1s:
 - `Best Lawn Care Lawn Care Near Me Columbia SC`
 - `SEO optimized headline approved`
 - `Landscaping in every city we serve`
+
+For Content Engine Factory runs, generate the H1 recommendation alongside the rest of the page packet:
+
+- Recommended H1.
+- Primary target keyword or intent.
+- DataForSEO context used.
+- Reason for the H1 choice.
+- Source field or template likely controlling the H1.
+- Human-review flag when the H1 changes positioning, visible hero copy, service areas, layout, offers, pricing, guarantees, credentials, awards, or sensitive claims.
 
 ## H1 Rules
 
@@ -282,19 +316,22 @@ For static sites or app-based sites:
 
 Koga can:
 
+- Run the H1 workflow from the Content Engine Factory job.
+- Pull DataForSEO keyword, SERP, competitor, ranking, and related-query data.
 - Crawl rendered pages.
 - Extract H1s, title tags, canonicals, and heading structures.
 - Detect missing, multiple, hidden, duplicated, vague, stuffed, or mismatched H1s.
 - Compare H1s against keyword maps, title tags, URLs, and body copy.
 - Identify likely template-level patterns.
-- Draft recommended H1 replacements.
+- Draft recommended H1 replacements from DataForSEO-backed intent and page context.
 - Prepare page-by-page fix lists.
-- Patch static-site routes when safe.
+- Patch static-site routes or CMS fields when safe.
+- Route page-builder/template exceptions for review.
 - Verify rendered output after changes.
 
 ## What Stays Human
 
-Humans approve or handle:
+Humans approve or handle exception cases:
 
 - Visible hero copy changes on high-value pages.
 - Brand positioning decisions on homepage and primary service pages.
@@ -309,6 +346,7 @@ Humans approve or handle:
 - [ ] Target URLs were crawled from the sitemap or verified URL list.
 - [ ] Non-indexable, redirected, broken, or non-canonical URLs were excluded or handled intentionally.
 - [ ] Rendered H1 output was checked, not just source HTML.
+- [ ] DataForSEO context was pulled or the fallback was documented.
 - [ ] Each priority page has one clear visible H1 unless a deliberate exception is documented.
 - [ ] H1 matches the page topic, target keyword, and search intent.
 - [ ] H1 aligns with the title tag without awkward duplication.
@@ -328,6 +366,12 @@ For each run, produce:
   "client": "Client Name",
   "run_type": "h1_audit",
   "crawl_date": "YYYY-MM-DD",
+  "dataforseo_context": {
+    "location": "Columbia, South Carolina, United States",
+    "primary_keyword": "lawn care columbia sc",
+    "serp_checked": true,
+    "ranking_context_used": true
+  },
   "summary": {
     "urls_checked": 0,
     "missing_h1": 0,
@@ -367,11 +411,13 @@ For each run, produce:
 The process is complete when:
 
 - The target URL set has been crawled or otherwise verified.
+- DataForSEO context has been pulled directly from the API or the fallback is documented.
 - Priority pages have reviewed rendered H1 output.
 - Missing, multiple, hidden, duplicated, generic, stuffed, risky, or leaked H1s have been corrected or logged.
 - Page-builder, template, or design-sensitive items are clearly separated for human review.
 - Approved fixes have been applied in the correct source field or template.
 - Live rendered pages confirm the expected H1 after edits.
+- The Content Engine Factory record includes the H1 decision, implementation path, verification result, and any exception-review notes.
 - The task record includes what changed, what remains, and what should be reviewed next.
 
 ## Common Mistakes
@@ -390,6 +436,7 @@ The process is complete when:
 
 | Source | Relevant Rules |
 |---|---|
+| DataForSEO API | Supplies keyword, SERP, competitor, related-query, ranking, and local-intent metrics that drive H1 recommendations inside the Content Engine Factory. |
 | `OPTIMIZATION-PROTOCOL.md` | Requires one clear H1, strong visible title experience, title/H1 alignment, and clean H2/H3 structure. |
 | `BLOG-CREATION-PROCESS.md` | Requires clear article headings and competitor heading-structure review during blog creation. |
 | `deliverables/on-page/02-service-pages/README.md` | Requires clear service-page H1s and routes deeper H1 auditing to this process. |
