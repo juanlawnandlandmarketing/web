@@ -9,7 +9,7 @@ const SOP_FILES = {
   '3': { title: 'Service Area Pages', source: 'deliverables/on-page/03-service-area-pages/README.md' },
   '4': { title: 'Blog Content', source: 'deliverables/on-page/04-blog-content/README.md' },
   '5': { title: 'Internal Linking', source: 'deliverables/on-page/05-internal-linking/README.md' },
-  '6': { title: 'Alt Text on Images', source: 'deliverables/on-page/06-alt-text/README.md' },
+  '6': { title: 'AI Generation', source: 'deliverables/on-page/06-alt-text/README.md' },
   '7': { title: 'Title Tags & Meta Descriptions', source: 'deliverables/on-page/07-title-tags-meta/README.md' },
   '8': { title: 'H1 Optimization', source: 'deliverables/on-page/08-h1-optimization/README.md' },
   '9': { title: 'Competitor Analysis', source: 'deliverables/on-page/09-competitor-analysis/README.md' },
