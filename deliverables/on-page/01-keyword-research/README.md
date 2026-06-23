@@ -2,10 +2,10 @@
 
 **Process ID:** 01
 **Category:** On-Page SEO
-**Fulfillment Connection:** One-Time Fulfillment / Onsite Core Content Optimization / SEO Ranking Performance
-**Cadence:** Onboarding, quarterly refresh, and any time a new service or service area is added
-**Automation Readiness Score:** 7/10 - Highly automatable
-**Status:** Documented
+**Fulfillment Connection:** One-Time Fulfillment / Onsite Core Content Optimization / Blog Content Creation / Press Releases / SEO Ranking Performance
+**Cadence:** Automated on onboarding, every content-engine run, quarterly refresh, and any time a new service or service area is added
+**Automation Readiness Score:** 10/10 - Fully automated for content generation
+**Status:** Fully automated
 
 ---
 
@@ -13,11 +13,14 @@
 
 Keyword research turns a client's services and service areas into a prioritized search map. It tells the team which keywords matter, which pages should target them, what content should be created next, and which rankings should be tracked.
 
+Process 1 is now fully automated for the content engine. Koga pulls keyword, SERP, competitor, and opportunity data through the DataForSEO API and uses that research to generate aligned web content, blog posts, and press releases without a manual keyword-research build step.
+
 This process feeds:
 
 - Service Pages
 - Service Area Pages
 - Blog Content
+- Press Releases
 - Internal Linking
 - Title Tags and Meta Descriptions
 - Competitor Analysis
@@ -27,13 +30,15 @@ This process feeds:
 
 ## Current State
 
-The current baseline process uses Merge Words to combine a service list with city and state modifiers. That creates a raw keyword list, but it does not provide volume data, competition scoring, ranking opportunity, keyword clustering, or a quarterly refresh loop.
+The old baseline process used Merge Words to combine a service list with city and state modifiers. That raw-list step has been replaced for content-generation work.
 
-This means the team can generate keywords, but the output is not yet a decision system.
+Koga now actively pulls keyword data from DataForSEO, expands service and city opportunities, clusters intent, scores priorities, and routes the results into the established content engine. The automated output supports web content, blog posts, and press releases with current search-demand data instead of static keyword lists.
 
 ## Target State
 
-Koga/Kai should use DataForSEO or SE Ranking to pull keyword volume, competition, CPC, ranking, and SERP data for every meaningful service and city combination. The output should be a prioritized keyword map ranked by opportunity, reviewed by a human, and refreshed quarterly.
+Koga/Kai should keep Process 1 running as a fully automated research layer. DataForSEO remains the primary source for keyword volume, competition, CPC, ranked keywords, SERP composition, competitor discovery, and local search opportunity. SE Ranking and GSC can supplement the run when available.
+
+The output is a prioritized keyword map and content brief foundation that can be used immediately by the web content, blog, and press release workflows. Human review is an exception path for missing inputs, unsupported service claims, unusual client positioning, or sensitive content decisions.
 
 The final map must show:
 
@@ -41,11 +46,12 @@ The final map must show:
 - Service x city keyword opportunities
 - Supporting secondary keywords
 - Informational blog opportunities
+- Press release angles and local authority topics
 - Existing URL or new page recommendation
 - Search intent and funnel stage
 - Priority tier for fulfillment
 - Ranking tracker seed keywords
-- Human approval notes
+- Automation notes and exception-review flags
 
 ## Required Inputs
 
@@ -54,21 +60,21 @@ Before running keyword research, collect these inputs:
 | Input | Owner | Notes |
 |---|---|---|
 | Client domain | Human or Koga | Use the live website when available. |
-| Client services | Human | Include core services and individual services. |
-| Service areas | Human | Cities and states only. Do not use counties as primary targets unless approved. |
-| Priority services | Human | The services the client most wants to sell. |
-| Known competitors | Human | Use client-provided competitors as a starting point. |
+| Client services | Koga, with human fallback | Pull from website, onboarding notes, GBP services, and known client data. |
+| Service areas | Koga, with human fallback | Cities and states only. Do not use counties as primary targets unless approved. |
+| Priority services | Koga, with human fallback | Infer from package, site structure, onboarding notes, and content priorities. |
+| Known competitors | Koga, with human fallback | Use DataForSEO SERPs and client-provided competitors when available. |
 | Current sitemap or indexed URLs | Koga/Kai | Used to map keywords to existing pages. |
 | Google Search Console access | Koga/Kai | Use if available for current impressions, clicks, and position data. |
 | GBP categories and services | Human or Koga | Helps validate local terminology. |
-| Brand/client notes | Human | Exclude services the client does not want, cannot staff, or does not offer. |
+| Brand/client notes | Koga, with human fallback | Exclude services the client does not want, cannot staff, or does not offer. |
 
 ## Data Sources and Tools
 
 | Source | Used For |
 |---|---|
-| DataForSEO SERP API | Local SERP simulation, competitor discovery, keyword metrics, search volume, competition, CPC. |
-| DataForSEO Labs | Competitor ranked keywords and keyword gap data. |
+| DataForSEO SERP API | Primary source for local SERP simulation, competitor discovery, ranking context, SERP features, and local pack checks. |
+| DataForSEO Labs | Primary source for keyword ideas, search volume, competition, CPC, competitor ranked keywords, and keyword gap data. |
 | SE Ranking | Keyword research, rank tracking seed list, competitive data when available. |
 | Google Search Console | Existing query data, positions 4-20 opportunities, page-level impressions and clicks. |
 | Client onboarding notes | Services, locations, exclusions, local terminology, business priorities. |
@@ -79,9 +85,9 @@ Before running keyword research, collect these inputs:
 
 ## Workflow
 
-### 1. Confirm the Business Inputs
+### 1. Confirm the Business Inputs Automatically
 
-Start with the client facts, not the keyword tool. Confirm:
+Start with the client facts, not the keyword tool. Koga compiles:
 
 - Business name and domain
 - Core services
@@ -92,7 +98,7 @@ Start with the client facts, not the keyword tool. Confirm:
 - Known competitors
 - Current GBP category and service list
 
-If any input is missing, document the assumption instead of inventing it silently.
+If any input is missing, document the assumption and mark the field as an exception-review item. Do not block the standard content-engine run unless the missing input creates a real risk.
 
 ### 2. Build Seed Keywords
 
@@ -121,9 +127,9 @@ Seed keyword distribution should be roughly:
 - 45-55% medium priority
 - 15-25% low priority
 
-### 3. Pull Keyword Metrics
+### 3. Pull Keyword Metrics With DataForSEO
 
-Use DataForSEO or SE Ranking to enrich the seed list with:
+Use DataForSEO as the default enrichment layer for:
 
 - Monthly search volume
 - Competition or keyword difficulty
@@ -134,6 +140,8 @@ Use DataForSEO or SE Ranking to enrich the seed list with:
 - Competitors ranking for the same term
 
 Use the correct local geography for DataForSEO. Prefer a city-level location name such as `Princeton, New Jersey, United States` when the process is evaluating a city-specific keyword.
+
+Use SE Ranking or GSC as supplemental context when available, not as the primary automation dependency for content-generation work.
 
 ### 4. Expand With Competitor Gaps
 
@@ -222,7 +230,7 @@ Every approved keyword cluster must map to one of these outcomes:
 
 Avoid mapping the same primary keyword to multiple pages. If two pages could target the same primary term, flag it as a cannibalization risk.
 
-### 9. Select Rank Tracking Keywords
+### 9. Select Rank Tracking and Content-Engine Keywords
 
 Choose a practical tracking set from the approved map.
 
@@ -232,42 +240,43 @@ Include:
 - Priority city/service combinations
 - High-value existing rankings in positions 4-20
 - A few informational/blog keywords tied to active content
+- Press release support terms tied to local authority, service expansion, seasonal topics, or company news
 - Brand/entity terms only when they matter for reporting
 
 Do not overload the tracker with every keyword in the universe. The tracker should reflect decisions, not raw research.
 
-### 10. Human Review and Approval
+### 10. Automated QA and Exception Review
 
-Human approval is the required manual gate.
+For standard web content, blog posts, and press releases, Process 1 no longer requires a manual keyword-research gate. Koga validates the keyword map against services, locations, intent, SERP relevance, and existing URLs before handing it to the content engine.
 
-Juan or the assigned SEO owner reviews:
+Human review is only required when the automation flags:
 
-- Priority services
-- Service area accuracy
-- Excluded services/locations
-- Top 5-10 first targets
-- Page recommendations
-- Any sensitive local terminology
-- Final rank tracking seed list
+- Missing or conflicting service-area data
+- Services the client may not actually offer
+- Sensitive claims, regulated language, or legal/reputation risk
+- A major page-structure decision that could create cannibalization
+- A press release angle that needs client confirmation
+- Any confidence score below the acceptable threshold
 
-No keyword map is complete until the human reviewer approves it or leaves clear revision notes.
+If no exception is present, the keyword research packet is considered automation-approved for content generation.
 
 ### 11. Handoff to Fulfillment
 
-After approval, send the keyword map into the next process:
+After automated QA, send the keyword map into the next process:
 
 | Destination Process | What It Receives |
 |---|---|
 | Service Pages | Primary service keywords, secondary terms, page intent, and current URL/new URL recommendation. |
 | Service Area Pages | Approved city/service opportunities and local page priorities. |
 | Blog Content | Informational and commercial topics tied to service gaps. |
+| Press Releases | Local authority angles, service-expansion topics, seasonal topics, entity terms, and anchor/context recommendations. |
 | Title Tags and Meta Descriptions | Primary keywords and search intent by URL. |
 | Internal Linking | Page priority, related service clusters, and anchor language. |
 | Reporting | Ranking tracker seed terms and strategic context. |
 
-### 12. Quarterly Refresh
+### 12. Automated Refresh
 
-Every quarter, refresh:
+Refresh automatically during quarterly reviews and content-engine runs:
 
 - Search volume and competition
 - Current rankings
@@ -289,10 +298,11 @@ Quarterly refresh output should include:
 
 ## Automation Plan
 
-### Koga/Kai Can Automate
+### Koga/Kai Automates the Full Process
 
 - Generate seed keywords from services and locations
-- Pull DataForSEO or SE Ranking metrics
+- Pull DataForSEO metrics, SERP data, and competitor keyword data
+- Pull SE Ranking and GSC support data when available
 - Pull GSC query opportunities
 - Find competitor keyword gaps
 - Normalize and deduplicate keyword data
@@ -301,18 +311,18 @@ Quarterly refresh output should include:
 - Score opportunity
 - Map clusters to existing URLs
 - Recommend new pages and blog topics
-- Build the approval packet
+- Recommend press release angles
+- Build the content-engine research packet
+- Flag exceptions instead of forcing every run through manual review
 - Refresh the map quarterly
 
-### Human Must Handle
+### Human Exception Handling Only
 
-- Confirm real services and service areas
-- Decide priority services
-- Exclude bad-fit or low-margin services
-- Validate local terminology
-- Approve the top targets
-- Approve new page/content priorities
-- Resolve ambiguous strategy calls
+- Resolve missing or conflicting services and service areas
+- Confirm unusual or sensitive client claims
+- Reject bad-fit or low-margin targets when automation confidence is low
+- Approve major site-architecture changes when cannibalization risk is high
+- Approve client-sensitive press release angles
 
 ## Output Format
 
@@ -334,8 +344,9 @@ The completed keyword map should contain at minimum:
 | Current Ranking | Client's current position when available. |
 | Existing URL | Current page if one exists. |
 | Recommended URL/Page | Existing optimization or new page recommendation. |
+| Content Engine Use | Service page, service area page, blog, press release, metadata, internal linking, tracker only, or reject. |
 | Priority Tier | Tier 1, Tier 2, Tier 3, Reject. |
-| Human Approval | Approved, revise, rejected, or pending. |
+| Automation Status | Automation-approved, exception review, revised, rejected, or pending. |
 | Notes | Assumptions, exclusions, or next steps. |
 
 ## Quality Checklist
@@ -345,6 +356,7 @@ Before marking this process complete, verify:
 - [ ] Core services are represented.
 - [ ] Individual services are represented.
 - [ ] Main service areas are represented.
+- [ ] DataForSEO keyword and SERP pulls completed for the active geography.
 - [ ] Unsupported services are removed.
 - [ ] Unsupported cities are removed.
 - [ ] Synonyms are preserved when customers actually search that way.
@@ -354,8 +366,10 @@ Before marking this process complete, verify:
 - [ ] No two pages are assigned the same primary keyword without a cannibalization note.
 - [ ] Positions 4-20 opportunities are flagged when GSC/ranking data is available.
 - [ ] Top 5-10 first targets are identified.
+- [ ] Blog and press release opportunities are routed into the content engine.
 - [ ] Rank tracking seed terms are selected.
-- [ ] Human reviewer approved the final map or left revision notes.
+- [ ] Automation-approved rows have no unresolved exception flags.
+- [ ] Any exception-review rows have clear human action notes.
 
 ## Completion Criteria
 
@@ -366,19 +380,20 @@ This process is complete when:
 3. Each approved cluster has a fulfillment destination.
 4. The first 5-10 targets are clear.
 5. Rank tracking seed keywords are selected.
-6. Human approval is documented.
-7. The next process owner can start Service Pages, Service Area Pages, Blog Content, or metadata optimization without redoing the research.
+6. Web content, blog, and press release opportunities are ready for the content engine.
+7. Exception-review items are either resolved or clearly isolated from the automated content run.
+8. The next process owner can start Service Pages, Service Area Pages, Blog Content, Press Releases, or metadata optimization without redoing the research.
 
 ## Common Mistakes
 
-- Using only Merge Words and stopping at a raw list.
+- Using only Merge Words and stopping at a raw list instead of DataForSEO-backed automation.
 - Chasing high-volume generic keywords that will not convert locally.
 - Ignoring the client's most profitable services.
 - Targeting counties as primary local pages without approval.
 - Mapping one primary keyword to several pages.
 - Throwing every keyword into rank tracking.
-- Skipping human approval.
-- Treating keyword research as a one-time onboarding task instead of refreshing quarterly.
+- Sending exception-flagged claims into content without review.
+- Treating keyword research as a one-time onboarding task instead of refreshing through the automated content engine.
 
 ## Source References
 
@@ -390,6 +405,7 @@ This process is complete when:
 - `/opt/koga/.openclaw/workspace/seo/automation/STEP_5_SITE_ARCHITECTURE.md`
 - `/opt/koga/.openclaw/workspace/seo/ONBOARDING_MASTER.md`
 - `/opt/koga/.openclaw/workspace/seo/SEO_MASTER_STRATEGY.md`
+- `/opt/koga/.openclaw/workspace/repos/web-process-30/lib/dataforseo.js`
 
 ---
 
