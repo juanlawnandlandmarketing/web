@@ -16,6 +16,7 @@ All 38 SEO deliverables organized by category. Each folder contains the automati
 
 | Score | Meaning |
 |-------|---------|
+| ⚫ 0 | 100% manual |
 | 🔴 1–2 | Manual — hard to automate |
 | 🟡 3–4 | Low automation — mostly human |
 | 🟢 5–6 | Partial automation possible |
