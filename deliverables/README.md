@@ -30,11 +30,11 @@ Ordered by automation readiness (highest first):
 | # | Deliverable | Score | Status |
 |---|------------|-------|--------|
 | 01 | [Keyword Research](./on-page/01-keyword-research/) | 🤖 10/10 | 🤖 **Fully automated** |
+| 05 | [Internal Linking](./on-page/05-internal-linking/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 04 | [Blog Content](./on-page/04-blog-content/) | 🚀 9/10 | 🔨 **In Progress** |
 | 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | ✅ Documented |
 | 37 | [Internal Monthly Scorecard](./reporting/37-internal-monthly-scorecard/) | 🚀 9/10 | 🔲 Not started |
 | 06 | [Alt Text on Images](./on-page/06-alt-text/) | 🚀 9/10 | 🔲 Not started |
-| 05 | [Internal Linking](./on-page/05-internal-linking/) | ✅ 8/10 | 🔲 Not started |
 | 09 | [Competitor Analysis](./on-page/09-competitor-analysis/) | ✅ 8/10 | 🔲 Not started |
 | 22 | [Google Search Console](./technical/22-google-search-console/) | ✅ 8/10 | 🔲 Not started |
 | 26 | [Page Speed / Core Web Vitals](./technical/26-page-speed-core-web-vitals/) | ✅ 8/10 | 🔲 Not started |
