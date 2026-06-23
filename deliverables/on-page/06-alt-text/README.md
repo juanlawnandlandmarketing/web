@@ -1,360 +1,332 @@
-# Alt Text on Images
+# AI Generation
 
+**Process ID:** 06
 **Category:** On-Page SEO
-**Automation Readiness Score:** 9/10 — 🚀 Near-full automation
-**Status:** ✅ Documented
+**Fulfillment Connection:** Content Factory Engine / Blog Content Creation / Service Pages / Service Area Pages / Press Releases
+**Cadence:** Every content creation and production pipeline run
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
 ## Purpose
 
-Alt text helps screen readers, image fallback states, and search engines understand meaningful images on a page.
+AI Generation is the content-production layer that turns approved keyword research, client preferences, page intent, and SEO performance data into publish-ready content assets.
 
-For Lawn & Land clients, alt text should describe the actual visual while naturally supporting the page topic, service, and location when that context is truthful. It is not a place to stuff keywords, invent local proof, describe the filename, or leak AI prompt language.
+Process 06 is executed completely by the AI Agent during the content creation and production pipeline. The agent generates drafts, rewrites, metadata, FAQs, schema notes, summaries, excerpts, calls to action, supporting image prompts, and optimization recommendations while actively targeting the defined keywords for the page or asset.
 
-The goal is simple:
+This process feeds:
 
-- Every meaningful image has useful alternative text.
-- Featured images and inline body images are reviewed before close-out.
-- Alt text describes what is actually visible.
-- SEO context is included only when it fits naturally.
-- Decorative images are handled intentionally instead of accidentally left blank.
-- Prompt instructions, workflow notes, filenames, and generic labels never appear in public metadata.
+- Service Pages
+- Service Area Pages
+- Blog Content Factory Engine
+- Internal Linking
+- Title Tags and Meta Descriptions
+- Press Releases
+- GBP Posts
+- Email Newsletter
+- Client Monthly Report
 
 ## Current State
 
-Alt text already appears inside several production workflows:
+AI generation is already embedded throughout the Content Factory Engine. The agent uses Process 1 keyword data, DataForSEO-backed topic research, client preference notes, live-page context, and source-of-truth workflows to create or improve content.
 
-- Blog creation requires featured image alt text at image generation and upload.
-- Blog optimization requires every assigned or inserted image to have appropriate alt text.
-- Service page and service-area SOPs require image notes and alt text guidance.
-- WordPress publishing work usually touches featured images, inline images, Media Library fields, and sometimes page-builder image widgets.
-
-The missing piece is a standalone process for auditing, generating, applying, and verifying alt text across a site.
+The SOP now treats Process 06 as a fully automated production process, not a manual drafting assist. Human review only appears as an exception path for missing facts, sensitive claims, access blockers, or client-risk decisions.
 
 ## Target State
 
-Every active SEO client should have a repeatable image-alt process that can run during publishing, launch QA, and retroactive audits.
+Every generated asset should be tied to a defined keyword target, a known page role, and a clear production destination. The output should be useful to a homeowner or operator first, then aligned to search intent and SEO structure.
 
-The ideal system:
+The final AI generation packet must include:
 
-1. Crawls all indexable pages and posts.
-2. Extracts meaningful image URLs, attachment IDs when available, current alt text, captions, surrounding copy, and page context.
-3. Flags missing, generic, duplicated, stuffed, irrelevant, or prompt-leaked alt text.
-4. Uses the actual image and page context to generate concise replacement alt text.
-5. Separates safe bulk updates from human-review images.
-6. Updates the correct field: HTML `alt`, WordPress attachment alt, page-builder image alt, or manifest metadata depending on the site.
-7. Verifies the live page and WordPress source after edits.
+- Client and domain context
+- Target asset type
+- Target URL or destination
+- Primary target keyword
+- Secondary target keywords
+- Search intent and funnel stage
+- Source workflow used
+- Client preference notes
+- Required service, location, and offer facts
+- Draft or rewritten content
+- Metadata and excerpt when applicable
+- FAQ candidates when applicable
+- Schema notes when applicable
+- Internal link targets
+- Image or creative prompt when applicable
+- Keyword integration notes
+- Automation status
+- QA notes
 
-## Automation Score
+## Required Inputs
 
-**9/10 — Near-full automation**
+Before generating content, collect or derive these inputs:
 
-Most of the process can be automated:
-
-- Crawling pages for image tags.
-- Finding missing or weak `alt` attributes.
-- Pulling WordPress attachment metadata with WP-CLI.
-- Matching images to pages, posts, featured image IDs, and inline placements.
-- Using image understanding to describe visible content.
-- Checking for keyword stuffing, duplicate alt text, filenames, and AI prompt leakage.
-- Producing bulk update commands or page-edit recommendations.
-
-It is not a 10/10 because some image meaning depends on human context: real client photos, brand identity, service accuracy, local claims, decorative images, logos, awards, before/after galleries, and page-builder-specific fields.
-
-## When This Process Runs
-
-| Trigger | What Happens |
-|---|---|
-| New blog post | Generate/upload a featured image with descriptive alt text before publishing. |
-| Blog optimization | Verify featured and inline images have useful, relevant alt text before closing the row. |
-| Service page build | Add alt text guidance for hero, service, process, gallery, and trust images. |
-| Service-area page build | Add truthful local/service context only when the image and page support it. |
-| Image upload | Add Media Library alt text at upload time instead of leaving cleanup for later. |
-| Retroactive audit | Crawl the site and fix missing, generic, duplicated, stuffed, or irrelevant alt text. |
-| Image replacement | Re-check alt text whenever an image asset changes. |
-
-## Inputs
-
-| Input | Used For |
-|---|---|
-| Page and post URLs | Locate images on live pages. |
-| WordPress media library | Find attachment IDs, current alt text, captions, and featured image assignments. |
-| Page HTML | Extract image tags, current alt attributes, lazy-loaded sources, and surrounding context. |
-| Image files or URLs | Understand what is actually visible. |
-| Page title, H1, URL, and body copy | Add truthful service/page context. |
-| Keyword map | Use keywords naturally when they match the image and page. |
-| Client brand references | Confirm real logos, uniforms, trucks, and project photos. |
-| Image manifest files | Update managed static-site image metadata where used. |
-
-## Image Classification
-
-Classify each image before writing alt text.
-
-| Image Type | Examples | Alt Text Rule |
+| Input | Owner | Notes |
 |---|---|---|
-| Featured image | Blog or page featured image | Must have descriptive alt text in the attachment metadata. |
-| Hero image | Top page banner or service visual | Usually meaningful; describe the service/result/location if truthful. |
-| Inline body image | Image inserted into article content | Must describe the visible content and match the surrounding topic. |
-| Service card image | Image for a service tile or page section | Describe the service/result shown, not just the card title. |
-| Gallery/project image | Portfolio, before/after, project photo | Describe the visible project accurately; avoid invented details. |
-| Logo | Company logo or partner logo | Use brand/logo alt when meaningful; decorative logos may need empty alt depending on implementation. |
-| Icon | Decorative UI icon | Usually decorative; do not force SEO alt text. |
-| Background image | CSS background or decorative hero layer | Add accessible text elsewhere when the image carries meaning. |
-| Tracking/spacer image | Pixel, preload, placeholder | Should not receive SEO alt text. |
+| Approved keyword target | AI Agent / Koga | Required. Do not generate production content without a defined target keyword. |
+| Secondary keywords | AI Agent / Koga | Used naturally in headings, body copy, FAQs, metadata, and supporting sections. |
+| Client domain | AI Agent / Koga | Required for crawl context and internal links. |
+| Asset type | AI Agent / Koga | Blog, service page, service area page, PR, GBP post, metadata, FAQ, or report copy. |
+| Search intent | AI Agent / Koga | Informational, commercial, transactional, local, or mixed. |
+| Client preferences | Human or AI Agent | Tone, topics to prioritize, services to emphasize, services to avoid, and approval constraints. |
+| Service and market facts | Human or AI Agent | Required for service, location, price, warranty, and local claims. |
+| Existing site content | AI Agent / Koga | Prevents duplicate content and supports internal links. |
+| Source workflow | AI Agent / Koga | Blog process, optimization protocol, PR process, service page SOP, or service area SOP. |
+| Brand guidelines | AI Agent / Koga | Required for style, creative direction, and visual prompts. |
+
+## Data Sources and Tools
+
+| Source | Used For |
+|---|---|
+| Process 1 Keyword Research | Primary and secondary keyword targets. |
+| DataForSEO API | Keyword demand, SERP context, related queries, competitor angles, CPC, and competition. |
+| Content Factory Engine | Production orchestration and content packet assembly. |
+| n8n workflows | Automated research, routing, and production handoff where configured. |
+| Google Search Console | Existing page/query opportunities when available. |
+| Client onboarding notes | Client services, service areas, exclusions, and preferences. |
+| Website crawl | Existing content, internal links, duplication checks, and page context. |
+| Ground Control brand references | Brand and visual constraints for generated creative prompts. |
+| Source-of-truth SOPs | Process-specific rules for blogs, service pages, service area pages, PRs, reports, and optimization. |
 
 ## Workflow
 
-### 1. Define the Run Type
+### 1. Identify the Production Asset
 
-Classify the request first.
+Classify what the AI Agent is generating:
 
-| Run Type | Primary Goal |
+- Blog article
+- Service page
+- Service area page
+- Press release
+- GBP post
+- Email/newsletter copy
+- Metadata
+- FAQ block
+- Schema-support copy
+- Optimization rewrite
+- Report narrative
+
+Each asset must have a destination, owner process, and expected output format before generation begins.
+
+### 2. Load the Source Workflow
+
+Use the controlling SOP before generation:
+
+| Asset | Required Workflow |
 |---|---|
-| Publish support | Ensure new featured and inline images have alt text before publishing. |
-| Existing post optimization | Fix image alt text as part of the content optimization pass. |
-| Service/page build | Add image notes and alt text guidance before final QA. |
-| Sitewide audit | Find and prioritize all missing or weak alt text across the site. |
-| Image replacement | Update alt text to match the new asset, not the old one. |
-| Static-site image pass | Update HTML attributes and image manifests together. |
+| Blog article | `BLOG-CREATION-PROCESS.md` and Process 04. |
+| Blog optimization | `OPTIMIZATION-PROTOCOL.md`. |
+| Service page | Process 02. |
+| Service area page | Process 03. |
+| Internal links | Process 05. |
+| Press release | `Press_Release_Creation_Process.md` and PR support files. |
+| SEO report copy | `seo/SEO_REPORT_PROTOCOL.md`. |
 
-### 2. Crawl Image Inventory
+Do not generate from memory when a source workflow applies.
 
-Collect the live image inventory from each target URL.
+### 3. Confirm Keyword Targets
 
-Capture:
+Every AI-generated content asset must actively target and integrate the defined keywords.
 
-- Page URL
-- Page title and H1
-- Image source URL
-- Responsive/lazy source if different
-- Current `alt` attribute
-- Attachment ID if WordPress exposes it
-- Featured image status if applicable
-- Caption text
-- Surrounding heading or paragraph
-- Image dimensions
-- Whether the image appears visible or decorative
-- Whether the same image is reused on multiple pages
+At minimum, identify:
 
-Do not assume an image is the featured image because the filename looks similar. For WordPress posts, verify `_thumbnail_id` when featured image assignment matters.
+- Primary keyword
+- Secondary keywords
+- Related questions
+- Search intent
+- Funnel stage
+- Target page or asset destination
+- Service or market being supported
 
-### 3. Audit Current Alt Text
+Keyword integration rules:
 
-Flag any image where alt text is:
+- Use the primary keyword naturally in the title/H1 or opening when the asset type supports it.
+- Use secondary keywords only where they fit the reader's intent.
+- Include related questions in FAQ or supporting sections when useful.
+- Match keywords to the asset's page role.
+- Do not stuff keywords into every heading.
+- Do not add city/service terms the client cannot truthfully support.
+- Do not generate content for a keyword that belongs to a different page type.
 
-- Missing on a meaningful image.
-- Empty when the image is not decorative.
-- Generic, such as `image`, `blog image`, `lawn care`, `photo`, `landscaping`, or the filename.
-- Keyword-stuffed.
-- Duplicated across several different images.
-- Describing the page topic instead of the actual visual.
-- Describing a previous asset after the image was replaced.
-- Irrelevant to the image.
-- Making fake local, brand, certification, or service claims.
-- Containing prompt instructions, workflow/status text, AI self-checks, or internal notes.
-- Broken by escaped punctuation or special-character artifacts.
+### 4. Gather Context
 
-### 4. Generate Replacement Alt Text
+Before drafting, the AI Agent gathers:
 
-Use the image first, then the page context.
+- Client services and service areas
+- Existing page and blog context
+- Internal link targets
+- Competitor/SERP context when useful
+- Client preference notes
+- Brand and voice constraints
+- Claims to avoid
+- Required CTA or conversion path
 
-Good alt text formula:
+If required facts are missing, the agent marks the item as an exception and either uses a documented assumption or stops generation when the risk is too high.
 
-```text
-[Specific visible subject] + [service/result context] + [truthful location or brand context when supported]
-```
+### 5. Generate the Content
 
-Examples:
+The AI Agent produces the content in the required format for the destination process.
 
-| Image Context | Good Alt Text |
-|---|---|
-| Blog featured image for paver sealing | Freshly sealed paver driveway beside a landscaped Florida home. |
-| Service page hero for lawn aeration | Lawn aeration plugs across a healthy residential turf area. |
-| Service-area landscaping card | Finished front yard landscaping for a residential property in Fairfield County. |
-| Client truck project photo | Branded landscape truck parked beside a completed planting bed. |
-| Blog body image for outdoor lighting | Low-voltage landscape lights illuminating a stone walkway at dusk. |
+Generation standards:
 
-Weak alt text:
+- Lead with the answer or useful framing.
+- Match the search intent quickly.
+- Use natural keyword integration.
+- Preserve client voice and service accuracy.
+- Support the site's SEO silo structure.
+- Add internal-link opportunities where the destination process requires them.
+- Avoid generic filler.
+- Avoid unsupported guarantees, prices, certifications, awards, locations, or project claims.
+- Avoid visible prompt language, AI self-reference, workflow notes, or status labels.
 
-- `lawn care`
-- `IMG_2045.jpg`
-- `best lawn care company near me`
-- `click here`
-- `AI-generated image showing approved final result`
-- `professional landscaping service in every city we serve`
+### 6. Generate Metadata and Supporting Elements
 
-## Alt Text Rules
+When applicable, the AI Agent generates:
 
-Alt text should:
+- SEO title
+- Meta description
+- Slug
+- Excerpt
+- FAQ block
+- Schema notes
+- Internal link plan
+- CTA
+- Image prompt
+- Alt text
+- Social/GBP/email repurposing notes
 
-- Describe the actual image accurately.
-- Be concise, usually under 125 characters unless more detail is needed.
-- Use natural language.
-- Support the page topic when truthful.
-- Include the service or location only when the image and page context support it.
-- Be distinct when multiple images appear on the same page.
-- Prioritize accessibility first and SEO second.
-- Avoid repeating the same phrase across a gallery or service grid.
+Metadata and supporting elements must reinforce the same keyword target as the main content.
 
-Alt text should not:
+### 7. Run Automated QA
 
-- Stuff keywords.
-- Invent services, cities, credentials, awards, equipment, logos, or project details.
-- Describe invisible intent, such as "high-converting SEO image."
-- Use the filename as the alt text.
-- Say "image of" or "picture of" unless it is needed for clarity.
-- Include prompt text, workflow status, model names, or internal reasoning.
-- Repeat page titles mechanically on every image.
+Before a generated asset moves forward, verify:
 
-## WordPress Implementation
+- Primary keyword appears naturally in the correct places.
+- Secondary keywords are integrated without stuffing.
+- Content matches the assigned search intent.
+- Service and location claims are accurate.
+- Client preferences are reflected.
+- Internal links support the correct silo.
+- No duplicate or near-duplicate content issue is obvious.
+- No prompt text, AI notes, or internal workflow language remains.
+- CTA and next step are clear.
+- Output format matches the destination process.
 
-For WordPress sites:
+### 8. Handoff to Production
 
-1. Use WP-CLI to identify posts/pages and image attachment IDs when possible.
-2. Check featured image assignment with `_thumbnail_id`.
-3. Update attachment alt text with the correct `_wp_attachment_image_alt` value.
-4. Check inline/body image tags for hardcoded `alt` attributes.
-5. Check page-builder image widgets where the alt text is stored outside post content.
-6. Re-render or purge cache when needed.
-7. Verify the live HTML and the Media Library/attachment metadata when possible.
+After QA, route the generated asset to the correct next step:
 
-Typical WP-CLI checks:
+- Draft packet
+- Staging packet
+- CMS publishing packet
+- Optimization packet
+- PR upload packet
+- GBP/email repurposing packet
+- Exception queue
 
-```bash
-wp post meta get <post_id> _thumbnail_id
-wp post meta get <attachment_id> _wp_attachment_image_alt
-wp post meta update <attachment_id> _wp_attachment_image_alt "Descriptive alt text"
-```
+The handoff must include the target keywords and any exception notes.
 
-Do not close a blog optimization row if the featured image exists visually but the WordPress `_thumbnail_id` is empty or the assigned attachment has missing/generic alt text.
+## Automation Plan
 
-## Static Site Implementation
+### AI Agent Automates
 
-For static sites or managed image systems:
+- Pull keyword targets and search intent.
+- Pull DataForSEO context when relevant.
+- Crawl or summarize existing content context.
+- Generate page, blog, PR, GBP, metadata, FAQ, and report copy.
+- Integrate target keywords into titles, headings, body copy, FAQs, metadata, and supporting elements.
+- Generate internal-link recommendations.
+- Generate image prompts and alt text.
+- Run duplicate, keyword, formatting, and workflow-artifact checks.
+- Package the output for the production pipeline.
 
-1. Update the `alt` or `aria-label` text in the page/template.
-2. Update image manifest metadata when the repo uses one.
-3. Keep managed filenames intact unless the image system explicitly allows renaming.
-4. Verify that the live HTML uses the new text.
-5. Re-check that the visible image matches the alt text after deployment.
+### Human Exception Handling
 
-## What Gets Automated
+No routine human drafting gate remains in Process 06.
 
-Koga can:
+Humans handle only:
 
-- Crawl pages and extract image inventory.
-- Detect missing, empty, generic, duplicated, stuffed, or leaked alt text.
-- Pull WordPress attachment IDs and metadata.
-- Use visual/image understanding to draft accurate alt text.
-- Compare image topic against page/service topic.
-- Generate bulk update commands or patch static files.
-- Update metadata when authorized.
-- Verify live HTML after edits.
-- Produce a before/after audit log.
-
-## What Stays Human
-
-Humans approve or handle:
-
-- Ambiguous project photos.
-- Real client photos where identity, property, or brand details matter.
-- Images involving people, crews, vehicles, logos, signage, certifications, or awards.
-- Decorative-vs-meaningful decisions in complex layouts.
-- Page-builder widgets that cannot be safely edited programmatically.
-- Any alt text that could imply a service, location, or result the client cannot truthfully claim.
-- Large retroactive batches before live publishing.
-
-## QA Checklist
-
-- [ ] Target pages or posts were crawled.
-- [ ] Featured image assignment was checked when working on blog posts.
-- [ ] Meaningful images have non-empty alt text.
-- [ ] Decorative images are intentionally handled.
-- [ ] Alt text describes the actual image, not just the keyword.
-- [ ] Service and location context is truthful.
-- [ ] Alt text is concise, natural, and not keyword-stuffed.
-- [ ] Multiple images on the same page have distinct alt text.
-- [ ] No filenames, prompt text, workflow notes, AI reasoning, or internal status text appear in alt text.
-- [ ] WordPress attachment metadata was updated when applicable.
-- [ ] Inline/body image attributes were checked when applicable.
-- [ ] Page-builder or manifest metadata was checked when applicable.
-- [ ] Live HTML was verified after implementation.
+- Missing client facts the agent cannot safely infer.
+- Sensitive legal, pricing, guarantee, certification, or reputation claims.
+- Client-specific positioning that requires approval.
+- Access or publishing blockers.
+- Content that should not proceed because the keyword target or page type is wrong.
 
 ## Output Format
 
-For each run, produce:
+The AI generation packet should contain:
 
-```json
-{
-  "client": "Client Name",
-  "run_type": "sitewide_alt_text_audit",
-  "crawl_date": "YYYY-MM-DD",
-  "summary": {
-    "pages_checked": 0,
-    "images_checked": 0,
-    "missing_alt": 0,
-    "weak_alt": 0,
-    "updates_recommended": 0,
-    "updates_completed": 0
-  },
-  "recommendations": [
-    {
-      "page_url": "https://example.com/blog/topic/",
-      "image_url": "https://example.com/wp-content/uploads/image.jpg",
-      "attachment_id": 123,
-      "current_alt": "",
-      "recommended_alt": "Freshly sealed paver driveway beside a landscaped Florida home.",
-      "reason": "Featured image is meaningful and currently missing alt text.",
-      "implementation_type": "wordpress_attachment_meta",
-      "human_gate": false
-    }
-  ],
-  "completed_updates": [
-    {
-      "page_url": "https://example.com/blog/topic/",
-      "image_url": "https://example.com/wp-content/uploads/image.jpg",
-      "new_alt": "Freshly sealed paver driveway beside a landscaped Florida home.",
-      "verified_live": true
-    }
-  ]
-}
-```
+| Field | Description |
+|---|---|
+| Client | Client name/domain. |
+| Process ID | `06`. |
+| Asset Type | Blog, service page, service area page, PR, metadata, FAQ, GBP, email, or report copy. |
+| Destination Process | Process receiving the generated asset. |
+| Primary Keyword | Required main target. |
+| Secondary Keywords | Supporting terms. |
+| Search Intent | Informational, commercial, transactional, local, or mixed. |
+| Funnel Stage | TOFU, MOFU, BOFU, or reporting/support. |
+| Source Workflow | SOP or protocol followed. |
+| Generated Content | Draft, rewrite, metadata, FAQ, or production-ready content. |
+| Keyword Integration Notes | Where target keywords were used and why. |
+| Internal Links | Suggested or applied internal links. |
+| Image/Creative Notes | Prompt, alt text, and brand constraints when applicable. |
+| Automation Status | Generated, QA passed, staged, published, optimized, exception review, blocked, or parked. |
+| QA Notes | Checks passed, assumptions, or blockers. |
+
+## Quality Checklist
+
+- [ ] Source workflow was identified.
+- [ ] Primary target keyword is defined.
+- [ ] Secondary keywords are defined or intentionally omitted.
+- [ ] Search intent is documented.
+- [ ] Generated content matches the assigned asset type.
+- [ ] Primary keyword is integrated naturally.
+- [ ] Secondary keywords are used only where relevant.
+- [ ] Client service and location claims are accurate.
+- [ ] Client preferences are reflected.
+- [ ] Internal links support the correct silo.
+- [ ] Metadata/FAQ/schema support the same keyword target when applicable.
+- [ ] No prompt text, AI notes, or workflow artifacts remain.
+- [ ] Unsupported claims are removed or flagged.
+- [ ] Output is routed to the correct production step.
 
 ## Completion Criteria
 
-The process is complete when:
+Process 06 is complete when:
 
-- The target image inventory has been reviewed.
-- Every meaningful featured and inline image has appropriate alt text.
-- Decorative images have been intentionally handled.
-- Weak, generic, duplicated, stuffed, irrelevant, or leaked alt text has been corrected or logged.
-- Human-review items are clearly separated.
-- Live pages or WordPress metadata have been verified after edits.
-- The task record includes what changed, what remains, and what should be reviewed next.
+1. The generated asset has a defined keyword target.
+2. The output follows the controlling source workflow.
+3. Target keywords are naturally integrated.
+4. Automated QA has passed or blockers are documented.
+5. The output is handed to the correct production pipeline step.
+6. Any exception-review items are clearly isolated.
 
 ## Common Mistakes
 
-- Writing alt text for the keyword instead of the image.
-- Leaving the featured image visually present but missing its WordPress attachment alt.
-- Guessing the featured image asset by filename instead of checking `_thumbnail_id`.
-- Reusing the same alt text across every image in a gallery.
-- Adding fake city names because the page is a service-area page.
-- Describing AI prompt intent instead of visible image content.
-- Leaving old alt text after replacing an image.
-- Treating decorative icons like SEO image targets.
-- Closing the task without checking the live HTML.
+- Generating content without a defined primary keyword.
+- Mentioning keywords without matching search intent.
+- Stuffing keywords into headings or metadata.
+- Generating city/service claims the client cannot support.
+- Creating content for the wrong page type.
+- Ignoring the source workflow.
+- Leaving prompt notes, AI self-reference, or internal status text in the output.
+- Treating AI generation as complete before keyword integration QA passes.
 
 ## Source References
 
 | Source | Relevant Rules |
 |---|---|
-| `BLOG-CREATION-PROCESS.md` | Requires featured image generation with descriptive, naturally keyword-relevant alt text entered in the Media Library. |
-| `OPTIMIZATION-PROTOCOL.md` | Requires featured and inline image alt text, service-to-image accuracy, no generic/stuffed alt, and no prompt leakage. |
-| `deliverables/on-page/02-service-pages/README.md` | Requires service page image planning and non-stuffed alt text guidance. |
-| `deliverables/on-page/03-service-area-pages/README.md` | Requires service-area image planning with truthful local context. |
-| `deliverables/on-page/04-blog-content/README.md` | Requires featured image generation/upload, alt text, and live verification during blog publishing. |
+| `BLOG-CREATION-PROCESS.md` | New blog generation, publication, image, metadata, and QA rules. |
+| `OPTIMIZATION-PROTOCOL.md` | Post-optimization protocol and live-page verification. |
+| `deliverables/on-page/01-keyword-research/README.md` | Required keyword targets and search intent. |
+| `deliverables/on-page/02-service-pages/README.md` | Service page content generation rules. |
+| `deliverables/on-page/03-service-area-pages/README.md` | Service area page generation and local-claim safeguards. |
+| `deliverables/on-page/04-blog-content/README.md` | Blog Content Factory Engine phases. |
+| `deliverables/on-page/05-internal-linking/README.md` | SEO silo and internal link rules. |
+| DataForSEO API | Keyword, SERP, CPC, competition, and topic context. |
 
 ---
 
-*Part of the [SEO Command Center](../../README.md) · Lawn & Land Marketing*
+*Part of the [SEO Command Center](../../README.md) - Lawn & Land Marketing*
