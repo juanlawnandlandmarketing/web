@@ -1,8 +1,11 @@
 # Internal Linking
 
+**Process ID:** 05
 **Category:** On-Page SEO
-**Automation Readiness Score:** 8/10 — ✅ Highly automatable
-**Status:** ✅ Documented
+**Fulfillment Connection:** Content Factory Engine / Onsite Core Content Optimization / Blog Content Creation / Service Pages / Service Area Pages
+**Cadence:** Every content-engine run, every publish, every optimization pass, and quarterly sitewide crawl
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
@@ -19,7 +22,7 @@ The goal is not to add random links. The goal is to build a clean link graph whe
 - Orphaned or underlinked pages are discovered and corrected.
 - Anchor text is descriptive, varied, contextual, and useful.
 
-Automation can handle most discovery, scoring, matching, and recommendation work. A human still reviews risky placements, page-builder edits, and any link change that affects visible page layout or client-sensitive claims.
+Process 05 is executed completely by the Content Factory Engine. It crawls the site, classifies URLs by SEO role, applies the defined SEO silo structure, generates source-target-anchor recommendations, inserts or queues safe link placements, and verifies the live result without a routine human gate.
 
 ## Current State
 
@@ -30,11 +33,11 @@ Internal linking is already required inside related workflows:
 - Service page and service-area briefs include recommended outbound and inbound internal links.
 - Site architecture planning defines how BOFU, MOFU, and TOFU content should reinforce each other.
 
-The missing piece is a standalone process that turns those rules into an audit-and-execution workflow for the whole site.
+The standalone process is now the Content Factory Engine's internal-linking layer. It turns those rules into a fully automated audit, recommendation, implementation, and verification workflow for the whole site.
 
 ## Target State
 
-Every active SEO client should have an internal link map that can be refreshed during publishing, monthly optimization, and quarterly audits.
+Every active SEO client should have an internal link map that is refreshed during publishing, monthly optimization, quarterly audits, and every Content Factory Engine run.
 
 The ideal system:
 
@@ -43,14 +46,15 @@ The ideal system:
 3. Maps each URL to its SEO role: homepage, services hub, core service, individual service, service-area page, blog post, trust page, contact page, or utility page.
 4. Identifies orphan pages, weakly linked pages, overlinked pages, broken internal links, redirecting links, duplicate anchors, and missing conversion paths.
 5. Recommends source URL, target URL, anchor text, placement context, priority, and reason.
-6. Separates safe automatic updates from human-review edits.
+6. Implements or queues links according to the content-engine update path.
 7. Verifies the live page after implementation.
+8. Logs any access or page-builder blocker as an execution blocker, not a manual approval step.
 
 ## Automation Score
 
-**8/10 — Highly automatable**
+**10/10 — Fully automated**
 
-The analysis is mostly deterministic:
+The process is deterministic enough for full automation:
 
 - Sitemaps can be crawled.
 - Internal links can be extracted.
@@ -58,8 +62,11 @@ The analysis is mostly deterministic:
 - Orphan and underlinked pages can be calculated.
 - Link opportunities can be matched from keyword map, service map, and content similarity.
 - Broken links and redirecting internal links can be checked programmatically.
+- The SEO silo structure defines which page roles should interconnect.
+- The Content Factory Engine can generate contextual source-target-anchor placements during content creation and optimization.
+- Live-page verification can confirm that links were added, remain canonical, and do not create broken or redirecting paths.
 
-It is not a 10/10 because implementation can touch page builders, reusable blocks, menus, buttons, Avada/Elementor modules, or client-specific content. The final choice of anchor text and placement also needs judgment so the page does not read like SEO junk.
+If access, page-builder behavior, reusable blocks, menus, or locked CMS areas prevent implementation, the engine logs the blocker and queues the exact update packet. That does not change the automation status of the process.
 
 ## When This Process Runs
 
@@ -69,6 +76,7 @@ It is not a 10/10 because implementation can touch page builders, reusable block
 | Blog optimization | Review whether the article has 2-5 useful contextual internal links and a natural path to a money page. |
 | New service page | Link to parent services, relevant service areas, related services, contact path, and supporting blog content. |
 | New service-area page | Link to the services actually offered in that area, nearby areas when useful, contact path, and supporting local/trust content. |
+| Content Factory Engine run | Generate silo-aware internal links across Service Area Pages, Core Services, individual Service Pages, supporting blogs, and conversion paths. |
 | Quarterly audit | Crawl the site, find orphan/underlinked/broken/redirecting links, and produce a prioritized fix list. |
 | Consolidation or URL cleanup | Update old internal links to the surviving canonical page and remove links to retired URLs. |
 
@@ -82,8 +90,29 @@ It is not a 10/10 because implementation can touch page builders, reusable block
 | Site architecture output | Understand parent/child service relationships and funnel stage. |
 | Existing page copy | Find natural link insertion points. |
 | GSC and ranking data | Prioritize pages that need support or are close to improving. |
-| WordPress/page-builder access | Implement approved internal link edits. |
+| WordPress/page-builder access | Implement or queue internal link edits through the available update path. |
 | Current redirects and canonicals | Avoid linking to redirected, duplicate, or non-canonical URLs. |
+| Content Factory Engine output | Apply links during creation, publication, optimization, and verification phases. |
+
+## SEO Silo Structure
+
+The Content Factory Engine generates links according to the defined SEO silo structure.
+
+| Silo Layer | Link Rules |
+|---|---|
+| Core Services | Link to individual Service Pages, relevant Service Area Pages, supporting blogs, proof pages, and conversion paths. |
+| Individual Service Pages | Link back to the parent Core Service, related individual services, relevant Service Area Pages, supporting blogs, and conversion paths. |
+| Service Area Pages | Link to the Core Services and individual Service Pages actually available in that market, nearby Service Area Pages when useful, local proof/trust pages, and conversion paths. |
+| Blog Content | Link to the money pages it supports: Core Services first, then individual Service Pages, Service Area Pages, related posts, trust pages, and conversion paths. |
+| Trust/Proof Pages | Link back into relevant Core Services, Service Pages, Service Area Pages, and conversion paths when context supports it. |
+
+Required interconnections:
+
+- Service Area Pages must link to the Core Services and individual Service Pages available in that market.
+- Core Services must link to the individual Service Pages that belong under that service silo.
+- Individual Service Pages must link back to their Core Service and to relevant Service Area Pages.
+- Blog posts must reinforce the relevant silo instead of linking randomly.
+- Every priority SEO page must have a clean path to contact, quote, or estimate conversion.
 
 ## Page Role Classification
 
@@ -196,9 +225,9 @@ Strong source pages usually include:
 
 Avoid recommendations where the source page topic is unrelated, the anchor would feel forced, or the link only exists because an SEO checklist demanded it.
 
-### 6. Generate Link Recommendations
+### 6. Generate and Apply Link Recommendations
 
-Each recommendation should include:
+Each recommendation/update should include:
 
 | Field | Requirement |
 |---|---|
@@ -209,7 +238,7 @@ Each recommendation should include:
 | Priority | High, medium, or low. |
 | Reason | Why the link helps users and site structure. |
 | Implementation type | Direct content edit, page-builder edit, menu/block update, or review only. |
-| Human gate | Whether the placement needs approval before publishing. |
+| Automation status | Applied, queued, skipped, blocked, or verified. |
 
 ## Placement Rules
 
@@ -276,7 +305,7 @@ Exact-match anchors are acceptable when they are natural, but the system should 
 
 ## What Gets Automated
 
-Koga can:
+The Content Factory Engine automates:
 
 - Crawl page and post sitemaps.
 - Extract internal links and anchor text.
@@ -284,22 +313,27 @@ Koga can:
 - Detect orphan and underlinked pages.
 - Detect broken, redirecting, non-canonical, or noindexed internal links.
 - Compare link support against keyword map and site architecture.
+- Apply the SEO silo structure across Service Area Pages, Core Services, and individual Service Pages.
 - Find likely link insertion points inside page copy.
 - Generate source-target-anchor recommendations.
 - Score recommendations by priority and risk.
 - Draft WordPress-ready HTML snippets when authorized.
+- Apply safe content-body links during content creation, publication, and optimization.
 - Produce QA checklists and implementation logs.
+- Verify live links after publish or update.
 
-## What Stays Human
+## Blocker Handling
 
-Humans approve or handle:
+No routine human approval gate remains in Process 05.
 
-- Links that require page-builder, theme, menu, or reusable block edits.
-- Any placement that changes visual layout.
-- Local claims, service availability, or market coverage.
-- Sensitive claims, testimonials, awards, licensing, or guarantees.
-- Consolidation decisions where two pages compete for the same intent.
-- Final approval for large batches of sitewide internal link changes.
+The engine logs and queues blockers when:
+
+- CMS access is unavailable.
+- A page-builder, theme, menu, or reusable block cannot be safely edited by automation.
+- A requested link would require a service-area claim not supported by the source data.
+- A consolidation decision belongs to another process before links should be updated.
+
+Those are blocker states, not standing manual steps.
 
 ## Implementation Rules
 
@@ -354,7 +388,7 @@ For each run, produce:
       "placement_context": "Add inside the section discussing the related service.",
       "reason": "The post already explains this problem and should support the relevant money page.",
       "implementation_type": "content_edit",
-      "human_gate": false
+      "automation_status": "verified"
     }
   ],
   "completed_edits": [
@@ -373,8 +407,7 @@ The process is complete when:
 
 - The site inventory and internal link graph have been reviewed.
 - Priority link issues are documented.
-- Safe internal link edits have been implemented or queued.
-- Human-review items are clearly separated.
+- Safe internal link edits have been implemented, queued, skipped, or blocked with a reason.
 - Live edited pages have been verified.
 - Broken or redirecting internal links have been corrected or logged.
 - The client/task record includes what changed, what remains, and what should be reviewed next.
@@ -387,6 +420,7 @@ The process is complete when:
 - Linking to city pages where the client does not actually serve that city.
 - Repeating exact-match anchors in a way that looks unnatural.
 - Leaving a new blog post with only a contact link and no service-page support.
+- Failing to interconnect Service Area Pages, Core Services, and individual Service Pages according to the silo structure.
 - Updating visible page-builder sections without checking mobile layout.
 - Closing the task without live verification.
 
