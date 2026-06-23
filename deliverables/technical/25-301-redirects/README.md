@@ -1,14 +1,14 @@
-# 301 Redirects
+# Domain Migration & 301 Redirects
 
 **Category:** Technical SEO
-**Automation Readiness Score:** 6/10 - Partial automation possible
-**Status:** SOP documented
+**Automation Readiness Score:** 7/10 - Platform-routed automation
+**Status:** Platform-routed SOP documented
 
 ---
 
 ## Purpose
 
-Process 25 covers redirect planning, implementation support, verification, and cleanup. The goal is to make sure changed, removed, migrated, or broken URLs send users and Google to the best available destination without creating redirect chains, loops, wrong destinations, or stale sitemap/internal-link issues.
+Process 25 covers domain migration redirect planning, URL mapping, implementation routing, verification, and cleanup. The goal is to make sure changed, removed, migrated, or broken URLs send users and Google to the best available destination without creating redirect chains, loops, wrong destinations, or stale sitemap/internal-link issues.
 
 This process is not just "add a 301." It is a URL-change control process.
 
@@ -25,7 +25,7 @@ The goal is simple:
 
 ## Current State
 
-Process 25 is represented in the dashboard as `301 Redirects` with fulfillment tied to `Technical SEO Audit`.
+Process 25 is represented in the dashboard as `Domain Migration & 301 Redirects` with fulfillment tied to `Technical SEO Audit`, `SEO Audit Ahrefs`, and `GSC Indexing Audit`.
 
 The ClickUp list does not currently expose a dedicated `301 Redirects` task. The working sources for this SOP are related technical workflows:
 
@@ -39,6 +39,11 @@ The ClickUp list does not currently expose a dedicated `301 Redirects` task. The
 - `13. Robots.txt File Managment`
 
 That means redirect work usually starts from a crawl/audit finding, GSC indexing issue, sitemap cleanup, launch/migration task, broken link, or Rank Math/WordPress implementation need rather than from a standalone ClickUp redirect task.
+
+The migration workflow is now routed by platform:
+
+- Vercel + GitHub stacks: fully automated with AI Agents. Old website URLs are fed into the system, the AI Agent programmatically determines old-to-new URL mapping, writes the redirect configuration in the repo source of truth, and verifies the deployed behavior after Vercel ships.
+- WordPress sites: semi-automated. Claude analyzes old URLs, current URLs, page intent, slugs, titles, and content context to determine the old-to-new URL mapping strategy. After the redirect map is generated, redirects are manually created and deployed inside Rank Math.
 
 ## Target State
 
@@ -58,21 +63,38 @@ The finished redirect setup should send users and search engines directly from o
 
 ## Automation Score
 
-**6/10 - Partial automation possible**
+**7/10 - Platform-routed automation**
 
-Koga can automate a lot of the audit and QA work:
+Process 25 is highly automated for migration mapping and QA, with implementation routed by platform:
+
+- Vercel + GitHub stacks are fully automated using AI Agents.
+- WordPress sites are semi-automated because Claude generates the mapping strategy, but the 301 redirects are manually created and deployed in Rank Math.
+
+Koga and the AI Agents can automate a lot of the audit, mapping, and QA work:
 
 - Crawl URLs and detect 3xx, 4xx, 5xx, chains, loops, and mixed protocol/host redirects.
 - Pull sitemap URLs and flag redirected URLs in the sitemap.
 - Compare old URL inventories against live URLs.
 - Detect broken internal links.
 - Detect common HTTP to HTTPS and non-www to www issues.
-- Suggest redirect targets based on slug/title/content similarity.
+- Programmatically determine redirect targets based on slug, title, H1, content similarity, service/city intent, backlink value, and the new target URL inventory.
 - Prepare redirect maps.
+- For Vercel + GitHub stacks, write repo-owned redirect rules and route them through the GitHub/Vercel deployment flow.
+- For WordPress sites, generate the Claude-backed redirect map for manual Rank Math deployment.
 - Verify live redirects after implementation.
 - Detect if internal links still point through redirects.
 
-The score is not higher because redirect implementation can live in WordPress plugins, Rank Math, hosting, `.htaccess`, Nginx, Vercel, CMS routing, or legacy server config. Humans need to approve mapping decisions and apply changes where logged-in or server-level access is required.
+The score is not higher because WordPress redirect implementation still requires manual Rank Math entry and verification after Claude generates the mapping strategy. Logged-in/plugin-level execution remains a controlled manual step for WordPress migrations.
+
+## Platform Routing
+
+| Platform | Automation Status | Mapping Workflow | Deployment Workflow |
+|---|---|---|---|
+| Vercel + GitHub stack | Fully automated | Feed old website URLs and new target URL inventory into the AI Agent. The agent programmatically determines each old-to-new mapping from slug, title, content, service, city, and SEO-strategy signals. | AI Agent writes redirect rules to the repo source of truth, pushes through GitHub, and verifies the deployed Vercel redirect behavior. |
+| WordPress with Rank Math | Semi-automated | Claude analyzes old URLs, current URLs, page intent, slugs, titles, headings, and content context to generate the mapping strategy. | A human manually creates and deploys each 301 redirect inside Rank Math, then the workflow verifies live behavior. |
+| Hosting/server-managed redirects | Exception path | Use AI/Claude mapping support, then route to the approved hosting, `.htaccess`, Nginx, or server source of truth. | Manual/server-controlled deployment with careful rollback notes. |
+
+Do not use the Vercel + GitHub automation path for WordPress sites whose approved redirect manager is Rank Math. Do not bypass Rank Math on WordPress unless the redirect source of truth has been changed and documented.
 
 ## Training Video
 
@@ -164,6 +186,9 @@ Use ClickUp for internal workflow context and Google documentation for current r
 | Redirect source of truth | Prevents duplicate redirect systems. |
 | Content/page intent | Helps map old URLs to relevant live destinations. |
 | Launch/migration notes | Explains why URLs changed. |
+| Platform route | Determines whether AI Agents deploy automatically through Vercel/GitHub or Claude prepares a Rank Math map for manual WordPress entry. |
+| Old website URL feed | Required for migration mapping, especially Vercel + GitHub AI Agent execution. |
+| New target URL inventory | Required so AI/Claude can map old URLs to the best current destination. |
 
 ## Redirect Source of Truth
 
@@ -175,7 +200,7 @@ Choose one primary redirect system per site.
 | Hosting redirect rules | Host controls domain/protocol or server-level redirects | Requires hosting access and careful testing. |
 | `.htaccess` | Apache/SiteGround WordPress sites with file access | Syntax mistakes can break site access. |
 | Nginx config | Server-managed sites | Requires server access and reload discipline. |
-| Vercel/static config | Static or app-based sites | Must update repo/deploy source, not just live behavior. |
+| Vercel + GitHub config | Static, headless, or app-based sites using GitHub/Vercel | Fully automated AI Agent path; must update repo/deploy source, not just live behavior. |
 | CMS/router rules | Platform-managed URL routing | Platform-specific behavior and export limits. |
 
 Do not split redirects across multiple systems without a reason. Duplicate redirect systems create hard-to-debug chains and loops.
@@ -214,9 +239,31 @@ Record:
 - Client domain.
 - Site platform.
 - Redirect source of truth.
+- Platform route: Vercel + GitHub, WordPress + Rank Math, hosting/server-managed, or exception path.
 - Access available.
 - Whether this is one URL, a batch, or a migration.
 - Whether the change is permanent or temporary.
+
+### 1A. Route by Platform
+
+For Vercel + GitHub stacks:
+
+- Feed the old website URL list into the AI Agent.
+- Feed the new target URL inventory, sitemap output, service/city strategy, and defined SEO strategy into the same run.
+- Let the AI Agent programmatically determine the old-to-new URL mapping.
+- Have the AI Agent write the redirect rules into the repo source of truth.
+- Validate redirects locally or in preview when available.
+- Deploy through GitHub/Vercel and verify live production redirect behavior.
+
+For WordPress sites using Rank Math:
+
+- Feed the old website URL list, new URL inventory, sitemap, page titles, slugs, headings, and content notes into Claude.
+- Use Claude to determine the old-to-new URL mapping strategy.
+- Review the generated map for obvious mismatch, weak homepage catch-all behavior, chains, loops, and missing high-value URLs.
+- Manually create and deploy the 301 redirects inside Rank Math.
+- Verify live behavior after Rank Math deployment.
+
+If the platform route or redirect source of truth is unclear, create an exception packet before implementation.
 
 ### 2. Build the URL Inventory
 
@@ -278,7 +325,11 @@ Prefer the implementation type that the platform supports cleanly. For SEO migra
 
 Do not use meta refresh or JavaScript redirects for normal SEO redirect work unless there is no server/CMS alternative and the risk is documented.
 
-### 5. Prepare the Redirect Map
+### 5. Generate the Redirect Map
+
+For Vercel + GitHub migrations, the AI Agent generates the redirect map and applies the mapping to the repo redirect configuration.
+
+For WordPress migrations, Claude generates the redirect map and the human implementer uses it as the Rank Math entry sheet.
 
 Use this format:
 
@@ -292,13 +343,13 @@ Include notes for:
 - Traffic.
 - Matching confidence.
 - Content gaps.
-- Human approval needs.
+- Mapping review notes.
 - Implementation location.
 - Expected sitemap/internal-link cleanup.
 
-### 6. Human Approval Gate
+### 6. Mapping QA and Implementation Gate
 
-Human approval is required when:
+Mapping QA is required when:
 
 - The target is not an obvious one-to-one match.
 - The source has backlinks or rankings.
@@ -308,6 +359,10 @@ Human approval is required when:
 - The destination changes client positioning or claims.
 - A URL should maybe be rebuilt instead of redirected.
 
+For Vercel + GitHub stacks, QA happens before the AI Agent commits or ships the redirect config.
+
+For WordPress sites, QA happens before the human implementer creates redirects manually in Rank Math.
+
 ### 7. Implement Redirects
 
 Implement in the approved source of truth:
@@ -316,8 +371,12 @@ Implement in the approved source of truth:
 - Hosting redirect rules.
 - `.htaccess`.
 - Nginx config.
-- Vercel/static config.
+- Vercel + GitHub redirect config.
 - CMS/router rules.
+
+For Vercel + GitHub stacks, implementation is fully automated by the AI Agent after mapping and QA.
+
+For WordPress sites, implementation is manual in Rank Math after Claude generates the mapping strategy.
 
 Do not implement the same redirect in multiple systems unless the stack requires it and the chain is tested.
 
@@ -361,13 +420,15 @@ After implementation, monitor:
 
 ## What Gets Automated
 
-Koga can:
+Koga, Claude, and AI Agents can:
 
 - Crawl and classify redirects, 404s, chains, loops, and final statuses.
 - Compare sitemap URLs against redirect behavior.
 - Compare internal links against final URLs.
-- Suggest target URLs from title/slug/content similarity.
-- Build redirect maps.
+- Determine target URLs from title, slug, H1, content, service/city intent, backlink, and target-inventory signals.
+- Build redirect maps for migrations.
+- Fully automate Vercel + GitHub redirect mapping, repo updates, and deployment verification.
+- Generate Claude-backed WordPress redirect maps for Rank Math entry.
 - Validate implementation after changes.
 - Prepare Ahrefs/GSC issue summaries.
 - Create internal-link cleanup lists.
@@ -376,11 +437,12 @@ Koga can:
 
 Humans handle:
 
-- Approving final mappings.
-- Implementing redirects in logged-in/admin/server systems.
+- Manually creating and deploying WordPress redirects inside Rank Math.
+- Reviewing Claude-generated WordPress redirect maps before Rank Math entry.
+- Handling logged-in/admin/server systems outside the Vercel + GitHub automation path.
 - Deciding when to rebuild a page instead of redirecting it.
 - Deciding when 404/410 is better than a weak redirect.
-- Handling domain migrations and launch timing.
+- Handling domain migration launch timing when DNS/client coordination is involved.
 - Managing client communication for major URL changes.
 - Approving changes that affect services, markets, offers, or conversion paths.
 
@@ -389,8 +451,12 @@ Humans handle:
 Before marking Process 25 complete:
 
 - [ ] Redirect source of truth identified.
+- [ ] Platform route identified: Vercel + GitHub, WordPress + Rank Math, or exception path.
 - [ ] Old/source URL list collected.
+- [ ] New target URL inventory collected.
 - [ ] Target URLs selected and approved.
+- [ ] Vercel + GitHub migrations used AI Agent mapping and repo/deploy automation.
+- [ ] WordPress migrations used Claude mapping and manual Rank Math deployment.
 - [ ] Redirect type matches permanent or temporary intent.
 - [ ] No homepage catch-all used without a clear reason.
 - [ ] High-value backlink/ranking URLs prioritized.
@@ -416,6 +482,8 @@ Use this structure in ClickUp or the redirect audit log:
 Source of issue:
 Redirect source of truth:
 Implementation system:
+Platform route:
+Mapping engine:
 Date checked:
 
 Redirect map:
@@ -429,6 +497,10 @@ Verification:
 - Sitemap cleanup:
 - Internal-link cleanup:
 
+Routing notes:
+- Vercel + GitHub: AI Agent mapping/deployment status.
+- WordPress: Claude mapping status and Rank Math manual deployment status.
+
 Issues found:
 - [URL] - [Issue] - [Recommended route]
 
@@ -441,7 +513,10 @@ Next actions:
 Process 25 is complete when:
 
 - A redirect map exists for all source URLs in scope.
-- Human approval is documented for non-obvious or high-impact mappings.
+- Platform route is documented for the migration.
+- Vercel + GitHub stacks have AI Agent-generated mappings deployed through the repo/Vercel path.
+- WordPress sites have Claude-generated mappings manually deployed in Rank Math.
+- Mapping QA is documented for non-obvious or high-impact mappings.
 - Redirects are implemented in the approved source of truth.
 - Live tests confirm the expected status, target, and final 200 response.
 - Chains, loops, bad destinations, and weak homepage redirects are resolved or documented.
