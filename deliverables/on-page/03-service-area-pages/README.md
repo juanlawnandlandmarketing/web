@@ -2,10 +2,10 @@
 
 **Process ID:** 03
 **Category:** On-Page SEO
-**Fulfillment Connection:** Onsite Core Content Optimization
-**Cadence:** Onboarding, launch rebuilds, service-area expansion campaigns, and as-needed optimization updates
-**Automation Readiness Score:** 7/10 - Highly automatable
-**Status:** Documented
+**Fulfillment Connection:** Onsite Core Content Optimization / Content Engine / SEO Images Optimization
+**Cadence:** Content-engine driven on onboarding, launch rebuilds, service-area expansion campaigns, and as-needed optimization updates
+**Automation Readiness Score:** 9/10 - 90% automated
+**Status:** 90% automated
 
 ---
 
@@ -17,7 +17,7 @@ Service pages answer: **What do we do?**
 
 Service area pages answer: **Do we do it here, and why should someone in this market trust us?**
 
-The operating process is intentionally similar to Service Pages. The same automation can draft briefs, copy, metadata, FAQs, links, schema notes, and QA packets. The difference is the local proof layer: city accuracy, market fit, real service coverage, local internal links, and duplicate-city-page control.
+The operating process is functionally identical to Service Pages and is now 90% automated through the content engine. The same automation drafts briefs, copy, metadata, FAQs, links, schema notes, image prompts, alt text, and QA packets. The difference is the local proof layer: city accuracy, market fit, real service coverage, local internal links, and duplicate-city-page control.
 
 This process receives input from Keyword Research and feeds:
 
@@ -34,13 +34,13 @@ This process receives input from Keyword Research and feeds:
 
 ## Current State
 
-The current baseline documentation identifies service area pages as part of Onsite Core Content Optimization, but the placeholder did not define a complete operating standard. The automation docs already generate service-area URLs from city/state inputs and include `service_area` as a website content brief type.
+The content engine now handles roughly 90% of the service-area page workflow. It generates or updates service-area briefs, drafts, metadata, FAQs, internal links, schema guidance, image prompts, alt text, and publish/QA packets from the approved keyword map, site architecture, client data, city/service demand, and local-proof inputs.
 
-What is missing is the real-world SOP: when a city deserves a page, what must be true before it is published, how it should differ from neighboring city pages, how it should connect back to services, and how to avoid swapped-city filler.
+The remaining 10% is human exception handling: confirming service coverage, approving local proof, checking sensitive claims, handling major page-builder or design choices, and making sure generated imagery follows the client's approved Ground Control references.
 
 ## Target State
 
-Every service area page should target a real city or market the client serves, match the approved keyword map, and provide enough local context to be useful without pretending to have hyperlocal proof the client does not have.
+Every service area page should target a real city or market the client serves, match the approved keyword map, and provide enough local context to be useful without pretending to have hyperlocal proof the client does not have. The page should be produced through the content engine with required SEO, conversion, local-proof, brand, image, and QA elements in place.
 
 The final page must include:
 
@@ -56,8 +56,9 @@ The final page must include:
 - Links to nearby service area pages when useful
 - FAQ section
 - Image guidance and alt text
+- Image generation prompts tied to client brand guidelines and Ground Control image references
 - Schema recommendation
-- Human approval notes
+- Automation status and exception-review notes
 - Publish or optimization status
 
 ## Required Inputs
@@ -77,6 +78,7 @@ Before drafting or optimizing a service area page, collect these inputs:
 | Client service details | Human | Services, exclusions, seasonality, process, and capacity. |
 | Competitor examples | Koga/Kai | Used to identify local content gaps. |
 | Internal link targets | Koga/Kai | Core services, individual services, nearby cities, blogs, gallery, reviews, and contact page. |
+| Ground Control brand references | Koga/Kai | Required for image generation and visual direction when references are available. |
 | Publishing access | Human or Koga | WordPress, static repo, page builder, or other CMS. |
 
 ## Data Sources and Tools
@@ -92,9 +94,11 @@ Before drafting or optimizing a service area page, collect these inputs:
 | Google Business Profile | Service area consistency, categories, services, and local entity signals. |
 | Reviews/testimonials | Local customer language and market proof when available. |
 | Project/gallery assets | City-specific or market-relevant proof. |
+| Ground Control brand references | Approved client visual references, brand direction, image examples, and generated-image constraints. |
 | Rank Math or CMS SEO fields | Metadata, schema, canonical, and indexing settings. |
 | Site Architecture automation | URL structure and page type decisions. |
 | Content Briefs automation | Page brief structure and recommended metadata. |
+| Content Engine | Service-area brief generation, drafting, metadata, FAQs, schema guidance, image prompts, and QA packet assembly. |
 
 ## Workflow
 
@@ -191,7 +195,7 @@ Competitor review is for gap detection. Do not copy location claims or fabricate
 
 ### 5. Build the Page Brief
 
-Create the brief before drafting.
+Create the brief through the content engine before drafting.
 
 Required brief fields:
 
@@ -211,7 +215,8 @@ Required brief fields:
 | Required Sections | H2 plan and conversion sections. |
 | Internal Links | Services, nearby cities, blogs, gallery, reviews, and contact page. |
 | Schema | Recommended schema types. |
-| Human Notes | Service limits, cities to avoid, claims to avoid, approval notes. |
+| Image Direction | Required image types, approved brand references, and generation constraints. |
+| Exception Notes | Service limits, cities to avoid, claims to avoid, approval notes, and manual-review flags. |
 
 ### 6. Define the Page Structure
 
@@ -244,7 +249,7 @@ Recommended H2 patterns:
 
 ### 7. Draft or Rewrite the Page
 
-The page should make the local service promise clear.
+The content engine drafts or rewrites the page from the approved brief. The page should make the local service promise clear.
 
 Writing standards:
 
@@ -260,7 +265,7 @@ Writing standards:
 - Avoid unsupported neighborhood, project, or review claims.
 - Keep the CTA specific to scheduling service in that market.
 
-If the page cannot be made meaningfully distinct, park it or consolidate it instead of publishing thin content.
+If the page cannot be made meaningfully distinct, mark it for exception review and park or consolidate it instead of publishing thin content.
 
 ### 8. Optimize Metadata
 
@@ -323,7 +328,7 @@ Minimum link set:
 
 Anchor text should be natural. Do not use exact-match city anchors everywhere.
 
-### 11. Add Images and Alt Text Guidance
+### 11. Add Images, Brand References, and Alt Text Guidance
 
 For each page, identify the images needed:
 
@@ -331,6 +336,26 @@ For each page, identify the images needed:
 - Service-area supporting image
 - Project, crew, or finished-property image when available
 - Optional map/coverage visual if the design supports it
+
+Image generation must follow the established client brand guidelines and the specific image references uploaded to Ground Control. Do not generate generic stock-style city or landscape images when approved client references exist.
+
+Before generating or recommending images, Koga must check:
+
+- Ground Control brand references for the client
+- Approved logo, color, typography, and visual style guidance when available
+- Existing client photos, project references, and city or market-relevant examples
+- Image rights, realism, and service-area accuracy
+- Whether the requested image should be generated, selected from client assets, or left as a human-photo request
+
+Generated image prompts must include:
+
+- Client name, target city/market, and service context
+- The target page and image placement
+- Required visual style based on Ground Control references
+- What must be included or avoided
+- Any brand, equipment, crew, uniform, property, regional, or seasonal cues supported by references
+
+Do not invent logos, uniforms, trucks, certifications, awards, project locations, local landmarks, before/after proof, or city-specific work that is not supported by client references.
 
 Alt text should describe the image, service context, and location only when the location is genuinely represented.
 
@@ -357,11 +382,11 @@ Most service area pages should be considered for:
 
 Schema must match visible page content. Do not invent local addresses, ratings, reviews, prices, or service areas. If the business does not have a physical location in the city, do not imply that it does.
 
-### 13. Human Review and Approval
+### 13. Automated QA and Exception Review
 
-Human approval is required before publishing or major optimization updates.
+The content engine handles the standard page build and QA packet. Human review is required only for exception items, risky claims, weak local proof, major design decisions, or live publishing where access/page-builder safety requires a person.
 
-The reviewer checks:
+The exception reviewer checks:
 
 - The city is actually served.
 - The services listed are actually available there.
@@ -369,10 +394,10 @@ The reviewer checks:
 - No fake project, neighborhood, or location claims were added.
 - The page is distinct enough from nearby city pages.
 - CTA and conversion path are correct.
-- Images are appropriate.
+- Images follow Ground Control brand references and do not imply unsupported local proof.
 - Any pricing, guarantee, or compliance-sensitive claims are approved.
 
-No service area page is complete until a human approves it or leaves revision notes.
+No exception-flagged service area page is complete until a human approves it or leaves revision notes. Standard low-risk content-engine outputs can move to staging or implementation once automated QA passes.
 
 ### 14. Publish or Prepare CMS Update
 
@@ -445,12 +470,12 @@ The two processes should share the same automation readiness score because the b
 | Proof needed | Service process, expertise, outcomes | Coverage, local proof, market fit |
 | Main risk | Generic service copy or cannibalization | Thin swapped-city pages or fake local claims |
 | Main links out | Related services, service areas, blogs, contact | Service pages, nearby cities, blogs, contact |
-| Human gate | Service accuracy and claims | Service coverage, city accuracy, local proof |
-| Automation score | 7/10 | 7/10 |
+| Human gate | Exception review for service accuracy and claims | Exception review for service coverage, city accuracy, local proof, and image-reference fit |
+| Automation score | 9/10 | 9/10 |
 
 ## Automation Plan
 
-### Koga/Kai Can Automate
+### Koga/Kai Automates
 
 - Pull approved keyword map data.
 - Match city/service keywords to existing URLs.
@@ -462,19 +487,23 @@ The two processes should share the same automation readiness score because the b
 - Draft title tags and meta descriptions.
 - Generate FAQ candidates.
 - Recommend internal links to services and nearby cities.
+- Pull Ground Control brand references for visual direction.
+- Generate image prompts that follow client brand guidelines and approved references.
 - Generate alt text recommendations.
 - Prepare schema recommendations.
 - Build QA checklists.
 - Identify thin, duplicate, or overlapping city pages.
+- Prepare content-engine packets for staging or publishing.
 
-### Human Must Handle
+### Human Exception Handling
 
 - Confirm the city is actually served.
 - Confirm which services are available in the city.
 - Provide or approve local proof.
 - Approve client-specific claims.
 - Approve pricing, warranty, guarantee, or certification language.
-- Approve final page copy before publishing.
+- Review exception-flagged page copy before publishing.
+- Approve or replace generated imagery when brand references are incomplete, sensitive, or too weak for a local claim.
 - Make page-builder edits when automation cannot safely update the page.
 - Decide on consolidation when city pages overlap.
 - Validate live page appearance and conversion fit when design changes are involved.
@@ -504,9 +533,9 @@ The completed service-area packet should contain at minimum:
 | H1 | Page heading. |
 | FAQs | Questions and answers. |
 | Internal Links | Links to add and source pages to link from. |
-| Image Notes | Required images and alt text guidance. |
+| Image Notes | Required images, Ground Control references used, generation prompt, and alt text guidance. |
 | Schema Notes | Recommended schema and validation status. |
-| Human Approval | Approved, revise, rejected, or pending. |
+| Automation Status | Content-engine ready, staged, published, verified, exception review, revised, rejected, or pending. |
 | Publish Status | Drafted, staged, published, verified, parked, or consolidated. |
 | QA Notes | Live checks and issues. |
 
@@ -530,10 +559,12 @@ Before marking this process complete, verify:
 - [ ] FAQs answer real local buyer questions.
 - [ ] Internal links to services are included.
 - [ ] Nearby area links are included when useful.
+- [ ] Ground Control brand references were checked for image direction.
+- [ ] Image prompts follow client brand guidelines and approved references.
 - [ ] Images and alt text guidance are included.
 - [ ] Schema recommendation is documented.
 - [ ] CTA is clear.
-- [ ] Human approval is documented.
+- [ ] Exception-review items are documented when required.
 - [ ] Published page returns HTTP 200.
 - [ ] Page is indexable when it should be.
 - [ ] Mobile layout is usable.
@@ -547,9 +578,9 @@ This process is complete when:
 1. The service area page brief exists.
 2. The target city/market and page role are approved.
 3. The content is drafted or optimized.
-4. Metadata, H1, FAQs, internal links, image guidance, and schema notes are complete.
+4. Metadata, H1, FAQs, internal links, brand-aligned image guidance, and schema notes are complete.
 5. Local proof or honest coverage language is documented.
-6. Human approval is documented.
+6. Automation status and exception-review notes are documented.
 7. The page is published, staged, parked, or consolidated.
 8. Live QA confirms the page works and is indexable when appropriate.
 9. The page can feed internal linking, metadata, schema, GSC, and reporting workflows without rework.
@@ -565,8 +596,10 @@ This process is complete when:
 - Linking only to contact instead of connecting the city page to service pages.
 - Creating city pages that cannibalize nearby city pages or service pages.
 - Adding FAQ schema for FAQs that are not visible.
+- Generating images without checking Ground Control brand references.
+- Creating visuals that imply unsupported city-specific projects, crews, uniforms, landmarks, or proof.
 - Forgetting to clear cache and verify the live page.
-- Calling the page complete before human approval.
+- Calling an exception-flagged page complete before review.
 
 ## Source References
 
@@ -578,6 +611,7 @@ This process is complete when:
 - `/opt/koga/.openclaw/workspace/seo/automation/STEP_6B_CONTENT_BRIEFS_P2.md`
 - `/opt/koga/.openclaw/workspace/seo/ONBOARDING_MASTER.md`
 - `/opt/koga/.openclaw/workspace/seo/SEO_MASTER_STRATEGY.md`
+- Ground Control client brand references and uploaded image references
 
 ---
 
