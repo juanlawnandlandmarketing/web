@@ -2,16 +2,18 @@
 
 **Process ID:** 02
 **Category:** On-Page SEO
-**Fulfillment Connection:** Onsite Core Content Optimization
-**Cadence:** Onboarding, launch rebuilds, new service launches, and as-needed optimization updates
-**Automation Readiness Score:** 7/10 - Highly automatable
-**Status:** Documented
+**Fulfillment Connection:** Onsite Core Content Optimization / Content Engine / SEO Images Optimization
+**Cadence:** Content-engine driven on onboarding, launch rebuilds, new service launches, and as-needed optimization updates
+**Automation Readiness Score:** 9/10 - 90% automated
+**Status:** 90% automated
 
 ---
 
 ## Purpose
 
 Service pages turn the approved keyword map into pages that can rank, convert, and support the rest of the SEO system. A strong service page should make it obvious what the client does, where they do it, why the service matters, what the process looks like, and what the visitor should do next.
+
+Process 2 is now driven by the content engine. Koga turns Process 1 keyword research, site architecture, client data, live-page audits, and brand assets into service-page briefs, drafts, metadata, FAQs, internal-link recommendations, schema guidance, image prompts, alt text, and QA packets.
 
 This process receives input from Keyword Research and feeds:
 
@@ -28,13 +30,13 @@ This process receives input from Keyword Research and feeds:
 
 ## Current State
 
-The current baseline documentation identifies service pages as part of Onsite Core Content Optimization, but the placeholder did not define a complete operating standard. The automation docs already describe URL architecture and website content briefs, but the team still needs a practical SOP for turning those briefs into publishable service pages.
+The content engine now handles roughly 90% of the service-page workflow. It can build the page brief, draft or rewrite the page, prepare metadata, generate FAQs, recommend internal links, define schema, prepare asset guidance, generate image prompts, and build the publish/QA packet.
 
-Without this SOP, service pages can drift into thin copy, generic headings, repeated stock sections, weak internal links, missing schema, or content that ranks for a keyword but does not answer the homeowner's real buying question.
+The remaining 10% is human exception handling: verifying service facts, approving sensitive claims, confirming major design/page-builder decisions, and making sure generated imagery follows the client's approved brand references.
 
 ## Target State
 
-Every priority service should have a clear page target, either as a core service page or an individual service page. The page should be grounded in the approved keyword map, written for the client's actual market, and published with the required SEO elements in place.
+Every priority service should have a clear page target, either as a core service page or an individual service page. The page should be grounded in the approved keyword map, written for the client's actual market, and produced through the content engine with required SEO, conversion, brand, image, and QA elements in place.
 
 The final page must include:
 
@@ -48,8 +50,9 @@ The final page must include:
 - FAQ section
 - Internal links to related services, service areas, blogs, and conversion pages
 - Image guidance and alt text
+- Image generation prompts tied to client brand guidelines and Ground Control image references
 - Schema recommendation
-- Human approval notes
+- Automation status and exception-review notes
 - Publish or optimization status
 
 ## Required Inputs
@@ -68,6 +71,7 @@ Before drafting or optimizing a service page, collect these inputs:
 | Competitor examples | Koga/Kai | Used to identify content gaps, not to copy structure blindly. |
 | Internal link targets | Koga/Kai | Related services, area pages, blogs, gallery, reviews, and contact page. |
 | Brand/client voice notes | Human or Koga | Keep the copy accurate to the business. |
+| Ground Control brand references | Koga/Kai | Required for image generation and visual direction when references are available. |
 | Publishing access | Human or Koga | WordPress, static repo, page builder, or other CMS. |
 
 ## Data Sources and Tools
@@ -82,10 +86,12 @@ Before drafting or optimizing a service page, collect these inputs:
 | GBP services/categories | Terminology validation and entity consistency. |
 | Reviews/testimonials | Service-specific trust signals and customer language. |
 | Image library or client photos | Visual planning and alt text. |
+| Ground Control brand references | Approved client visual references, brand direction, image examples, and generated-image constraints. |
 | Rank Math or CMS SEO fields | Metadata, schema, canonical, and indexing settings. |
 | LawnLab SEO Playbook | Fulfillment context and process alignment. |
 | Site Architecture automation | URL structure and page type decisions. |
 | Content Briefs automation | Page brief structure and recommended metadata. |
+| Content Engine | Service-page brief generation, drafting, metadata, FAQs, schema guidance, image prompts, and QA packet assembly. |
 
 ## Workflow
 
@@ -164,7 +170,7 @@ Competitor review is for gap detection. Do not copy wording, layouts, or claims.
 
 ### 4. Build the Page Brief
 
-Create a brief before drafting. The brief should be short enough to use and complete enough to prevent generic copy.
+Create the brief through the content engine before drafting. The brief should be short enough to use and complete enough to prevent generic copy.
 
 Required brief fields:
 
@@ -185,7 +191,8 @@ Required brief fields:
 | Required Sections | H2 plan and conversion sections. |
 | Internal Links | Links to include on the page. |
 | Schema | Recommended schema types. |
-| Human Notes | Service limitations, claims to avoid, approval notes. |
+| Image Direction | Required image types, approved brand references, and generation constraints. |
+| Exception Notes | Service limitations, claims to avoid, approval notes, and manual-review flags. |
 
 ### 5. Define the Page Structure
 
@@ -218,7 +225,7 @@ Recommended H2 patterns:
 
 ### 6. Draft or Rewrite the Page
 
-The page should answer the buyer's actual questions before it tries to sound impressive.
+The content engine drafts or rewrites the page from the approved brief. The page should answer the buyer's actual questions before it tries to sound impressive.
 
 Writing standards:
 
@@ -234,7 +241,7 @@ Writing standards:
 - Avoid fake guarantees, prices, timelines, or certifications.
 - Keep the CTA clear and consistent with the client's site.
 
-If a page cannot be made specific because client information is missing, document the gap and request the detail before final approval.
+If a page cannot be made specific because client information is missing, document the gap and mark it for exception review before final approval.
 
 ### 7. Optimize Metadata
 
@@ -298,7 +305,7 @@ Minimum link set:
 
 Anchor text should be descriptive and natural. Do not use exact-match anchors everywhere.
 
-### 10. Add Images and Alt Text Guidance
+### 10. Add Images, Brand References, and Alt Text Guidance
 
 For each page, identify the images needed:
 
@@ -306,6 +313,26 @@ For each page, identify the images needed:
 - Process or crew image
 - Before/after or finished project image when available
 - Supporting visual for FAQ/process sections if the design needs it
+
+Image generation must follow the established client brand guidelines and the specific image references uploaded to Ground Control. Do not generate generic stock-style lawn or landscape images when approved client references exist.
+
+Before generating or recommending images, Koga must check:
+
+- Ground Control brand references for the client
+- Approved logo, color, typography, and visual style guidance when available
+- Existing client photos, project references, and service-specific examples
+- Image rights, realism, and service accuracy
+- Whether the requested image should be generated, selected from client assets, or left as a human-photo request
+
+Generated image prompts must include:
+
+- Client name and service context
+- The target page and image placement
+- Required visual style based on Ground Control references
+- What must be included or avoided
+- Any brand, equipment, crew, uniform, property, or regional cues supported by references
+
+Do not invent logos, uniforms, trucks, certifications, awards, project locations, or before/after proof that is not supported by client references.
 
 Alt text should describe the image and service context. Do not stuff keywords into image alt text.
 
@@ -332,11 +359,11 @@ Most service pages should be considered for:
 
 Schema should match visible page content. Do not add FAQ schema for hidden or nonexistent FAQs. Do not invent prices, ratings, aggregate reviews, or service areas.
 
-### 12. Human Review and Approval
+### 12. Automated QA and Exception Review
 
-Human approval is required before publishing or major optimization updates.
+The content engine handles the standard page build and QA packet. Human review is required only for exception items, risky claims, major design decisions, or live publishing where access/page-builder safety requires a person.
 
-The reviewer checks:
+The exception reviewer checks:
 
 - Service accuracy
 - Client voice and claims
@@ -344,11 +371,11 @@ The reviewer checks:
 - Local details
 - Differentiators
 - CTA
-- Images
+- Images and Ground Control brand-reference alignment
 - Any pricing, guarantee, or compliance-sensitive claims
 - Whether the page should publish now or wait for more detail
 
-No page is complete until a human approves it or leaves revision notes.
+No exception-flagged page is complete until a human approves it or leaves revision notes. Standard low-risk content-engine outputs can move to staging or implementation once automated QA passes.
 
 ### 13. Publish or Prepare CMS Update
 
@@ -410,7 +437,7 @@ Optimization can include metadata rewrites, new sections, FAQ expansion, interna
 
 ## Automation Plan
 
-### Koga/Kai Can Automate
+### Koga/Kai Automates
 
 - Pull approved keyword map data.
 - Match service keywords to existing URLs.
@@ -422,18 +449,22 @@ Optimization can include metadata rewrites, new sections, FAQ expansion, interna
 - Draft title tags and meta descriptions.
 - Generate FAQ candidates.
 - Recommend internal links.
+- Pull Ground Control brand references for visual direction.
+- Generate image prompts that follow client brand guidelines and approved references.
 - Generate alt text recommendations.
 - Prepare schema recommendations.
 - Build QA checklists.
 - Identify pages that may need consolidation or redirects.
+- Prepare content-engine packets for staging or publishing.
 
-### Human Must Handle
+### Human Exception Handling
 
 - Confirm the service is real and actively sold.
 - Approve client-specific claims.
 - Provide missing service details.
 - Approve pricing, warranty, guarantee, or certification language.
-- Approve final page copy before publishing.
+- Review exception-flagged page copy before publishing.
+- Approve or replace generated imagery when brand references are incomplete or sensitive.
 - Make page-builder edits when automation cannot safely update the page.
 - Decide on consolidation when two pages compete.
 - Validate live page appearance and conversion fit when design changes are involved.
@@ -461,9 +492,9 @@ The completed service-page packet should contain at minimum:
 | H1 | Page heading. |
 | FAQs | Questions and answers. |
 | Internal Links | Links to add and source pages to link from. |
-| Image Notes | Required images and alt text guidance. |
+| Image Notes | Required images, Ground Control references used, generation prompt, and alt text guidance. |
 | Schema Notes | Recommended schema and validation status. |
-| Human Approval | Approved, revise, rejected, or pending. |
+| Automation Status | Content-engine ready, staged, published, verified, exception review, revised, rejected, or pending. |
 | Publish Status | Drafted, staged, published, verified, or parked. |
 | QA Notes | Live checks and issues. |
 
@@ -485,10 +516,12 @@ Before marking this process complete, verify:
 - [ ] Local relevance is accurate, not filler.
 - [ ] FAQs answer real buyer questions.
 - [ ] Internal links are included.
+- [ ] Ground Control brand references were checked for image direction.
+- [ ] Image prompts follow client brand guidelines and approved references.
 - [ ] Images and alt text guidance are included.
 - [ ] Schema recommendation is documented.
 - [ ] CTA is clear.
-- [ ] Human approval is documented.
+- [ ] Exception-review items are documented when required.
 - [ ] Published page returns HTTP 200.
 - [ ] Page is indexable when it should be.
 - [ ] Mobile layout is usable.
@@ -502,8 +535,8 @@ This process is complete when:
 1. The service page brief exists.
 2. The target URL and page role are approved.
 3. The content is drafted or optimized.
-4. Metadata, H1, FAQs, internal links, image guidance, and schema notes are complete.
-5. Human approval is documented.
+4. Metadata, H1, FAQs, internal links, brand-aligned image guidance, and schema notes are complete.
+5. Automation status and exception-review notes are documented.
 6. The page is published or the publish-ready update packet is staged.
 7. Live QA confirms the page works and is indexable when appropriate.
 8. The page can feed internal linking, metadata, schema, GSC, and reporting workflows without rework.
@@ -518,9 +551,11 @@ This process is complete when:
 - Writing for Google before answering the homeowner's actual question.
 - Skipping metadata because the body copy is done.
 - Adding FAQ schema for FAQs that are not visible.
+- Generating images without checking Ground Control brand references.
+- Creating visuals that ignore client style, actual services, equipment, location, or approved image examples.
 - Using exact-match internal links everywhere.
 - Forgetting to clear cache and verify the live page.
-- Calling the page complete before human approval.
+- Calling an exception-flagged page complete before review.
 
 ## Source References
 
@@ -532,6 +567,7 @@ This process is complete when:
 - `/opt/koga/.openclaw/workspace/seo/automation/STEP_6B_CONTENT_BRIEFS_P2.md`
 - `/opt/koga/.openclaw/workspace/seo/ONBOARDING_MASTER.md`
 - `/opt/koga/.openclaw/workspace/seo/SEO_MASTER_STRATEGY.md`
+- Ground Control client brand references and uploaded image references
 
 ---
 
