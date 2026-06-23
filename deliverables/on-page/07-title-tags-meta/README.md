@@ -1,7 +1,7 @@
 # Title Tags & Meta Descriptions
 
 **Category:** On-Page SEO
-**Automation Readiness Score:** 7/10 — ✅ Highly automatable
+**Automation Readiness Score:** 10/10 — ✅ Fully automated inside the Content Engine Factory
 **Status:** ✅ Documented
 
 ---
@@ -30,7 +30,9 @@ Metadata appears inside several production workflows already:
 - Service page and service-area SOPs require page briefs with metadata before publishing.
 - Rank Math setup and schema work depend on clean page-level SEO fields.
 
-The missing piece is a standalone process for auditing, rewriting, applying, and verifying metadata across a client site.
+The missing piece was a standalone process for auditing, rewriting, applying, and verifying metadata across a client site.
+
+That work now belongs inside the Content Engine Factory. The factory creates or optimizes page packets with DataForSEO keyword and SERP data, approved keyword-map context, live page metadata, page copy, GSC signals when available, and the publish target. Title tags and meta descriptions are generated as a normal factory output, not as an afterthought at the end of publishing.
 
 ## Target State
 
@@ -38,28 +40,32 @@ Every active SEO client should have a repeatable metadata process that runs duri
 
 The ideal system:
 
-1. Crawls all indexable pages and posts.
-2. Extracts live title tags, meta descriptions, canonicals, H1s, status codes, page types, and target keywords.
-3. Flags missing, duplicated, truncated, bloated, vague, stuffed, irrelevant, or prompt-leaked metadata.
-4. Drafts replacement title tags and meta descriptions using page intent, keyword map, SERP context, and brand/service facts.
-5. Separates safe updates from changes needing human approval.
-6. Updates the correct CMS, Rank Math, page-builder, or static-site field.
-7. Verifies the live HTML after publishing or deployment.
+1. Receives a Content Engine Factory job, publishing tracker row, page-build request, or metadata audit request.
+2. Crawls all indexable pages and posts in scope.
+3. Extracts live title tags, meta descriptions, canonicals, H1s, status codes, page types, and target keywords.
+4. Pulls DataForSEO keyword, SERP, and competitor-snippet context for the page intent and market.
+5. Flags missing, duplicated, truncated, bloated, vague, stuffed, irrelevant, or prompt-leaked metadata.
+6. Drafts replacement title tags and meta descriptions using page intent, DataForSEO context, keyword map, SERP patterns, page copy, and brand/service facts.
+7. Separates safe updates from changes needing human approval.
+8. Updates the correct CMS, Rank Math, page-builder, or static-site field.
+9. Verifies the live HTML after publishing or deployment.
 
 ## Automation Score
 
-**7/10 — Highly automatable**
+**10/10 — Fully automated inside the Content Engine Factory**
 
-Most discovery and drafting work can be automated:
+The dashboard should show this process as 100% automated because the full operational loop can be handled by Koga/Kai when credentials and publishing access exist:
 
 - Crawling pages and extracting live metadata.
 - Comparing metadata against titles, H1s, slugs, canonicals, and keyword targets.
+- Pulling DataForSEO keyword ideas, SERP examples, related queries, and competitor snippet patterns.
 - Detecting missing, duplicate, too-long, too-short, stuffed, generic, or leaked metadata.
-- Drafting metadata variants by page type.
+- Drafting metadata variants by page type from DataForSEO-backed intent and page context.
 - Producing bulk update sheets, WP-CLI commands, or static-file patches.
+- Applying safe approved updates through Rank Math, WordPress, CMS fields, or static metadata files.
 - Verifying live output after updates.
 
-It is not higher because title and description decisions often affect positioning, offers, local claims, brand voice, and page cannibalization. A human should review major messaging changes, sensitive claims, broad sitewide templates, and anything that could overpromise a service or location.
+Fully automated does not mean human-free. It means the system can run the process end to end and route only the right exceptions for review. Humans still review major positioning changes, sensitive claims, broad sitewide templates, service-area uncertainty, and anything that could overpromise a service or location.
 
 ## When This Process Runs
 
@@ -80,12 +86,13 @@ It is not higher because title and description decisions often affect positionin
 |---|---|
 | Page and post sitemaps | Build the active URL inventory. |
 | Live HTML | Confirm actual title tag, meta description, canonical, H1, and rendered output. |
+| Content Engine Factory job | Connect metadata generation to the article, service page, service-area page, or optimization packet being produced. |
 | Keyword map | Align metadata with approved primary and secondary targets. |
 | Page type classification | Apply different rules for homepage, service pages, city pages, blogs, and trust pages. |
 | Existing page copy | Make metadata truthful to what the page actually says. |
 | GSC data | Find pages with impressions but weak CTR or stale snippets. |
-| Ranking data | Prioritize pages close to movement or tied to revenue keywords. |
-| SERP review | Understand competitor snippet patterns and intent expectations. |
+| DataForSEO ranking data | Prioritize pages close to movement or tied to revenue keywords. |
+| DataForSEO SERP review | Understand competitor snippet patterns, local intent expectations, and result-page language. |
 | Rank Math or CMS fields | Apply approved SEO title and description updates. |
 | Client brand/service facts | Avoid fake claims, unsupported guarantees, and wrong service areas. |
 
@@ -119,6 +126,8 @@ Classify the request before changing anything.
 | Keyword remap | Update metadata after keyword research or page-role changes. |
 | Brand/service cleanup | Remove stale offers, wrong locations, or unsupported claims. |
 
+If the request comes from the Content Engine Factory, keep the factory job as the parent record. The metadata output should travel with the page packet, article packet, or optimization packet from brief to publish QA.
+
 ### 2. Crawl Metadata Inventory
 
 Use sitemaps as the default inventory, then supplement with a crawler when needed.
@@ -143,7 +152,22 @@ Capture:
 
 Do not optimize noindex, non-canonical, broken, redirected, duplicate, or intentionally retired URLs unless the task is specifically to clean them up.
 
-### 3. Audit Current Title Tags
+### 3. Pull DataForSEO Intent Context
+
+For each priority page or page packet, pull DataForSEO context before drafting metadata.
+
+Capture:
+
+- Primary keyword and close variants.
+- Local modifiers and service/category language.
+- SERP titles and descriptions for the target market.
+- Related queries and People Also Ask style intent when available.
+- Competitor patterns worth matching or avoiding.
+- Search volume, CPC, and competition where useful for prioritization.
+
+If DataForSEO is unavailable, document the fallback and do not label the output as data-backed.
+
+### 4. Audit Current Title Tags
 
 Flag title tags that are:
 
@@ -161,7 +185,7 @@ Flag title tags that are:
 
 Typical title length is around 50 to 65 characters when practical. That is guidance, not a hard rule. A strong readable title wins over character-count obedience.
 
-### 4. Audit Current Meta Descriptions
+### 5. Audit Current Meta Descriptions
 
 Flag meta descriptions that are:
 
@@ -179,7 +203,7 @@ Flag meta descriptions that are:
 
 Typical meta description length is around 140 to 160 characters when practical. That is guidance, not a hard rule. The description should be a click-through pitch, not a keyword container.
 
-### 5. Prioritize URLs
+### 6. Prioritize URLs
 
 Fix obvious errors immediately when safe, then prioritize by business value.
 
@@ -201,9 +225,9 @@ Lower priority:
 - Archive, tag, or author pages that should not be active SEO targets.
 - Pages pending consolidation, redirect, or rewrite.
 
-### 6. Draft Replacement Metadata
+### 7. Draft Replacement Metadata
 
-Use page intent first, then keywords.
+Use page intent first, then DataForSEO context and keywords.
 
 Good title tag formula:
 
@@ -234,6 +258,15 @@ Weak metadata:
 - `Learn more about our services.`
 - `AI-approved SEO title for focus keyword`
 - `Professional landscaping services in every city we serve`
+
+For Content Engine Factory runs, generate the metadata alongside the page brief or article packet:
+
+- SEO title.
+- Meta description.
+- Focus keyword or primary target.
+- Slug recommendation when the URL is not already fixed.
+- Reason for the title/description choice.
+- Human-review flag when the metadata changes positioning, service areas, offers, pricing, guarantees, or sensitive claims.
 
 ## Metadata Rules
 
@@ -310,8 +343,9 @@ Koga can:
 - Pull title, description, H1, canonical, indexability, and page-type data.
 - Detect missing, duplicate, weak, bloated, stuffed, stale, or leaked metadata.
 - Compare metadata against keyword maps, H1s, URLs, and page copy.
+- Pull DataForSEO keyword, SERP, related-query, and competitor-snippet context.
 - Pull GSC CTR and query data when access exists.
-- Draft replacement title tags and meta descriptions.
+- Draft replacement title tags and meta descriptions inside the Content Engine Factory packet.
 - Prepare bulk update sheets, WP-CLI commands, CMS recommendations, or code patches.
 - Apply approved updates when authorized.
 - Verify live output after changes.

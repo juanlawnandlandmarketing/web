@@ -10,6 +10,6 @@ This folder contains automation builds for all **9 On-Page SEO** deliverables.
 | 04 | [Blog Content](./04-blog-content/) | 9/10 | ✅ Documented |
 | 05 | [Internal Linking](./05-internal-linking/) | 8/10 | ✅ Documented |
 | 06 | [Alt Text on Images](./06-alt-text/) | 9/10 | ✅ Documented |
-| 07 | [Title Tags & Meta Descriptions](./07-title-tags-meta/) | 7/10 | ✅ Documented |
+| 07 | [Title Tags & Meta Descriptions](./07-title-tags-meta/) | 10/10 | ✅ Documented |
 | 08 | [H1 Optimization](./08-h1-optimization/) | 5/10 | ✅ Documented |
 | 09 | [Competitor Analysis](./09-competitor-analysis/) | 8/10 | ✅ Documented |
