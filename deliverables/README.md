@@ -20,7 +20,8 @@ All 38 SEO deliverables organized by category. Each folder contains the automati
 | 🟡 3–4 | Low automation — mostly human |
 | 🟢 5–6 | Partial automation possible |
 | ✅ 7–8 | Highly automatable |
-| 🚀 9–10 | Near-full automation |
+| 🚀 9 | Near-full automation |
+| 🤖 10 | Fully automated |
 
 ## Build Priority
 
@@ -28,6 +29,7 @@ Ordered by automation readiness (highest first):
 
 | # | Deliverable | Score | Status |
 |---|------------|-------|--------|
+| 01 | [Keyword Research](./on-page/01-keyword-research/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 04 | [Blog Content](./on-page/04-blog-content/) | 🚀 9/10 | 🔨 **In Progress** |
 | 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | ✅ Documented |
 | 37 | [Internal Monthly Scorecard](./reporting/37-internal-monthly-scorecard/) | 🚀 9/10 | 🔲 Not started |
