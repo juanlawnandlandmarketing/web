@@ -4,8 +4,8 @@ This folder contains automation builds for all **10 Off-Page SEO** deliverables.
 
 | # | Deliverable | Automation Score | Status |
 |---|------------|-----------------|--------|
-| 10 | [Citation Building — Onboarding](./10-citation-building-onboarding/) | 4/10 | ✅ Documented |
-| 11 | [Citation Monitoring — Ongoing](./11-citation-monitoring/) | 6/10 | ✅ Documented |
+| 10 | [Citation Building — Onboarding](./10-citation-building-onboarding/) | 0/10 | 100% manual |
+| 11 | [Citation Monitoring — Ongoing](./11-citation-monitoring/) | 0/10 | 100% manual |
 | 12 | [Press Releases](./12-press-releases/) | 7/10 | ✅ Documented |
 | 13 | [Backlink — Business Directories](./13-backlink-business-directories/) | 4/10 | ✅ Documented |
 | 14 | [Backlink — Social Profiles](./14-backlink-social-profiles/) | 5/10 | ✅ Documented |

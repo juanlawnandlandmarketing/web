@@ -1,7 +1,7 @@
 # Citation Building — Onboarding
 
 **Category:** Off-Page SEO
-**Automation Readiness Score:** 4/10 — 🟡 Low automation — mostly human
+**Automation Readiness Score:** 0/10 - 100% manual
 **Status:** ✅ Documented
 
 ---
@@ -35,7 +35,7 @@ Citation building appears in the fulfillment map as a one-time onboarding task a
 - Business-directory backlinks may overlap with citation opportunities.
 - Ongoing citation monitoring needs a clean baseline to compare against.
 
-The missing piece is a standalone citation onboarding process that turns those ClickUp tasks into one clear SOP: business data packet, Whitespark order preparation, directory priority, submission rules, documentation format, video/training references, and human approval gates.
+This process is now documented as a fully manual workflow. Humans own the Whitespark routing decision, order placement, account access, verification, support communication, and every follow-up touch. The SOP exists to make the manual routing rules explicit, not to automate citation submissions.
 
 ## Target State
 
@@ -48,25 +48,17 @@ The ideal system:
 3. Builds a prioritized directory list.
 4. Flags duplicates, old addresses, old phone numbers, wrong domains, and wrong categories.
 5. Prepares submission-ready business descriptions, categories, services, photos, and links.
-6. Separates safe preparation work from human/manual submission steps.
-7. Tracks live listing URLs, pending verifications, blocked listings, and follow-up needs.
+6. Routes Authority and Growth clients into the correct manual Whitespark path.
+7. Tracks live listing URLs, pending verifications, blocked listings, and follow-up needs through manual email follow-up.
 8. Hands the final citation baseline into ongoing monitoring.
 
 ## Automation Score
 
-**4/10 — Low automation, mostly human**
+**0/10 - 100% manual**
 
-Koga can automate meaningful prep and QA:
+Process 10 is 100% manual. Citation work requires Whitespark order handling, account context, client package routing, payment/order decisions, verification, support communication, and human judgment around duplicate or ownership issues.
 
-- Build a NAP packet.
-- Check the website and GBP for consistency.
-- Create a directory priority list.
-- Prepare descriptions, categories, services, and tracking sheets.
-- Search for existing listings and duplicates.
-- Draft submission notes.
-- Verify live URLs after publication.
-
-The score stays low because many citation platforms require manual account creation, email or phone verification, client approval, payment, CAPTCHA, proof of ownership, platform-specific edits, or business-owner access. Automation should prepare the work and reduce mistakes, not pretend it can safely submit every listing without human handling.
+Koga may document the packet, summarize the manual state, or prepare notes when asked, but Koga does not execute the process directly inside Whitespark and does not replace the manual owner. All tracking and follow-up after execution must be handled manually via email.
 
 ## When This Process Runs
 
@@ -80,6 +72,17 @@ The score stays low because many citation platforms require manual account creat
 | Rebrand | Update business name, logo, descriptions, and duplicate profiles. |
 | Acquisition or DBA change | Identify whether old entities should be merged, suppressed, or left separate. |
 | Pre-monitoring handoff | Create the baseline for Process 11, Citation Monitoring. |
+
+## Manual Client Routing Rules
+
+Process 10 has two required manual routes:
+
+| Client Segment | Required Workflow |
+|---|---|
+| Authority clients | Execute citation management 100% manually through the internal Whitespark workflow. A human owns Whitespark access, order details, submission decisions, verification, support communication, and completion tracking. |
+| Growth clients | Do not run this process directly inside Whitespark. A human must manually place a fulfillment order through the Whitespark listings service page: [https://whitespark.ca/listings-service/](https://whitespark.ca/listings-service/). |
+
+After either route runs, all subsequent status tracking, unresolved-item follow-up, support communication, client clarification, and completion confirmation must happen manually via email.
 
 ## Inputs
 
@@ -122,7 +125,7 @@ Use these ClickUp tasks as the operational source for this SOP. If ClickUp and t
 | Source | Role in Process 10 |
 |---|---|
 | [`12. Citation Building`](https://app.clickup.com/t/868eeg12f) | Parent one-time fulfillment task for citation onboarding. |
-| [`White spark order submit (Pending for a launch)`](https://app.clickup.com/t/868ehby11) | Whitespark order/submission task for launch-ready citation work. |
+| [`White spark order submit (Pending for a launch)`](https://app.clickup.com/t/868ehby11) | Manual Whitespark order/submission task for launch-ready Authority client citation work. |
 | [`5. Clear NAP Listings`](https://app.clickup.com/t/868eeg0qb) | NAP cleanup workflow that feeds the citation source-of-truth check. |
 | [`Verify NAP in Whitespark for SAE Clients`](https://app.clickup.com/t/868egzacu) | Whitespark-specific NAP verification task. |
 | [`Verify NAP in website and GBP`](https://app.clickup.com/t/868egz6r4) | Website and GBP consistency check before citation submission. |
@@ -139,7 +142,18 @@ No verified citation onboarding, Whitespark order submission, or citation-buildi
 
 ## Workflow
 
-### 1. Lock the NAP Source of Truth
+### 1. Confirm Client Segment and Manual Route
+
+Before any Whitespark action, identify the client segment.
+
+| Client Segment | Action |
+|---|---|
+| Authority client | Continue with the internal manual Whitespark workflow. |
+| Growth client | Stop the direct Whitespark workflow and manually place the order through [Whitespark Listings Service](https://whitespark.ca/listings-service/). |
+
+Do not use the Authority-client Whitespark workflow for Growth clients. Growth clients must be handled through the Whitespark fulfillment order path only.
+
+### 2. Lock the NAP Source of Truth
 
 Do not submit citations until the business identity is approved.
 
@@ -159,7 +173,7 @@ Confirm:
 
 Use `Verify NAP in website and GBP` and `Verify NAP in Whitespark for SAE Clients` as the operational checks for this step. If the website, GBP, client notes, Whitespark, and existing listings disagree, stop and resolve the conflict before submitting new citations.
 
-### 2. Build the Citation Packet
+### 3. Build the Citation Packet
 
 Prepare one reusable packet for submissions.
 
@@ -185,7 +199,7 @@ Include:
 
 Descriptions should be plain, factual, and consistent. Do not invent awards, licenses, emergency service, guarantees, service areas, or years in business.
 
-### 3. Find Existing Listings and Duplicates
+### 4. Find Existing Listings and Duplicates
 
 Before creating new listings, search for:
 
@@ -201,7 +215,7 @@ Before creating new listings, search for:
 
 When a listing already exists, prefer correcting or claiming the existing profile instead of creating another duplicate.
 
-### 4. Prioritize the Submission List
+### 5. Prioritize the Submission List
 
 Build a directory list in tiers.
 
@@ -226,7 +240,7 @@ For each platform, capture:
 - Submission owner.
 - Notes.
 
-### 5. Prepare Submission Copy
+### 6. Prepare Submission Copy
 
 For each approved platform, prepare:
 
@@ -242,24 +256,26 @@ For each approved platform, prepare:
 
 Keep descriptions consistent, but avoid pasting identical keyword-stuffed text everywhere. The business identity should be stable; profile copy can be lightly adapted to the platform.
 
-### 6. Submit or Assign Manual Steps
+### 7. Execute the Manual Whitespark Route
 
-For Whitespark orders, use the `White spark order submit (Pending for a launch)` task as the submission path. Treat the order as launch-ready only after the NAP source of truth is locked, the citation packet is complete, and any payment, access, or verification blocker has a human owner.
+For Authority clients, use the `White spark order submit (Pending for a launch)` task as the manual submission path. Treat the order as launch-ready only after the NAP source of truth is locked, the citation packet is complete, and any payment, access, or verification blocker has a human owner.
+
+For Growth clients, do not run the order directly inside Whitespark. A human must manually place the fulfillment order through [https://whitespark.ca/listings-service/](https://whitespark.ca/listings-service/), then track all order confirmation, support replies, listing status, and follow-up through email.
 
 Classify each listing before action:
 
 | Submission Type | Rule |
 |---|---|
-| Safe prep only | Koga prepares the packet, but a human submits because account access or verification is required. |
+| Manual packet preparation | Human prepares or approves the packet before Whitespark routing. |
 | Human submission | Human creates/claims/edits the listing directly. |
-| Assisted submission | Koga drafts fields and the human performs the final platform action. |
+| Growth fulfillment order | Human places the order through the Whitespark listings-service page instead of direct Whitespark execution. |
 | Already correct | Log the listing URL and no action needed. |
 | Needs cleanup | Duplicate, wrong NAP, old address, or old vendor claim requires manual resolution. |
 | Blocked | Needs client verification, payment approval, phone/email code, or account access. |
 
 Do not use Matt-owned or team-owned credentials to create third-party accounts for someone else unless the right authorization exists. Do not submit paid listings without explicit approval.
 
-### 7. Verify and Log Results
+### 8. Verify and Log Results
 
 After submission or correction, log:
 
@@ -273,9 +289,26 @@ After submission or correction, log:
 - Date verified.
 - Remaining follow-up.
 
-Verify live listings when possible. If the listing is pending moderation, log the pending status and follow-up date instead of calling it complete.
+Verify live listings manually when possible. If the listing is pending moderation, log the pending status and follow-up date instead of calling it complete.
 
-### 8. Handoff to Citation Monitoring
+### 9. Manual Email Follow-up
+
+After execution, all tracking and follow-up must be handled manually via email.
+
+The manual owner must track:
+
+- Whitespark order confirmation.
+- Support replies.
+- Client clarification requests.
+- Verification emails or phone/postcard checkpoints.
+- Pending listing publication.
+- Duplicate cleanup status.
+- Completion confirmation.
+- Follow-up dates and next owner.
+
+Do not mark Process 10 complete unless the email trail, listing log, and remaining blockers are documented.
+
+### 10. Handoff to Citation Monitoring
 
 At the end of onboarding, hand off:
 
@@ -291,25 +324,19 @@ Process 11 should use this baseline for ongoing citation monitoring.
 
 ## What Gets Automated
 
-Koga can:
+Nothing in Process 10 is considered automated. The production workflow is 100% manual.
 
-- Build the citation packet.
-- Compare website, GBP, and supplied client data.
-- Generate short and long business descriptions.
-- Prepare directory priority lists.
-- Search for existing listings and likely duplicates.
-- Flag inconsistent NAP values.
-- Draft platform-specific submission notes.
-- Prepare tracking rows.
-- Verify public listing URLs when they are live.
-- Produce handoff notes for citation monitoring.
+Koga may assist with documentation only when specifically asked, such as summarizing the packet or formatting notes. That assistance does not change the process status and does not replace the required manual Whitespark route or manual email follow-up.
 
 ## What Stays Human
 
 Humans approve or handle:
 
+- Client segment routing.
 - Final NAP source of truth.
 - Client-sensitive business facts.
+- Whitespark order placement.
+- Growth-client fulfillment orders through [Whitespark Listings Service](https://whitespark.ca/listings-service/).
 - Account creation.
 - Login credentials.
 - Email, phone, postcard, or business-owner verification.
@@ -317,10 +344,14 @@ Humans approve or handle:
 - CAPTCHA or anti-abuse checkpoints.
 - Claims, duplicate suppression, or ownership conflicts.
 - Final submission on platforms where automation would be risky or unauthorized.
+- Post-execution tracking and follow-up by email.
 
 ## QA Checklist
 
 - [ ] Business name, address, phone, website, hours, categories, services, and service areas are approved.
+- [ ] Client segment was confirmed before Whitespark routing.
+- [ ] Authority clients were handled through the internal manual Whitespark workflow.
+- [ ] Growth clients were not run directly inside Whitespark and were manually ordered through `https://whitespark.ca/listings-service/`.
 - [ ] Website and GBP identity were checked for consistency.
 - [ ] Old names, old addresses, old phone numbers, and old domains were documented when found.
 - [ ] A reusable citation packet exists.
@@ -332,6 +363,7 @@ Humans approve or handle:
 - [ ] Platforms requiring login or verification were assigned to a human owner.
 - [ ] Live listing URLs were verified when available.
 - [ ] Pending and blocked items have clear next steps.
+- [ ] Post-execution tracking and follow-up are handled manually via email.
 - [ ] Final output is ready for Process 11, Citation Monitoring.
 
 ## Output Format
@@ -342,6 +374,9 @@ For each onboarding run, produce:
 {
   "client": "Client Name",
   "run_type": "citation_building_onboarding",
+  "automation_status": "100% manual",
+  "client_segment": "Authority or Growth",
+  "manual_route": "Authority internal Whitespark workflow or Growth Whitespark listings-service order",
   "run_date": "YYYY-MM-DD",
   "nap_source_of_truth": {
     "business_name": "Client Business Name",
@@ -368,6 +403,7 @@ For each onboarding run, produce:
       "action_taken": "Submitted new listing with approved NAP and service categories.",
       "verification_required": "email",
       "human_owner": "Team member",
+      "follow_up_channel": "email",
       "follow_up_date": "YYYY-MM-DD",
       "notes": "Waiting for confirmation email."
     }
@@ -393,17 +429,20 @@ For each onboarding run, produce:
 The process is complete when:
 
 - The approved NAP source of truth is documented.
+- The client segment and manual Whitespark route are documented.
 - The citation packet is complete.
 - Existing listings and duplicates have been checked on priority platforms.
 - Tier 1 citation sources are completed, already correct, or clearly blocked.
 - Tier 2 and Tier 3 opportunities are submitted, assigned, rejected, or scheduled.
 - Live listing URLs are logged when available.
 - Pending verification and duplicate cleanup items have owners and follow-up dates.
+- All post-execution tracking and follow-up are owned manually via email.
 - The final citation baseline is ready for ongoing monitoring.
 
 ## Common Mistakes
 
 - Submitting before the NAP source of truth is approved.
+- Running Growth clients directly in Whitespark instead of placing the manual listings-service order.
 - Creating duplicate listings instead of claiming or correcting existing ones.
 - Using different phone numbers across platforms without a tracking decision.
 - Listing a service-area business like it has a staffed public office when it does not.
@@ -411,6 +450,7 @@ The process is complete when:
 - Paying for low-quality directories without approval.
 - Calling pending listings complete.
 - Forgetting to document login, verification, or ownership blockers.
+- Treating email follow-up as automated or optional.
 - Skipping the handoff to citation monitoring.
 
 ## Source References

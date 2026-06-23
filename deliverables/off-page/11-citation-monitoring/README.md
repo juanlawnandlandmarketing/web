@@ -1,24 +1,25 @@
 # Citation Monitoring - Ongoing
 
 **Category:** Off-Page SEO
-**Automation Readiness Score:** 6/10 - Partial automation possible
+**Automation Readiness Score:** 0/10 - 100% manual
 **Status:** SOP documented
 
 ---
 
 ## Purpose
 
-Citation monitoring keeps the client's business identity consistent after citation onboarding is complete. The onboarding process builds the baseline; this ongoing process checks whether major profiles, Whitespark-managed listings, and priority directories still match the approved name, address, phone, website, GBP, and service-area details.
+Citation monitoring keeps the client's business identity consistent after citation onboarding is complete. The onboarding process builds the baseline; this ongoing process manually checks whether major profiles, Whitespark-managed listings, and priority directories still match the approved name, address, phone, website, GBP, and service-area details.
 
-For Lawn & Land clients, citation monitoring is not a random directory sweep. It is a controlled recurring check for NAP drift, duplicate listings, broken URLs, ownership issues, pending Whitespark items, and directory profiles that need human follow-up.
+For Lawn & Land clients, citation monitoring is not a random directory sweep. It is a controlled manual follow-up workflow for NAP drift, duplicate listings, broken URLs, ownership issues, pending Whitespark items, and directory profiles that need human email follow-up.
 
 The goal is simple:
 
 - Keep the approved NAP source of truth consistent across important listings.
 - Catch old phone numbers, old addresses, old domains, and duplicate profiles.
-- Monitor Whitespark-managed directory work and support requests.
+- Monitor Whitespark-managed directory work and support requests manually.
 - Verify priority profiles such as Bing Places, Yelp, Facebook, and other business directory listings.
 - Route cleanup work to the right human owner when a platform requires login, verification, payment, or support escalation.
+- Handle all tracking and follow-up manually via email.
 - Keep the citation baseline ready for reporting and future onboarding/reference work.
 
 ## Current State
@@ -33,7 +34,7 @@ Citation monitoring is represented across several ClickUp tasks instead of one u
 - ClickUp subtask `Comunicate with Whitespark Support` is the support escalation path for stuck listings, Whitespark questions, or cleanup issues.
 - Process 10, `Citation Building - Onboarding`, creates the baseline that this process monitors.
 
-The missing piece is a recurring citation monitoring SOP that turns those tasks into a repeatable quarterly workflow with clear inputs, issue types, QA rules, video-reference decisions, and handoff expectations.
+This SOP documents Process 11 as a 100% manual recurring workflow. The system can store the SOP and reference the tracking standard, but the actual monitoring, Whitespark/account review, support communication, and post-execution follow-up stay with a human owner.
 
 ## Target State
 
@@ -44,38 +45,30 @@ The ideal system:
 1. Starts from the approved NAP source of truth and the Process 10 citation baseline.
 2. Checks the website, GBP, Whitespark, and priority directories for consistency.
 3. Reviews key profiles and listings for old NAP, duplicate profiles, missing links, broken links, or incorrect status.
-4. Separates issues Koga can detect from issues humans must fix inside third-party platforms.
+4. Separates the manual issue types, evidence, owner, next action, and due date.
 5. Creates a clean issue list with priority, platform, evidence, owner, next action, and due date.
-6. Escalates stuck Whitespark or listing issues through the support workflow.
-7. Tracks resolved, pending, blocked, and recurring problems over time.
+6. Escalates stuck Whitespark or listing issues through manual email follow-up.
+7. Tracks resolved, pending, blocked, and recurring problems manually over time.
 
 ## Automation Score
 
-**6/10 - Partial automation possible**
+**0/10 - 100% manual**
 
-Koga can automate much of the audit and evidence capture:
+Process 11 is 100% manual. Monitoring and follow-up depend on Whitespark/account context, third-party platform access, client or business-owner verification, support communication, manual duplicate suppression, payment decisions, and logged-in profile review.
 
-- Compare approved NAP against website and GBP data.
-- Pull the Process 10 citation baseline.
-- Search for likely client listings and duplicate profiles.
-- Check public listing URLs for live status, NAP text, website URL, and redirect behavior.
-- Flag mismatched business names, old phone numbers, old addresses, wrong URLs, and missing profile links.
-- Prepare Whitespark/support notes for human review.
-- Create monitoring summaries and recurring issue logs.
-
-The score stays at 6/10 because fixes often require platform access, client or business-owner verification, Whitespark coordination, manual duplicate suppression, payment decisions, or logged-in profile edits. Detection is more automatable than resolution.
+Koga may format documentation or summarize a manually supplied update when asked, but Koga does not own execution, tracking, support outreach, or follow-up. All subsequent tracking and follow-up for Process 11 must be handled manually via email.
 
 ## When This Process Runs
 
 | Trigger | What Happens |
 |---|---|
-| Quarterly fulfillment | Review Whitespark and priority directory listings for NAP consistency. |
+| Quarterly fulfillment | Manually review Whitespark and priority directory listings for NAP consistency. |
 | After Process 10 onboarding | Confirm the onboarding baseline is stable and ready for recurring monitoring. |
 | After website launch or domain change | Confirm listings point to the correct canonical website URL. |
 | After GBP changes | Check that citations still match the approved GBP identity. |
 | After phone/address/name changes | Identify old NAP variants and update/suppress priority listings. |
 | Ranking or local visibility issue | Check whether entity confusion, duplicates, or old listings may be contributing. |
-| Whitespark support issue | Document status, contacts, blocker, and follow-up date. |
+| Whitespark support issue | Manually document email status, contacts, blocker, and follow-up date. |
 
 ## Inputs
 
@@ -90,6 +83,24 @@ The score stays at 6/10 because fixes often require platform access, client or b
 | Old NAP variants | Duplicate and old-record detection. |
 | Client notes or ownership changes | Explains name/address/phone/domain updates. |
 | Prior monitoring log | Recurring issue detection and resolution history. |
+
+## Manual Tracking and Email Follow-up Rules
+
+All Process 11 tracking and follow-up must be handled manually via email.
+
+The manual owner must track:
+
+- Whitespark support messages.
+- Client clarification requests.
+- Verification requests.
+- Directory/platform support replies.
+- Pending publication or moderation status.
+- Duplicate cleanup status.
+- Blocked owner/access/payment items.
+- Next follow-up date.
+- Final completion confirmation.
+
+Do not mark Process 11 complete from a dashboard note alone. The manual email trail and monitoring log must support the final status.
 
 ## ClickUp Source Tasks and Video Audit
 
@@ -134,7 +145,9 @@ No citation-monitoring, NAP-monitoring, Whitespark-monitoring, Bing Places, Yelp
 
 ## Workflow
 
-### 1. Load the Approved Baseline
+### 1. Assign Manual Owner and Load the Approved Baseline
+
+Assign the human owner before beginning the monitoring cycle. That owner is responsible for account checks, Whitespark status review, email follow-up, and completion tracking.
 
 Start with:
 
@@ -166,7 +179,7 @@ Check:
 
 If the website and GBP do not match the approved baseline, log the mismatch before checking third-party directories. The site and GBP must be the reference point.
 
-### 3. Verify Whitespark NAP and Status
+### 3. Manually Verify Whitespark NAP and Status
 
 Use the ClickUp task `Verify NAP in Whitespark for SAE Clients`.
 
@@ -182,7 +195,7 @@ Check:
 - Duplicate cleanup requests.
 - Support notes or open questions.
 
-If Whitespark needs support follow-up, route it through `Comunicate with Whitespark Support` and log the support contact, question, date sent, and follow-up date.
+If Whitespark needs support follow-up, route it through `Comunicate with Whitespark Support` and log the support contact, question, email date sent, and follow-up date.
 
 ### 4. Check Priority Profiles
 
@@ -242,21 +255,19 @@ Use consistent issue types.
 | Payment approval | Platform requires paid action or membership decision. |
 | Blocked | Cannot move without client, platform, or ownership action. |
 
-### 7. Assign the Next Action
+### 7. Assign the Manual Next Action
 
 For every issue, define the owner and next step:
 
-- Koga can recheck public listing data.
-- Koga can prepare support notes.
-- Koga can draft correction instructions.
 - Human must perform logged-in changes.
 - Human must request client verification.
 - Human must decide on payments or memberships.
 - Whitespark support must resolve platform/listing issues.
+- Human must handle all support, client, and platform follow-up by email.
 
 Do not mark an issue fixed until the public listing or support response confirms it.
 
-### 8. Update the Monitoring Log
+### 8. Update the Manual Monitoring Log
 
 Each run should produce:
 
@@ -269,27 +280,21 @@ Each run should produce:
 - Blocked items.
 - Follow-up dates.
 - Recurring issues from prior runs.
+- Email-thread references or notes.
 
 The monitoring log becomes the evidence trail for future checks and client-facing summaries.
 
 ## What Gets Automated
 
-Koga can:
+Nothing in Process 11 is considered automated. The production workflow is 100% manual.
 
-- Load the Process 10 citation baseline.
-- Compare approved NAP against website and GBP.
-- Fetch public listing pages where accessible.
-- Search for old NAP variants and duplicates.
-- Detect mismatched names, phones, addresses, and URLs.
-- Check live URLs and redirect behavior.
-- Prepare Whitespark support notes.
-- Create monitoring summaries, issue tables, and follow-up lists.
-- Highlight recurring issues across monitoring cycles.
+Koga may assist with documentation only when specifically asked, such as formatting a manually supplied monitoring update. That assistance does not change the process status and does not replace manual email follow-up.
 
 ## What Stays Human
 
 Humans approve or handle:
 
+- Monitoring-cycle ownership.
 - Final NAP source-of-truth changes.
 - Logged-in directory edits.
 - GBP edits and verification.
@@ -299,10 +304,12 @@ Humans approve or handle:
 - Phone/email/postcard verification.
 - Paid directory or membership decisions.
 - Client-facing explanation of sensitive listing issues.
+- All post-execution tracking and follow-up by email.
 
 ## QA Checklist
 
 - [ ] Approved NAP baseline was loaded before monitoring.
+- [ ] A manual owner was assigned for account checks and email follow-up.
 - [ ] Process 10 citation baseline was reviewed.
 - [ ] Website and GBP were checked before third-party directories.
 - [ ] Whitespark NAP and status were checked.
@@ -312,6 +319,7 @@ Humans approve or handle:
 - [ ] Every issue has an issue type, evidence, owner, and next action.
 - [ ] Whitespark support items have a contact path and follow-up date.
 - [ ] Paid or access-required actions are assigned to a human.
+- [ ] All post-execution tracking and follow-up are handled manually via email.
 - [ ] Video references were only included if directly relevant to citation monitoring.
 - [ ] The final output is ready for the next quarterly monitoring cycle.
 
@@ -323,6 +331,9 @@ For each monitoring run, produce:
 {
   "client": "Client Name",
   "run_type": "citation_monitoring_ongoing",
+  "automation_status": "100% manual",
+  "follow_up_channel": "email",
+  "manual_owner": "Team member",
   "run_date": "YYYY-MM-DD",
   "baseline": {
     "business_name": "Client Business Name",
@@ -348,6 +359,7 @@ For each monitoring run, produce:
       "evidence": "Phone number on listing shows old number.",
       "recommended_action": "Update phone to approved baseline.",
       "owner": "Human",
+      "follow_up_channel": "email",
       "follow_up_date": "YYYY-MM-DD"
     }
   ],
@@ -369,11 +381,13 @@ For each monitoring run, produce:
 The process is complete when:
 
 - Website and GBP NAP have been checked against the approved baseline.
+- The manual owner and email follow-up path are documented.
 - Whitespark NAP and listing status have been reviewed.
 - Priority profiles/directories have been checked.
 - Old NAP variants and duplicates have been searched.
 - Every issue has evidence, owner, next action, and follow-up date.
 - Whitespark support issues are logged with contact path and next follow-up.
+- Post-execution tracking and follow-up are handled manually via email.
 - Irrelevant SOP videos are excluded from the process.
 - The monitoring log is ready for the next recurring cycle.
 
@@ -387,6 +401,7 @@ The process is complete when:
 - Including unrelated SOP videos just because they exist in ClickUp.
 - Sending Whitespark support questions without the client/order context.
 - Leaving blocked items without an owner or follow-up date.
+- Treating tracking or follow-up as automated.
 
 ## Source References
 
