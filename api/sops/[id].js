@@ -7,7 +7,7 @@ const SOP_FILES = {
   '1': { title: 'Keyword Research', source: 'deliverables/on-page/01-keyword-research/README.md' },
   '2': { title: 'Service Pages', source: 'deliverables/on-page/02-service-pages/README.md' },
   '3': { title: 'Service Area Pages', source: 'deliverables/on-page/03-service-area-pages/README.md' },
-  '4': { title: 'Blog Content', source: 'deliverables/on-page/04-blog-content/README.md' },
+  '4': { title: 'Blog Content Factory Engine', source: 'deliverables/on-page/04-blog-content/README.md' },
   '5': { title: 'Internal Linking', source: 'deliverables/on-page/05-internal-linking/README.md' },
   '6': { title: 'Alt Text on Images', source: 'deliverables/on-page/06-alt-text/README.md' },
   '7': { title: 'Title Tags & Meta Descriptions', source: 'deliverables/on-page/07-title-tags-meta/README.md' },
