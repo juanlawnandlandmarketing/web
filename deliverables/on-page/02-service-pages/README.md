@@ -4,8 +4,8 @@
 **Category:** On-Page SEO
 **Fulfillment Connection:** Onsite Core Content Optimization / Content Engine / SEO Images Optimization
 **Cadence:** Content-engine driven on onboarding, launch rebuilds, new service launches, and as-needed optimization updates
-**Automation Readiness Score:** 9/10 - 90% automated
-**Status:** 90% automated
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
@@ -13,7 +13,7 @@
 
 Service pages turn the approved keyword map into pages that can rank, convert, and support the rest of the SEO system. A strong service page should make it obvious what the client does, where they do it, why the service matters, what the process looks like, and what the visitor should do next.
 
-Process 2 is now driven by the content engine. Koga turns Process 1 keyword research, site architecture, client data, live-page audits, and brand assets into service-page briefs, drafts, metadata, FAQs, internal-link recommendations, schema guidance, image prompts, alt text, and QA packets.
+Process 2 is now driven by the Content Engine Factory. Koga turns Process 1 keyword research, site architecture, DataForSEO SERP context, client data, live-page audits, and brand assets into service-page briefs, drafts, metadata, FAQs, internal-link recommendations, schema guidance, image prompts, alt text, and QA packets.
 
 This process receives input from Keyword Research and feeds:
 
@@ -30,9 +30,9 @@ This process receives input from Keyword Research and feeds:
 
 ## Current State
 
-The content engine now handles roughly 90% of the service-page workflow. It can build the page brief, draft or rewrite the page, prepare metadata, generate FAQs, recommend internal links, define schema, prepare asset guidance, generate image prompts, and build the publish/QA packet.
+The Content Engine Factory now handles the full standard service-page workflow. It builds the page brief, drafts or rewrites the page, prepares metadata, generates FAQs, recommends internal links, defines schema, prepares asset guidance, generates image prompts, and builds the publish/QA packet from DataForSEO-backed keyword and SERP inputs.
 
-The remaining 10% is human exception handling: verifying service facts, approving sensitive claims, confirming major design/page-builder decisions, and making sure generated imagery follows the client's approved brand references.
+Human review is exception-only: missing service facts, sensitive claims, page-builder access blockers, consolidation conflicts, or incomplete brand and Ground Control references.
 
 ## Target State
 

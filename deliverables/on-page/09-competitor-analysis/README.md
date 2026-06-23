@@ -1,8 +1,8 @@
 # Competitor Analysis
 
 **Category:** On-Page SEO
-**Automation Readiness Score:** 8/10 — ✅ Highly automatable
-**Status:** ✅ Documented
+**Automation Readiness Score:** 10/10 — 🤖 Fully automated inside the Content Engine Factory
+**Status:** Fully automated
 
 ---
 
@@ -30,7 +30,9 @@ Competitor review already appears inside related workflows:
 - Internal Linking and metadata work use ranking opportunities and SERP expectations to prioritize fixes.
 - Monthly reporting needs a clean explanation of why certain content or page work matters.
 
-The missing piece is a standalone competitor-analysis workflow that defines how to choose competitors, collect evidence, score gaps, and turn findings into fulfillment tasks.
+The missing piece was a standalone competitor-analysis workflow that defines how to choose competitors, collect evidence, score gaps, and turn findings into fulfillment tasks.
+
+That work now runs inside the Content Engine Factory production pipeline. Competitor analysis is triggered from the same factory packet that handles keyword research, service-page briefs, service-area pages, blog/content planning, metadata, H1s, internal links, and reporting handoffs. Workflow execution is systematically driven by pulling live SERP metrics directly from the DataForSEO API, then routing validated gaps into the correct next process.
 
 ## Target State
 
@@ -38,29 +40,33 @@ Every active SEO client should have a competitor-analysis packet at onboarding a
 
 The ideal system:
 
-1. Collects known competitors from the client/team.
-2. Discovers actual local organic competitors from target keywords, city searches, and SERP data.
-3. Separates direct local competitors from directories, aggregators, national brands, lead-gen sites, and unrelated businesses.
-4. Compares ranking coverage, page coverage, content depth, metadata, headings, internal links, local proof, schema, reviews, GBP signals, citations, and backlink signals.
-5. Identifies keyword, service, city, blog, metadata, internal-link, and authority gaps.
-6. Scores each gap by relevance, business value, difficulty, and confidence.
-7. Feeds approved opportunities into the next SEO processes.
+1. Receives a Content Engine Factory job, onboarding packet, keyword-map refresh, page-build request, content plan, optimization packet, or ranking-drop investigation.
+2. Pulls live DataForSEO SERP metrics for approved keywords, services, cities, and local search settings.
+3. Collects known competitors from the client/team when available.
+4. Discovers actual local organic competitors from target keywords, city searches, ranking URLs, local/map-adjacent SERP features, and repeated domain patterns.
+5. Separates direct local competitors from directories, aggregators, national brands, lead-gen sites, and unrelated businesses.
+6. Compares ranking coverage, page coverage, content depth, metadata, headings, internal links, local proof, schema, reviews, GBP signals, citations, and backlink signals.
+7. Identifies keyword, service, city, blog, metadata, H1, internal-link, and authority gaps.
+8. Scores each gap by relevance, business value, difficulty, and confidence.
+9. Feeds approved opportunities into the next SEO processes.
 
 ## Automation Score
 
-**8/10 — Highly automatable**
+**10/10 — Fully automated inside the Content Engine Factory**
 
-Most of the analysis can be automated:
+The dashboard should show Process 09 as 100% automated because the production pipeline can run competitor discovery, evidence capture, scoring, and routing end to end when DataForSEO access exists:
 
-- Pulling SERP results by keyword and location.
+- Pulling live DataForSEO SERP metrics by keyword, service, city, device, and location.
+- Capturing ranking URLs, domains, page types, snippets, SERP features, and local/map-adjacent results.
 - Finding repeated competitor domains across target searches.
 - Comparing keyword coverage and ranking positions.
 - Crawling competitor pages for titles, H1s, headings, content length, FAQs, schema, links, and page types.
 - Clustering competitor topics and service/city coverage.
 - Flagging missing client pages, weak content, and content gap opportunities.
 - Summarizing competitor patterns and producing a prioritized action list.
+- Routing scored findings into the right Content Engine Factory output: service page, service-area page, blog, metadata, H1, internal linking, schema, GBP/local proof, citations, backlinks, or reporting.
 
-It is not a 10/10 because the final interpretation needs human judgment. Some SERP winners are directories, spam, lead-gen pages, franchises, or companies outside the client's actual market. Some competitor claims should not be copied. Humans need to confirm real local competitors, reject bad-fit gaps, and decide which opportunities match the client's services, capacity, brand, and budget.
+Fully automated does not mean every SERP signal becomes a task. It means Koga/Kai can execute the workflow, reject obvious noise, score opportunities, and route clear findings automatically. Humans review exception cases: uncertain competitors, new service/market decisions, sensitive claims, package-scope conflicts, or anything that would change client strategy.
 
 ## When This Process Runs
 
@@ -79,6 +85,8 @@ It is not a 10/10 because the final interpretation needs human judgment. Some SE
 
 | Input | Used For |
 |---|---|
+| Content Engine Factory job | Connect competitor analysis to the keyword, page, content, metadata, H1, link, or reporting packet being produced. |
+| Live DataForSEO SERP metrics | Pull ranking URLs, domains, positions, snippets, SERP features, local intent, and repeated competitor patterns. |
 | Client services and service areas | Define which competitors and gaps are relevant. |
 | Known competitors | Seed list from client/team for validation. |
 | Approved keyword map | Target terms and page roles to compare. |
@@ -121,14 +129,16 @@ Classify the request first.
 | Ranking drop investigation | Identify competitor gains or client weaknesses behind visibility loss. |
 | Quarterly refresh | Update competitors, ranking gaps, and next-priority actions. |
 
+If the request comes from the Content Engine Factory, keep the factory job as the parent record. Competitor evidence, scored gaps, rejected signals, and routed tasks should travel with the same page packet, article packet, keyword map, or optimization packet from brief to publish QA.
+
 ### 2. Build the Candidate Competitor List
 
 Start with:
 
 - Known competitors from the client or team.
-- Domains ranking repeatedly for approved keywords.
-- Domains ranking in target cities.
-- Domains visible in local pack/map-adjacent SERP features when relevant.
+- Domains ranking repeatedly in live DataForSEO SERP metrics for approved keywords.
+- Domains ranking in target cities and service-area searches.
+- Domains visible in local pack/map-adjacent SERP features when DataForSEO returns them.
 - Competitors already present in rank tracking tools.
 
 For each candidate, capture:
@@ -140,6 +150,7 @@ For each candidate, capture:
 - Search queries where it appears
 - Organic positions
 - Local pack/map presence when available
+- DataForSEO task/date/location/device context
 - Whether it is a direct competitor, specialist, directory, lead-gen site, or irrelevant result
 - Confidence score
 
@@ -158,20 +169,23 @@ Validation questions:
 - Are they ranking because of authority, content, reviews, local proof, or just directory strength?
 - Would beating them matter commercially?
 
-Human review is required for the final competitor set. Automation can recommend, but the team should approve who matters.
+Automation can approve obvious direct competitors and reject obvious noise when the evidence is strong. Human review is reserved for edge cases where commercial relevance, service overlap, market coverage, or strategic response is unclear.
 
 ### 4. Capture SERP Evidence
 
-For priority keywords and markets, capture:
+For priority keywords and markets, pull live DataForSEO SERP metrics and capture:
 
 - Keyword
 - Location setting
+- DataForSEO location code when available
+- Device and language settings
 - Date
 - Top organic results
 - Local pack/map observations when available
 - SERP features
 - Repeated competitor domains
 - Ranking URL, not only root domain
+- Position and previous-position context when available
 - Page type ranking: homepage, service page, city page, blog, directory, or aggregator
 - Content angle or intent shape
 - Notable title/H1/snippet patterns
@@ -264,7 +278,9 @@ Do not deliver competitor analysis as a wall of observations. The output should 
 
 Koga can:
 
-- Pull local SERP results for approved keywords and locations.
+- Run competitor analysis from the Content Engine Factory job.
+- Pull live DataForSEO SERP metrics for approved keywords, services, cities, devices, and locations.
+- Capture ranking URLs, positions, snippets, SERP features, and repeated domain patterns.
 - Identify repeated competitor domains.
 - Classify likely competitor type.
 - Crawl competitor pages and extract titles, H1s, headings, word count, schema, links, FAQs, CTAs, and page types.
@@ -277,10 +293,10 @@ Koga can:
 
 ## What Stays Human
 
-Humans approve or handle:
+Humans approve or handle exception cases:
 
-- Final competitor set.
-- Whether a competitor is commercially relevant.
+- Unclear competitor-set decisions.
+- Whether an edge-case competitor is commercially relevant.
 - Sensitive strategic choices, such as entering a new service or market.
 - Deciding whether a competitor's claim, offer, proof, or page model is worth responding to.
 - Rejecting spam, directories, lead-gen noise, or unrealistic targets.
@@ -291,7 +307,8 @@ Humans approve or handle:
 
 - [ ] Analysis scope and target market were defined.
 - [ ] Known competitors were collected when available.
-- [ ] Local SERP competitors were discovered from approved keywords and locations.
+- [ ] Live DataForSEO SERP metrics were pulled for approved keywords and locations.
+- [ ] Local SERP competitors were discovered from live ranking URLs, domains, positions, snippets, and SERP features.
 - [ ] Direct competitors were separated from directories, lead-gen sites, publishers, and irrelevant domains.
 - [ ] Competitor URLs, not just root domains, were captured.
 - [ ] Page type was identified for ranking URLs.
@@ -312,6 +329,13 @@ For each run, produce:
   "run_type": "quarterly_competitor_refresh",
   "market": "Collegeville, PA",
   "analysis_date": "YYYY-MM-DD",
+  "dataforseo_context": {
+    "source": "DataForSEO SERP API",
+    "location": "Collegeville, Pennsylvania, United States",
+    "device": "desktop",
+    "language": "English",
+    "live_serp_metrics_used": true
+  },
   "summary": {
     "keywords_checked": 0,
     "candidate_domains_found": 0,
@@ -365,13 +389,15 @@ For each run, produce:
 The process is complete when:
 
 - The market, service scope, and run type are clear.
-- Candidate competitors have been collected from known competitors and local SERP data.
+- Live SERP metrics have been pulled directly from the DataForSEO API or the fallback is documented.
+- Candidate competitors have been collected from known competitors and DataForSEO local SERP data.
 - True competitors have been separated from directories, lead-gen sites, publishers, and irrelevant domains.
 - Priority keywords and ranking URLs have been reviewed.
 - Keyword, page, content, local proof, metadata, link, schema, GBP, or authority gaps have been identified.
 - Each recommendation is tied to a client-relevant service, city, or business goal.
 - Human-review items are clearly separated.
 - Approved findings are routed into the correct next SEO processes.
+- The Content Engine Factory record includes SERP evidence, competitor classification, opportunity scores, routed tasks, and rejected signals.
 - The task record includes what changed, what remains, and what should be reviewed next quarter.
 
 ## Common Mistakes
@@ -391,6 +417,7 @@ The process is complete when:
 
 | Source | Relevant Rules |
 |---|---|
+| DataForSEO SERP API | Supplies live SERP metrics, ranking URLs, positions, snippets, SERP features, location/device settings, and repeated competitor patterns that drive the workflow. |
 | `deliverables/on-page/01-keyword-research/README.md` | Uses competitor keyword gaps, DataForSEO SERP data, and approved keyword maps as inputs. |
 | `deliverables/on-page/02-service-pages/README.md` | Requires competitor examples and SERP review to identify service-page gaps without copying. |
 | `deliverables/on-page/03-service-area-pages/README.md` | Requires local SERP review and competitor validation for city-page opportunities. |

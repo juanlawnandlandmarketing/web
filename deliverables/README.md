@@ -34,10 +34,12 @@ Ordered by automation readiness (highest first):
 | 02 | [Service Pages](./on-page/02-service-pages/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 05 | [Internal Linking](./on-page/05-internal-linking/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 06 | [AI Generation](./on-page/06-alt-text/) | 🤖 10/10 | 🤖 **Fully automated** |
+| 07 | [Title Tags & Meta Descriptions](./on-page/07-title-tags-meta/) | 🤖 10/10 | 🤖 **Fully automated** |
+| 08 | [H1 Optimization](./on-page/08-h1-optimization/) | 🤖 10/10 | 🤖 **Fully automated** |
+| 09 | [Competitor Analysis](./on-page/09-competitor-analysis/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 04 | [Blog Content](./on-page/04-blog-content/) | 🚀 9/10 | 🔨 **In Progress** |
 | 32 | [Automated Review Replies](./gbp/32-gbp-review-replies/) | 🚀 9/10 | ✅ Documented |
 | 37 | [Internal Monthly Scorecard](./reporting/37-internal-monthly-scorecard/) | 🚀 9/10 | 🔲 Not started |
-| 09 | [Competitor Analysis](./on-page/09-competitor-analysis/) | ✅ 8/10 | 🔲 Not started |
 | 22 | [Google Search Console](./technical/22-google-search-console/) | ✅ 8/10 | 🔲 Not started |
 | 26 | [Page Speed / Core Web Vitals](./technical/26-page-speed-core-web-vitals/) | ✅ 8/10 | 🔲 Not started |
 | 31 | [Weekly GBP Posts](./gbp/31-gbp-weekly-posts/) | ✅ 8/10 | ✅ Documented |
