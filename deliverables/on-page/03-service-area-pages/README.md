@@ -2,10 +2,10 @@
 
 **Process ID:** 03
 **Category:** On-Page SEO
-**Fulfillment Connection:** Onsite Core Content Optimization
-**Cadence:** Onboarding, launch rebuilds, service-area expansion campaigns, and as-needed optimization updates
-**Automation Readiness Score:** 7/10 - Highly automatable
-**Status:** Documented
+**Fulfillment Connection:** Onsite Core Content Optimization / Content Engine / SEO Images Optimization
+**Cadence:** Content Engine Factory run on onboarding, launch rebuilds, service-area expansion campaigns, and as-needed optimization updates
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
@@ -17,7 +17,7 @@ Service pages answer: **What do we do?**
 
 Service area pages answer: **Do we do it here, and why should someone in this market trust us?**
 
-The operating process is intentionally similar to Service Pages. The same automation can draft briefs, copy, metadata, FAQs, links, schema notes, and QA packets. The difference is the local proof layer: city accuracy, market fit, real service coverage, local internal links, and duplicate-city-page control.
+The operating process is intentionally similar to Service Pages. The Content Engine Factory drafts briefs, copy, metadata, FAQs, links, schema notes, image guidance, alt text, and QA packets from DataForSEO-backed city/service intent. The difference is the local proof layer: city accuracy, market fit, real service coverage, local internal links, and duplicate-city-page control.
 
 This process receives input from Keyword Research and feeds:
 
@@ -34,9 +34,9 @@ This process receives input from Keyword Research and feeds:
 
 ## Current State
 
-The current baseline documentation identifies service area pages as part of Onsite Core Content Optimization, but the placeholder did not define a complete operating standard. The automation docs already generate service-area URLs from city/state inputs and include `service_area` as a website content brief type.
+The Content Engine Factory now handles the full standard service-area page workflow. It builds the page brief, validates city/service intent, drafts or rewrites the page, prepares metadata, generates FAQs, recommends internal links, defines schema, prepares asset guidance, generates image prompts, and builds the publish/QA packet from DataForSEO-backed local keyword and SERP inputs.
 
-What is missing is the real-world SOP: when a city deserves a page, what must be true before it is published, how it should differ from neighboring city pages, how it should connect back to services, and how to avoid swapped-city filler.
+Human review is exception-only: uncertain service coverage, missing local proof, sensitive claims, page-builder access blockers, consolidation conflicts, or incomplete brand and Ground Control references.
 
 ## Target State
 
@@ -57,7 +57,7 @@ The final page must include:
 - FAQ section
 - Image guidance and alt text
 - Schema recommendation
-- Human approval notes
+- Automation status and exception-review notes
 - Publish or optimization status
 
 ## Required Inputs
@@ -357,22 +357,22 @@ Most service area pages should be considered for:
 
 Schema must match visible page content. Do not invent local addresses, ratings, reviews, prices, or service areas. If the business does not have a physical location in the city, do not imply that it does.
 
-### 13. Human Review and Approval
+### 13. Exception Review
 
-Human approval is required before publishing or major optimization updates.
+The Content Engine Factory routes only exception cases for review.
 
-The reviewer checks:
+Exception review checks:
 
-- The city is actually served.
-- The services listed are actually available there.
-- The local proof is accurate.
-- No fake project, neighborhood, or location claims were added.
-- The page is distinct enough from nearby city pages.
-- CTA and conversion path are correct.
-- Images are appropriate.
-- Any pricing, guarantee, or compliance-sensitive claims are approved.
+- Whether the city is actually served when coverage data is incomplete.
+- Whether the services listed are actually available there.
+- Whether local proof is accurate enough to use.
+- Whether any project, neighborhood, or location claim needs support.
+- Whether the page is distinct enough from nearby city pages.
+- Whether CTA or conversion-path changes need human approval.
+- Whether images are appropriate and match approved brand references.
+- Whether pricing, guarantee, or compliance-sensitive claims need approval.
 
-No service area page is complete until a human approves it or leaves revision notes.
+No routine production gate is required when source data is complete and the generated page passes QA. Human notes are captured only for exceptions, revisions, or blocked publishing steps.
 
 ### 14. Publish or Prepare CMS Update
 
@@ -445,39 +445,40 @@ The two processes should share the same automation readiness score because the b
 | Proof needed | Service process, expertise, outcomes | Coverage, local proof, market fit |
 | Main risk | Generic service copy or cannibalization | Thin swapped-city pages or fake local claims |
 | Main links out | Related services, service areas, blogs, contact | Service pages, nearby cities, blogs, contact |
-| Human gate | Service accuracy and claims | Service coverage, city accuracy, local proof |
-| Automation score | 7/10 | 7/10 |
+| Exception gate | Service accuracy and claims | Service coverage, city accuracy, local proof |
+| Automation score | 10/10 | 10/10 |
 
 ## Automation Plan
 
-### Koga/Kai Can Automate
+### Content Engine Factory Automates
 
 - Pull approved keyword map data.
 - Match city/service keywords to existing URLs.
 - Generate service-area page briefs.
 - Audit existing city page metadata, H1s, links, schema, and word count.
-- Pull GSC page/query data.
+- Pull DataForSEO local keyword, SERP, competitor, and related-query data.
+- Pull GSC page/query data when available.
 - Review local SERP competitors and summarize gaps.
 - Draft or rewrite service area page copy.
 - Draft title tags and meta descriptions.
 - Generate FAQ candidates.
 - Recommend internal links to services and nearby cities.
-- Generate alt text recommendations.
+- Generate image prompts and alt text recommendations from approved brand references.
 - Prepare schema recommendations.
 - Build QA checklists.
 - Identify thin, duplicate, or overlapping city pages.
+- Route exception cases to a human with the blocker and required decision.
 
-### Human Must Handle
+### Human Handles Exceptions
 
-- Confirm the city is actually served.
-- Confirm which services are available in the city.
-- Provide or approve local proof.
-- Approve client-specific claims.
+- Confirm city coverage when the source data is missing or contradictory.
+- Confirm which services are available in the city when unclear.
+- Provide or approve local proof when the page needs stronger support.
+- Approve sensitive client-specific claims.
 - Approve pricing, warranty, guarantee, or certification language.
-- Approve final page copy before publishing.
-- Make page-builder edits when automation cannot safely update the page.
-- Decide on consolidation when city pages overlap.
-- Validate live page appearance and conversion fit when design changes are involved.
+- Resolve page-builder access blockers.
+- Decide on consolidation when city pages overlap and automation cannot resolve the conflict.
+- Validate live page appearance when design changes affect conversion fit.
 
 ## Output Format
 
@@ -506,7 +507,7 @@ The completed service-area packet should contain at minimum:
 | Internal Links | Links to add and source pages to link from. |
 | Image Notes | Required images and alt text guidance. |
 | Schema Notes | Recommended schema and validation status. |
-| Human Approval | Approved, revise, rejected, or pending. |
+| Exception Review | None required, approved, revise, rejected, or blocked. |
 | Publish Status | Drafted, staged, published, verified, parked, or consolidated. |
 | QA Notes | Live checks and issues. |
 
@@ -533,7 +534,7 @@ Before marking this process complete, verify:
 - [ ] Images and alt text guidance are included.
 - [ ] Schema recommendation is documented.
 - [ ] CTA is clear.
-- [ ] Human approval is documented.
+- [ ] Automation status or exception-review note is documented.
 - [ ] Published page returns HTTP 200.
 - [ ] Page is indexable when it should be.
 - [ ] Mobile layout is usable.
@@ -549,7 +550,7 @@ This process is complete when:
 3. The content is drafted or optimized.
 4. Metadata, H1, FAQs, internal links, image guidance, and schema notes are complete.
 5. Local proof or honest coverage language is documented.
-6. Human approval is documented.
+6. Automation status or exception-review notes are documented.
 7. The page is published, staged, parked, or consolidated.
 8. Live QA confirms the page works and is indexable when appropriate.
 9. The page can feed internal linking, metadata, schema, GSC, and reporting workflows without rework.
