@@ -32,6 +32,7 @@ Ordered by automation readiness (highest first):
 |---|------------|-------|--------|
 | 01 | [Keyword Research](./on-page/01-keyword-research/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 02 | [Service Pages](./on-page/02-service-pages/) | 🤖 10/10 | 🤖 **Fully automated** |
+| 03 | [Service Area Pages](./on-page/03-service-area-pages/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 05 | [Internal Linking](./on-page/05-internal-linking/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 06 | [AI Generation](./on-page/06-alt-text/) | 🤖 10/10 | 🤖 **Fully automated** |
 | 07 | [Title Tags & Meta Descriptions](./on-page/07-title-tags-meta/) | 🤖 10/10 | 🤖 **Fully automated** |
