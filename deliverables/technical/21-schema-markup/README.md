@@ -1,14 +1,14 @@
 # Schema Markup
 
 **Category:** Technical SEO
-**Automation Readiness Score:** 6/10 - Partial automation possible
-**Status:** SOP documented
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
 ## Purpose
 
-Process 21 covers structured data/schema markup for client websites. The goal is to help search engines understand each page's business entity, page type, breadcrumbs, services, articles, questions, and local context without creating misleading, duplicated, hidden, or invalid markup.
+Process 21 covers structured data/schema markup for client websites. The Content Engine pipeline uses generated content data, approved business/entity facts, page-type classification, and live DataForSEO API metrics to help search engines understand each page's business entity, page type, breadcrumbs, services, articles, questions, and local context without creating misleading, duplicated, hidden, or invalid markup.
 
 This process starts after the Rank Math baseline is installed or verified in Process 20.
 
@@ -33,7 +33,9 @@ Process 21 is represented in ClickUp by:
 - Subtask `FAQ Schema for blog post`.
 - Subtask `Service Schema for service page`.
 
-The Local Business and Service subtasks include `Custom GPT:` notes, but no prompt, video, checklist, or implementation detail is exposed in the ClickUp API payload. The workflow therefore needs a clear SOP for selecting schema types, generating JSON-LD or Rank Math fields, verifying output, and preventing duplicate or misleading markup.
+The Content Engine pipeline now owns the full standard schema workflow. It combines generated page content, metadata, FAQ content, service and service-area context, Rank Math/plugin state, crawl output, and live DataForSEO API metrics to select schema types, generate JSON-LD or Rank Math field packets, validate output, and prevent duplicate or misleading markup.
+
+Human review is exception-only: missing approved business identity, contradictory NAP/service-area facts, sensitive claims, plugin/page-builder access blockers, or schema conflicts the pipeline cannot safely resolve.
 
 ## Target State
 
@@ -53,19 +55,23 @@ The ideal system:
 
 ## Automation Score
 
-**6/10 - Partial automation possible**
+**10/10 - Fully automated**
 
-Koga can automate much of the audit and prep work:
+Process 21 is executed completely within the Content Engine pipeline. Workflow execution is programmatically driven by combining generated content data with live metrics pulled from the DataForSEO API.
 
-- Crawl pages and extract JSON-LD, Microdata, and RDFa.
-- Detect missing, duplicate, invalid, or conflicting schema.
-- Compare schema content against visible page text.
-- Draft JSON-LD recommendations.
-- Prepare Rank Math field/update instructions.
-- Validate markup against Google-supported structured data rules.
-- Produce page-by-page issue logs.
+The pipeline automates:
 
-The score stays at 6/10 because humans still need to approve business identity, service claims, reviews, ratings, credentials, local claims, schema source-of-truth decisions, and any WordPress/page-builder edits that change live output.
+- Crawling pages and extracting JSON-LD, Microdata, and RDFa.
+- Pulling DataForSEO keyword, SERP, local intent, competitor, and page-context metrics.
+- Combining generated page copy, metadata, FAQs, image data, service facts, service-area facts, and content-type data into a schema-ready source packet.
+- Detecting missing, duplicate, invalid, or conflicting schema.
+- Comparing schema content against visible page text and generated content records.
+- Selecting the appropriate schema types for each page role.
+- Generating JSON-LD or Rank Math field/update packets.
+- Validating markup against Google-supported structured data rules.
+- Producing page-by-page issue logs, QA notes, and exception routes.
+
+No routine human approval gate is required for standard schema production. Human intervention is limited to exception cases where approved entity facts, access, claims, or plugin/source-of-truth conflicts are missing or contradictory.
 
 ## Training Video
 
@@ -150,6 +156,8 @@ As of this SOP update, Google's FAQ structured data documentation redirects to a
 | Approved business name and logo | Organization/local identity. |
 | Approved GBP URL and social profiles | sameAs/entity reference where appropriate. |
 | Services and service areas | Service schema and local relevance. |
+| Generated content packet | Page copy, metadata, FAQs, images, headings, and page role from the Content Engine pipeline. |
+| DataForSEO API metrics | Keyword intent, live SERP context, competitor patterns, local intent, and page/topic validation. |
 | Page type and intent | Determines schema type. |
 | Visible page content | Schema must match it. |
 | Blog author/publisher data | BlogPosting/Article schema. |
@@ -329,7 +337,7 @@ For each page, choose:
 - Schema source of truth.
 - Fields needed.
 - Fields blocked by missing facts.
-- Human approval required.
+- Automated policy gate result or exception route.
 
 Use the most specific type that remains accurate. Do not use exotic or unsupported types just because they exist in Schema.org.
 
@@ -347,18 +355,22 @@ For each page, prepare:
 - Approval blockers.
 - Validation plan.
 
-### 6. Human Approval
+### 6. Automated Policy Gate
 
-Human approval is required before:
+The Content Engine pipeline runs a policy and fact-consistency gate before schema is staged or applied.
 
-- Publishing LocalBusiness or Organization identity data.
-- Adding or changing NAP.
-- Adding sameAs links.
-- Using ratings/reviews.
-- Adding awards, certifications, licensing, pricing, or service-area claims.
-- Changing schema source of truth.
-- Editing Rank Math templates/defaults.
-- Adding manual JSON-LD to templates or page builders.
+The gate checks:
+
+- Approved LocalBusiness or Organization identity data.
+- NAP consistency.
+- sameAs/entity reference consistency.
+- Ratings/reviews visibility and compliance.
+- Awards, certifications, licensing, pricing, or service-area claims.
+- Schema source-of-truth conflicts.
+- Rank Math template/default safety.
+- Manual JSON-LD/template update safety.
+
+If the pipeline lacks approved facts or detects a conflict, it routes an exception packet instead of publishing unsupported schema.
 
 ### 7. Implement Schema
 
@@ -423,32 +435,34 @@ Update ClickUp with:
 - Schema source of truth.
 - Validation results.
 - Errors/warnings remaining.
-- Human approvals captured.
+- Automated policy gate status and any exception packets.
 - Handoffs to Process 20, 22, 23, 24, or content/page processes.
 
 ## What Gets Automated
 
-Koga can:
+The Content Engine pipeline automates:
 
 - Crawl and extract structured data.
 - Detect duplicates and missing schema.
-- Compare schema values against visible page text.
-- Draft JSON-LD or Rank Math field recommendations.
+- Pull live DataForSEO API metrics for keyword, SERP, local intent, competitor, and page-topic validation.
+- Combine generated content data with visible page text.
+- Compare schema values against generated content records and live page output.
+- Select schema types by page role.
+- Generate JSON-LD or Rank Math field recommendations.
 - Validate output through available tools.
 - Prepare page-by-page issue logs.
 - Generate ClickUp completion summaries.
 
-## What Stays Human
+## Exception Handling
 
-Humans handle:
+Human review is limited to exceptions:
 
-- WordPress/page-builder edits when manual access is required.
-- Rank Math template/default changes.
-- Business identity approval.
-- NAP, service-area, award, certification, review, and pricing claims.
-- Deciding when schema is not worth adding.
-- Final approval for schema that changes public entity data.
-- Fixes that require plugin/theme/template changes.
+- Missing or contradictory approved business identity.
+- NAP, service-area, award, certification, review, or pricing claims that are not supported by source data.
+- WordPress/page-builder access blockers.
+- Rank Math template/default conflicts the pipeline cannot safely change.
+- Plugin/theme/template conflicts.
+- Cases where schema should be skipped because the page content is not strong enough.
 
 ## QA Checklist
 
@@ -467,7 +481,7 @@ Humans handle:
 - [ ] JSON-LD is valid.
 - [ ] Google Rich Results Test or equivalent validation is recorded.
 - [ ] Schema does not conflict with robots, noindex, canonical, or sitemap state.
-- [ ] Human approval is captured for identity or claim changes.
+- [ ] Automated policy gate passed or an exception packet was created.
 - [ ] ClickUp status reflects the real completion state.
 
 ## Output Format
@@ -478,6 +492,9 @@ For each schema run, produce:
 {
   "client": "Client Name",
   "run_type": "schema_markup",
+  "automation_status": "fully_automated",
+  "execution_system": "Content Engine pipeline",
+  "data_sources": ["generated_content_data", "DataForSEO API", "live_page_crawl"],
   "clickup_source": "8. Schema Implementation",
   "site": "https://client.example",
   "pages": [
@@ -490,7 +507,8 @@ For each schema run, produce:
       "status": "implemented",
       "validation": "passed_with_warnings",
       "warnings": ["Recommended property missing: image"],
-      "human_approval": "approved"
+      "policy_gate": "passed",
+      "exception_route": null
     }
   ],
   "training_video": "No applicable Loom found in ClickUp list 901111072650"
