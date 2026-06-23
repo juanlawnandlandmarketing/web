@@ -1,14 +1,14 @@
 # robots.txt
 
 **Category:** Technical SEO
-**Automation Readiness Score:** 1/10 - Manual heavy
-**Status:** SOP documented
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
 ## Purpose
 
-Process 24 covers robots.txt review, configuration, validation, and monitoring. The goal is to make sure each client site gives crawlers the right crawl instructions without accidentally blocking important pages, assets, sitemaps, or rendering resources.
+Process 24 covers robots.txt review, configuration, deployment, validation, and monitoring. The Content Engine pipeline uses the target URL set, defined SEO strategy, platform routing, sitemap source, and live crawl checks to make sure each client site gives crawlers the right crawl instructions without accidentally blocking important pages, assets, sitemaps, or rendering resources.
 
 This process is high-risk because a small text-file mistake can hide a large part of a site from crawling.
 
@@ -54,6 +54,8 @@ www.yourwebsite.com/sitemap_index.xml
 
 Use that ClickUp comment as workflow context, not as a blind paste template. The final file must use the live client domain, the correct sitemap URL, and crawl rules that do not block files Google needs to render the site.
 
+The Content Engine pipeline now owns the full standard robots.txt workflow. It selects the deployment path by platform, generates or updates the robots.txt file, validates the rules against the target URL set and SEO strategy, deploys through the approved technical route, verifies the live file, and routes exceptions when access or crawl-policy conflicts are detected.
+
 ## Target State
 
 Every client should have a robots.txt record that explains:
@@ -69,20 +71,62 @@ Every client should have a robots.txt record that explains:
 
 ## Automation Score
 
-**1/10 - Manual heavy**
+**10/10 - Fully automated**
 
-Koga can automate audit support:
+Process 24 is fully automated in the Content Engine pipeline. Platform-specific routing controls how the robots.txt file is generated, deployed, validated, and monitored:
 
-- Fetch `/robots.txt`.
-- Parse `User-agent`, `Allow`, `Disallow`, and `Sitemap` lines.
-- Detect sitewide blocks like `Disallow: /`.
-- Detect missing, malformed, old-domain, or placeholder sitemap directives.
-- Test whether priority URLs match disallow rules.
-- Compare robots blocks against sitemap URLs.
-- Flag blocked CSS, JS, image, upload, service, blog, or conversion paths.
-- Prepare a recommended change packet.
+- Vercel + GitHub stacks: the pipeline uses the target URL inventory and defined SEO strategy to generate or update the repo-owned robots.txt file, validate the plaintext output, ship through GitHub/Vercel, and verify the deployed `/robots.txt` file.
+- WordPress sites: the pipeline programmatically loads the generated plaintext `robots.txt` file directly into the SiteGround HTML root folder of the website using FTP, then verifies the live file from the production host.
 
-The score stays at 1/10 because actually changing robots.txt can immediately affect crawling across the site. Humans should approve and implement final rules, especially during launches, migrations, staging cleanup, WordPress configuration, hosting edits, or emergency crawl blocks.
+The pipeline automates:
+
+- Fetching `/robots.txt`.
+- Parsing `User-agent`, `Allow`, `Disallow`, and `Sitemap` lines.
+- Detecting sitewide blocks like `Disallow: /`.
+- Detecting missing, malformed, old-domain, or placeholder sitemap directives.
+- Testing whether priority URLs match disallow rules.
+- Comparing robots blocks against sitemap URLs.
+- Flagging blocked CSS, JS, image, upload, service, blog, or conversion paths.
+- Generating the deployment-ready robots.txt file.
+- Deploying through Vercel + GitHub or WordPress + SiteGround FTP routing.
+- Verifying the live plaintext file after deployment.
+- Preparing ClickUp summaries and exception packets.
+
+No routine human gate is required for standard robots.txt production. Human review is exception-only for missing platform access, conflicting crawl strategy, staging/privacy uncertainty, emergency bot-control decisions, or rules that cannot be resolved from the approved SEO strategy.
+
+## Platform Routing
+
+| Platform | Automated Execution Path | Notes |
+|---|---|---|
+| Vercel + GitHub stack | Generate or update the repo-owned robots.txt file from the target URL inventory and defined SEO strategy, validate the plaintext file locally, push through GitHub, and verify `/robots.txt` after Vercel deployment. | Correct route for headless/static web deployments. |
+| WordPress on SiteGround | Generate the plaintext robots.txt file and programmatically load it by FTP into the website's HTML root folder on SiteGround, then fetch the live file to verify output. | Correct route for WordPress sites when the physical root file is the source of truth. |
+| WordPress plugin-managed robots.txt | Use only when the plugin is explicitly the approved source of truth. | If a root file and plugin conflict, route an exception before deployment. |
+| Legacy/custom hosting | Deploy to the approved public web root or server-managed source of truth. | Treat as an exception path and document the deployment target. |
+
+## Standard WordPress robots.txt Structure
+
+For WordPress sites that use the standard SiteGround HTML-root deployment path, generate this plaintext structure and replace `https://clientdomain/sitemap.xml` with the client's approved sitemap URL:
+
+```txt
+User-agent: *
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/plugins/
+Disallow: /wp-content/cache/
+Disallow: /wp-content/themes/
+Disallow: /trackback/
+Disallow: /comments/
+Disallow: /xmlrpc.php
+Disallow: /?s=
+
+Allow: /wp-content/uploads/
+Allow: /wp-admin/admin-ajax.php
+
+# Sitemap location
+Sitemap: https://clientdomain/sitemap.xml
+```
+
+After deployment, the pipeline must verify that the live robots.txt file is plaintext, uses the real client sitemap URL, and does not block the target URLs required by the approved SEO strategy.
 
 ## Training Video
 
@@ -161,7 +205,11 @@ Use ClickUp for the internal task flow and Google documentation for current robo
 | Client domain and canonical host | Determines the exact `/robots.txt` URL to fetch. |
 | Sitemap URL | Required for the `Sitemap:` directive. |
 | CMS/platform | Determines whether robots.txt is file-based, virtual, plugin-managed, or hosting-managed. |
-| WordPress admin, WP-CLI, hosting, or repo access | Needed for implementation if changes are approved. |
+| WordPress admin, WP-CLI, hosting, or repo access | Needed when the approved source of truth uses CMS, hosting, server, or repo-managed robots.txt output. |
+| GitHub repo access for Vercel stacks | Generates, updates, validates, and ships repo-owned robots.txt files. |
+| Vercel deployment state | Confirms deployed robots.txt output after merge/deploy for Vercel + GitHub stacks. |
+| SiteGround FTP access for WordPress sites | Loads the generated plaintext robots.txt file into the website HTML root folder. |
+| HTML root folder path | Confirms the public directory where WordPress robots.txt must be stored. |
 | Important URL list | Tests whether priority pages are blocked. |
 | Important asset paths | Tests whether CSS, JS, images, uploads, and rendering resources are blocked. |
 | GSC access | Validates robots.txt report, URL Inspection, and crawling status. |
@@ -176,13 +224,18 @@ Identify where robots.txt is controlled before changing anything.
 |---|---|---|
 | WordPress with Rank Math | WordPress virtual/file editor or server file | Confirm whether Rank Math edits the file or only exposes a helper UI. |
 | WordPress without direct file access | SEO plugin, CMS settings, or hosting panel | Do not assume a physical file exists. |
-| Static/custom site | Repo file or build/deploy output | Update the repo source, not only the deployed artifact. |
+| Vercel + GitHub static/custom site | Repo file or build/deploy output | Update the repo source from target URLs and SEO strategy, not only the deployed artifact. |
+| WordPress on SiteGround | Physical `robots.txt` in the website HTML root folder | Deploy programmatically by FTP when this is the approved source of truth. |
 | Server-managed site | Hosting, Nginx/Apache config, or root file | Requires careful deployment/rollback path. |
 | Staging site | Hosting/CMS noindex/no-crawl controls | Make sure staging rules do not leak to production. |
 
 ## Recommended Baseline
 
-For most WordPress production sites, start conservative:
+For Vercel + GitHub stacks, generate robots.txt from the target URL inventory and defined SEO strategy. The file should declare the live sitemap URL and avoid crawl blocks that conflict with the approved indexable URL set.
+
+For WordPress production sites using the SiteGround HTML-root deployment path, use the standard WordPress structure in this SOP unless the approved SEO strategy requires a narrower rule set.
+
+For conservative WordPress exceptions, the minimum fallback is:
 
 ```txt
 User-agent: *
@@ -208,9 +261,12 @@ Record:
 - Canonical host and protocol.
 - Site platform.
 - robots.txt source of truth.
+- Platform route: Vercel + GitHub, WordPress + SiteGround FTP, plugin-managed WordPress, or exception path.
+- Target URL inventory and defined SEO strategy.
+- HTML root folder path when using SiteGround FTP.
 - Sitemap URL from Process 23.
 - Whether this is launch setup, audit, issue investigation, or emergency bot-control work.
-- Who can approve changes.
+- Exception owner for access, crawl-policy, or source-of-truth conflicts.
 
 ### 2. Fetch the Live robots.txt File
 
@@ -231,6 +287,24 @@ Check:
 - Whether the file contains old domains, placeholders, or copied template values.
 
 If the file is missing, remember that default crawl behavior is allow. Missing robots.txt is not automatically an error.
+
+### 2A. Route by Platform
+
+For Vercel + GitHub stacks:
+
+- Pull the target URL inventory from generated routes, static route files, redirects, canonical rules, sitemap output, and the defined SEO strategy.
+- Generate or update the repo-owned robots.txt file.
+- Validate the plaintext file locally before push.
+- After merge/deploy, fetch the live Vercel output at `/robots.txt` and confirm it matches the intended rules.
+
+For WordPress sites on SiteGround:
+
+- Generate the approved plaintext robots.txt file.
+- Replace the sitemap placeholder with the client's real sitemap URL.
+- Upload the file by FTP directly into the website's HTML root folder.
+- Fetch the live production `/robots.txt` file and confirm the FTP-loaded file is active.
+
+If the platform route or source of truth is unclear, stop and create an exception packet instead of changing crawler rules.
 
 ### 3. Parse the Rules
 
@@ -300,9 +374,9 @@ Common acceptable blocks:
 | CSS/JS/theme/plugin resources | Usually allow | Blocking can hurt rendering. |
 | Published pages/posts/services | Allow | Use noindex/canonicals/redirects for indexing decisions. |
 
-### 7. Prepare the Change Packet
+### 7. Prepare the Deployment Packet
 
-Before anyone edits robots.txt, prepare:
+Before the pipeline deploys robots.txt, prepare:
 
 - Current live file.
 - Recommended replacement or diff.
@@ -310,17 +384,20 @@ Before anyone edits robots.txt, prepare:
 - URLs tested.
 - Resources tested.
 - Sitemap directive.
+- Platform route and deployment target.
+- GitHub/Vercel target file or SiteGround FTP HTML-root path.
 - Risk notes.
 - Rollback instructions.
 
-Human approval is required before implementation.
+If the deployment packet conflicts with the target URL inventory or approved SEO strategy, create an exception packet instead of deploying.
 
 ### 8. Implement Carefully
 
 Depending on the source of truth:
 
-- Update the repo file and deploy.
-- Update the server root file.
+- For Vercel + GitHub stacks, update the repo file and deploy through the GitHub/Vercel flow.
+- For WordPress on SiteGround, upload the plaintext file by FTP into the website HTML root folder.
+- Update the server root file when the host uses a different approved root path.
 - Update the WordPress/plugin robots editor.
 - Update the hosting-level setting.
 - Clear cache/CDN if needed.
@@ -342,7 +419,7 @@ Confirm:
 
 ## What Gets Automated
 
-Koga can:
+The Content Engine pipeline automates:
 
 - Fetch robots.txt.
 - Parse supported directives.
@@ -351,18 +428,23 @@ Koga can:
 - Test priority URL paths against rules.
 - Check if sitemap URLs are blocked.
 - Detect likely blocked rendering assets.
+- Generate the platform-specific robots.txt file.
+- Deploy through Vercel + GitHub or WordPress + SiteGround FTP routing.
+- Verify the live plaintext output after deployment.
 - Prepare recommended diffs and ClickUp summaries.
 - Monitor for changed robots.txt output over time.
 
-## What Stays Human
+## Exception Handling
 
-Humans handle:
+Human review is limited to exceptions:
 
-- Approving any rule that changes crawler access.
-- Editing robots.txt in WordPress, hosting, server, or repo sources.
-- Deciding whether specific URLs should be crawled, noindexed, canonicalized, redirected, password-protected, or removed.
+- Missing GitHub/Vercel, FTP, hosting, or CMS access.
+- Conflicting target URL inventory or SEO strategy.
+- Unclear robots.txt source of truth.
+- Plugin/root-file conflicts.
 - Emergency bot-control decisions.
 - Staging/privacy decisions.
+- Cases where specific URLs should be crawled, noindexed, canonicalized, redirected, password-protected, or removed but the approved strategy does not settle the decision.
 - Client-facing explanation of major crawl/indexing changes.
 
 ## QA Checklist
@@ -372,6 +454,9 @@ Before marking Process 24 complete:
 - [ ] Correct production domain and canonical host confirmed.
 - [ ] `/robots.txt` fetched live.
 - [ ] robots.txt source of truth identified.
+- [ ] Platform route confirmed: Vercel + GitHub, WordPress + SiteGround FTP, plugin-managed WordPress, or exception path.
+- [ ] Target URL inventory and SEO strategy checked.
+- [ ] SiteGround HTML root folder confirmed when FTP deployment is used.
 - [ ] File is public plain text or intentionally absent.
 - [ ] No production-wide accidental `Disallow: /`.
 - [ ] No placeholder sitemap URL remains.
@@ -395,6 +480,8 @@ Use this structure in ClickUp or the robots.txt audit log:
 
 Live robots.txt URL:
 Source of truth:
+Platform route:
+Deployment target:
 Sitemap directive:
 Status:
 
@@ -416,6 +503,9 @@ Issues found:
 Recommended changes:
 - None.
 
+Automation status:
+- Fully automated.
+
 Next actions:
 - None.
 ```
@@ -426,6 +516,8 @@ Process 24 is complete when:
 
 - The live robots.txt file is fetched and reviewed.
 - The source of truth is known.
+- The platform route is confirmed.
+- The deployment target is known.
 - The sitemap directive is correct or routed to Process 23.
 - Important pages and sitemap URLs are not blocked.
 - Important rendering assets are not blocked.
