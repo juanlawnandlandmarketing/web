@@ -97,6 +97,16 @@ Use these Loom assets while executing manual category work:
 | Secondary categories | [Secondary Categories Implementation](https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06) |
 | Services alignment | [Services Database Alignment](https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a) |
 
+### Embedded Training Videos
+
+::loom https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409
+
+::loom https://www.loom.com/share/d3293974918a495ca1db090c2939e660
+
+::loom https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06
+
+::loom https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a
+
 ## Source References
 
 Use ClickUp for internal operating context and Google Business Profile documentation for category rules.

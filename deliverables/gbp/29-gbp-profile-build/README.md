@@ -140,6 +140,40 @@ Use these Loom assets while executing the manual GBP profile build:
 | Products | [Product Optimization](https://www.loom.com/share/829cfddecedd4ae6b8e01be11063b81f?sid=b04264a9-a702-43ec-90c9-4f67b450a491) |
 | Services | [Services Database Alignment](https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a) |
 
+### Embedded Training Videos
+
+::loom https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409
+
+::loom https://www.loom.com/share/d3293974918a495ca1db090c2939e660
+
+::loom https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06
+
+::loom https://www.loom.com/share/8f7ff70aa500463e95adc8e81541380b
+
+::loom https://www.loom.com/share/c9ca147d0d4d4194864a8f066bf893d9
+
+::loom https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed
+
+::loom https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5
+
+::loom https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce
+
+::loom https://www.loom.com/share/6e288141bf1a4298be98fb85f82aa228
+
+::loom https://www.loom.com/share/b736ba347a1846cab93768e8022a6de9
+
+::loom https://www.loom.com/share/94deb5cb277347b88911d3bda195b30f
+
+::loom https://www.loom.com/share/46c8ba13f5ad4e4ca3f07c0c8769bd6b?sid=f800f0ae-2a4a-4762-b761-6f2ad9caed7e
+
+::loom https://www.loom.com/share/d2010dc3a3ea41a08d5d89713eff594b?sid=a6712d50-4a02-4352-81e6-331c7ae7726d
+
+::loom https://www.loom.com/share/c35da3a150464af9af08f60faceb0820?sid=ccb406f5-2a8d-4562-bd02-e4fa5b106c69
+
+::loom https://www.loom.com/share/829cfddecedd4ae6b8e01be11063b81f?sid=b04264a9-a702-43ec-90c9-4f67b450a491
+
+::loom https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a
+
 ## Source References
 
 Use ClickUp for internal operating context and Google Business Profile documentation for compliance and field behavior.
