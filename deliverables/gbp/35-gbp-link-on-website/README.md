@@ -108,6 +108,16 @@ Use these Loom assets while executing manual website/profile link work:
 | Social profile mapping | [Social Profile Mapping](https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce) |
 | Phone/NAP context | [Phone Number Configuration](https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed) |
 
+### Embedded Training Videos
+
+::loom https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409
+
+::loom https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5
+
+::loom https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce
+
+::loom https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed
+
 ## Source References
 
 Use ClickUp for internal operating context and Google documentation for current link/review rules.
