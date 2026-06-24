@@ -157,7 +157,7 @@ Use a consistent set of internal metrics. Not every client will have every sourc
 | Search performance | GSC clicks, impressions, CTR, average position, top queries/pages, declining pages. | Ground rankings in real search demand. |
 | Local/GBP signals | Profile completeness, posts, photos, reviews, review replies, local rankings, GBP links. | Track local trust and map visibility. |
 | Fulfillment completion | One-time, weekly, monthly, quarterly task completion. | Separate performance problems from execution problems. |
-| Output volume | Blogs, PRs, backlinks, service pages, technical fixes, GBP posts/photos/Q&A. | Show work shipped and spot under-production. |
+| Output volume | Blogs, PRs, backlinks, service pages, technical fixes, GBP posts/photos. | Show work shipped and spot under-production. |
 | Authority signals | Backlink acquisition, citations, press releases, directory/social/vendor/chamber/sponsorship work. | Track off-page progress. |
 | Risk flags | Missing access, stale tracking, negative reviews, index issues, ranking losses, critical technical blockers. | Build the action queue. |
 
