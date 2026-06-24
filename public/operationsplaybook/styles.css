@@ -60,6 +60,203 @@
   margin-top: 2px;
 }
 
+.template-coverage-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: -4px;
+}
+
+.template-coverage-strip span,
+.template-step-meta span,
+.template-missing-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
+  border: 1px solid rgba(172,231,29,0.22);
+  border-radius: var(--radius-pill);
+  background: rgba(172,231,29,0.08);
+  color: var(--text-secondary);
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.template-comparison-reader {
+  display: grid;
+  gap: 18px;
+}
+
+.template-comparison-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid rgba(172,231,29,0.2);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, rgba(172,231,29,0.09), rgba(255,255,255,0.02));
+}
+
+.template-comparison-hero h2 {
+  margin: 5px 0 8px;
+  font-size: 24px;
+}
+
+.template-comparison-hero p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.template-comparison-stats {
+  display: grid;
+  gap: 8px;
+}
+
+.template-comparison-stats div,
+.template-field-grid div {
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.template-comparison-stats strong {
+  display: block;
+  color: var(--green);
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-style: italic;
+}
+
+.template-comparison-stats span,
+.template-field-grid span {
+  display: block;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.template-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.template-field-grid strong {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.section-header.compact {
+  margin-bottom: 12px;
+}
+
+.template-step-list {
+  display: grid;
+  gap: 10px;
+}
+
+.template-step-card {
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.template-step-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.template-step-head h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.template-step-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.template-step-card p,
+.template-step-muted {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.template-step-compare {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.2fr) minmax(0, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(245,165,36,0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(245,165,36,0.06);
+}
+
+.template-step-compare strong {
+  color: #fbbf24;
+  font-size: 12px;
+}
+
+.template-step-compare span {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.template-step-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-compact {
+  min-height: 30px;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.template-step-sop {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.template-original-checklist {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+
+.template-original-checklist summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.template-original-checklist .sop-check-item {
+  color: var(--text-secondary);
+}
+
 .ops-empty-state {
   padding: 28px;
   border: 1px solid var(--border);
@@ -86,7 +283,10 @@
 
 @media (max-width: 980px) {
   .ops-area-panel,
-  .seo-system-hero {
+  .seo-system-hero,
+  .template-comparison-hero,
+  .template-field-grid,
+  .template-step-compare {
     grid-template-columns: 1fr;
   }
 }
