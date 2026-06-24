@@ -16,6 +16,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/operationsplaybook", "destination": "/operationsplaybook/index.html" }
+    { "source": "/operationsplaybook", "destination": "/operationsplaybook/index.html" },
+    { "source": "/operationsplaybook/", "destination": "/operationsplaybook/index.html" }
   ]
 }

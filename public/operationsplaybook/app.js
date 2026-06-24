@@ -129,6 +129,18 @@ function renderSopMarkdown(markdown) {
   return html;
 }
 
+function firstSopUrl(process) {
+  const haystack = [process.sopUrl, process.sopMarkdown, process.summary, process.title]
+    .filter(Boolean)
+    .join('\n');
+  const match = haystack.match(/https?:\/\/[^\s)"'<]+/i);
+  return match ? match[0] : '';
+}
+
+function isVideoUrl(url) {
+  return /(?:loom\.com\/share|youtube\.com|youtu\.be|vimeo\.com)/i.test(url || '');
+}
+
 function openModal(title, body, footer, modalClass = '') {
   $('#modalRoot').innerHTML = `<div class="modal-overlay" id="modalOverlay"><div class="modal ${h(modalClass)}"><div class="modal-header"><h2>${title}</h2><button class="modal-close" id="modalClose">×</button></div><div class="modal-body">${body}</div>${footer ? `<div class="modal-footer">${footer}</div>` : ''}</div></div>`;
   $('#modalOverlay').addEventListener('click', (event) => {
@@ -219,6 +231,10 @@ function renderSidebar() {
 
 function renderProcessCard(process) {
   const external = process.externalUrl ? `<a class="btn btn-ghost sop-view-btn" href="${h(process.externalUrl)}" target="_blank" rel="noopener noreferrer">Open System</a>` : '';
+  const sopUrl = firstSopUrl(process);
+  const sopButton = sopUrl && isVideoUrl(sopUrl)
+    ? `<a class="btn btn-primary sop-view-btn" href="${h(sopUrl)}" target="_blank" rel="noopener noreferrer">Watch SOP</a>`
+    : `<button class="btn btn-primary sop-view-btn" type="button" onclick="openOperationsSop('${h(process.id)}')">View SOP</button>`;
   return `<article class="seo-process-card">
     <div class="seo-process-topline">
       <span class="process-number">${h(process.number)}</span>
@@ -238,7 +254,7 @@ function renderProcessCard(process) {
       <span>${h(process.source)}</span>
     </div>
     <div class="ops-card-actions">
-      <button class="btn btn-primary sop-view-btn" type="button" onclick="openOperationsSop('${h(process.id)}')">View SOP</button>
+      ${sopButton}
       ${external}
     </div>
   </article>`;
