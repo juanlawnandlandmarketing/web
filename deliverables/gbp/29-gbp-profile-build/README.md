@@ -1,8 +1,8 @@
 # GBP Profile Build & Completion
 
 **Category:** GBP SEO
-**Automation Readiness Score:** 2/10 - Manual-heavy
-**Status:** SOP documented
+**Automation Readiness Score:** 0/10 - 100% manual
+**Status:** 100% manual SOP documented
 
 ---
 
@@ -65,77 +65,80 @@ Related ClickUp tasks:
 - `1. Business Directory Management (Whitespark)`
 - `Facebook Profile`
 
-ClickUp gives a good checklist, but the workflow needs guardrails: profile edits can trigger verification, inaccurate fields can create suspension risk, and some data must come from the approved client source of truth.
+ClickUp gives a good checklist, but the workflow needs guardrails: profile edits can trigger verification, inaccurate fields can create suspension risk, and every field must match the approved Ground Control and client source-of-truth data exactly.
+
+## Critical Ground Control Rule
+
+Every value entered into Google Business Profile must match Ground Control and the approved client documentation perfectly. Do not rely on memory, assumptions, screenshots from old tasks, or manually retyped values when a copy/paste source exists.
+
+Before saving any GBP field, verify:
+
+- Business name, punctuation, capitalization, and special characters match Ground Control and Client Directory Info exactly.
+- Phone numbers match the approved tracking/marketing and connect-number records.
+- Website URL matches the canonical live homepage URL.
+- Hours, services, service areas, and address visibility match approved client data.
+- Photos, logo, and social links come from verified client assets or approved internal production.
+
+If Ground Control and another source disagree, stop and route the mismatch before editing GBP.
+
+## High-Risk Re-Verification Warning
+
+Exercise extreme caution when modifying service areas, addresses, address visibility, business name, primary category, phone number, or website URL. These edits can trigger Google Business Profile re-verification, suspend progress, or block profile changes.
+
+For an existing GBP, make zero modifications to the address field unless Matt/Juan has explicitly approved the risk. For a new GBP setup, set the location status to private when appropriate and immediately toggle off `Show Business Address To Customers` for service-area/home-based businesses. If an unexpected verification loop appears, stop immediately, screenshot the prompt, and notify Matt.
 
 ## Target State
 
 Every GBP profile build or completion audit should produce:
 
 1. Approved source-of-truth packet for business name, NAP, website, services, service areas, hours, and category.
-2. GBP access/verification status check.
-3. Field-by-field completion checklist.
-4. Risk log for changes that may trigger verification or policy issues.
-5. Human-approved edits for sensitive profile fields.
-6. Drafted bio, services, products, Q&A, and photo/file recommendations.
-7. Screenshots or notes proving each completed field.
-8. Handoffs to category, posts, reviews, photos, Q&A, website link, and attributes processes.
-9. Final ClickUp update with what was completed, what was blocked, and what needs client/Matt/Juan approval.
+2. Ground Control exact-match verification before any field is saved.
+3. GBP access/verification status check.
+4. Field-by-field completion checklist.
+5. Risk log for changes that may trigger verification or policy issues.
+6. Human-applied edits for every profile field in scope.
+7. Drafted bio, services, products, Q&A, and photo/file recommendations where needed.
+8. Screenshots or notes proving each completed field.
+9. Handoffs to category, posts, reviews, photos, Q&A, website link, and attributes processes.
+10. Final ClickUp update with what was completed, what was blocked, and what needs client/Matt/Juan approval.
 
 ## Automation Score
 
-**2/10 - Manual-heavy**
+**0/10 - 100% manual**
 
-Koga can support the work:
+Process 29 is a 100% manual operation. Koga/AI may prepare text drafts or checklists, but the GBP profile build itself must be performed manually by a trained operator inside the correct Google Business Profile.
 
-- Audit profile completeness from screenshots/exports/manual notes.
-- Compare GBP data against website, client directory info, Ground Control, citation data, and approved docs.
-- Draft descriptions, service copy, product copy, Q&A answers, and photo/file naming recommendations.
-- Build a field-by-field checklist.
-- Flag NAP mismatches, missing services, missing photos, weak descriptions, and risky category/address changes.
-- Prepare update packets.
+AI support is limited to non-executing assistance:
 
-The score stays low because GBP changes usually require logged-in profile access, owner/manager permissions, verification flows, policy judgment, and careful human approval. Address, name, category, phone, website, and service-area edits can trigger re-verification or profile issues. Koga should prepare and verify; humans should apply sensitive edits.
+- Drafting the GBP bio from approved source data.
+- Helping structure product/service descriptions from provided prompts.
+- Preparing checklists and QA reminders.
+- Flagging mismatches after the human supplies current values.
+
+The score is `0/10` because the operator must manually verify Ground Control data, access the correct GBP, apply fields, monitor Google prompts, upload assets, and complete post-save verification. Address and service-area edits are especially high risk because they can trigger re-verification.
 
 ## Training Video
 
-No applicable Loom video for Process 29 was found in ClickUp list `901111072650`.
+Use these Loom assets while executing the manual GBP profile build:
 
-Checked sources:
-
-- `10. Pre Launch Website GBP Optimization`
-- `Accurate Name`
-- `Primary Category`
-- `Secondary Categories`
-- `Description / Bio`
-- `Location / Address`
-- `Phone Number`
-- `Website`
-- `Service Area`
-- `Business Hours`
-- `Add "Services"`
-- `Add "Products"`
-- `Logo`
-- `Cover Photo`
-- `Additional Images`
-- `Social Profile`
-- `Q&As Submitted`
-- `11. Post Launch Website GBP Optimization`
-- `5. Clear NAP Listings`
-- `Verify NAP in website and GBP`
-- `4. Clients Reviews Integration`
-- `1. GBP Audit and Image Post`
-- `Services audit`
-- `Updating Service Descriptions`
-- `1. Business Directory Management (Whitespark)`
-- `Facebook Profile`
-- Task comments
-- Attachments
-- Custom fields
-- Checklists
-- Rich embed payloads
-- Full-list Loom sweep across ClickUp list `901111072650`
-
-Decision: do not include unrelated reporting, Looker Studio, citation-only, Whitespark-only, blog, PageSpeed, Rank Math, schema, mobile, robots, canonical, backlink, Signal GeNeSYS, or old Imagify videos in this SOP. Add a video only if a real current GBP profile build / pre-launch GBP optimization Loom is supplied or later appears in the ClickUp SOP list.
+| Stage | Training Asset |
+|---|---|
+| Process overview | [Overview training video](https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409) |
+| Primary category | [Primary Category Configuration](https://www.loom.com/share/d3293974918a495ca1db090c2939e660) |
+| Secondary categories | [Secondary Categories Implementation](https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06) |
+| Description / bio | [Description / Bio Generation](https://www.loom.com/share/8f7ff70aa500463e95adc8e81541380b) |
+| Opening date | [Opening Date Setup](https://www.loom.com/share/c9ca147d0d4d4194864a8f066bf893d9) |
+| Phone number | [Phone Number Configuration](https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed) |
+| Website | [Website Integration](https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5) |
+| Social profiles | [Social Profile Mapping](https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce) |
+| Location / address | [Location / Address Management](https://www.loom.com/share/6e288141bf1a4298be98fb85f82aa228) |
+| Service area | [Service Area Targeting](https://www.loom.com/share/b736ba347a1846cab93768e8022a6de9) |
+| Business hours | [Business Hours Alignment](https://www.loom.com/share/94deb5cb277347b88911d3bda195b30f) |
+| Cover photo | [Cover Photo Deployment](https://www.loom.com/share/46c8ba13f5ad4e4ca3f07c0c8769bd6b?sid=f800f0ae-2a4a-4762-b761-6f2ad9caed7e) |
+| Logo | [Brand Logo Upload](https://www.loom.com/share/d2010dc3a3ea41a08d5d89713eff594b?sid=a6712d50-4a02-4352-81e6-331c7ae7726d) |
+| Additional images | [Additional Image Upload & Verification Loop](https://www.loom.com/share/c35da3a150464af9af08f60faceb0820?sid=ccb406f5-2a8d-4562-bd02-e4fa5b106c69) |
+| Products | [Product Optimization](https://www.loom.com/share/829cfddecedd4ae6b8e01be11063b81f?sid=b04264a9-a702-43ec-90c9-4f67b450a491) |
+| Services | [Services Database Alignment](https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a) |
 
 ## Source References
 
@@ -168,6 +171,7 @@ Use ClickUp for internal operating context and Google Business Profile documenta
 | [Google: Add or edit products](https://support.google.com/business/answer/9124406) | Product field guidance. |
 | [Google: Add photos or videos to your Business Profile](https://support.google.com/business/answer/6103862) | Photo/logo/cover-media guidance. |
 | [Google: Verification methods](https://support.google.com/business/answer/7107242) | Verification/re-verification context. |
+| Ground Control client records | Required source of truth for field-level exact-match verification. |
 | `deliverables/gbp/30-gbp-categories/README.md` | Deeper category research handoff. |
 | `deliverables/gbp/31-gbp-weekly-posts/README.md` | GBP post handoff. |
 | `deliverables/gbp/33-gbp-photo-management/README.md` | Ongoing photo workflow handoff. |
@@ -209,6 +213,220 @@ These fields require human approval before changing:
 | Verification method/status | Requires account owner action and often client/Matt/Juan coordination. |
 | Ownership/manager access | Security write; do not add/remove users without Matt approval. |
 
+## Master Manual Operating Procedure
+
+Execute these stages manually in GBP. Do not mark a field complete until it matches Ground Control and the approved client source-of-truth packet.
+
+### 1. Accurate Name Placement
+
+Objective: ensure the business name is 100% accurate.
+
+Procedure:
+
+- Copy the business name from Client Directory Info / Ground Control.
+- Double-check every letter, punctuation mark, capitalization choice, and special character.
+- Paste directly into GBP without manual edits or formatting changes.
+- Verify it matches all active documentation.
+
+### 2. Primary Category Configuration
+
+Objective: assign the optimal primary category for target SEO and service alignment.
+
+Procedure:
+
+- Review client services, target keywords, and Ground Control service data.
+- Select the single most applicable primary category from the approved configuration list, such as `Landscape Designer` or `Lawn Care Service`.
+- Confirm the category reflects the client's core service, not a secondary offer.
+- Select only one primary category.
+
+Training: [Primary Category Configuration](https://www.loom.com/share/d3293974918a495ca1db090c2939e660)
+
+### 3. Secondary Categories Implementation
+
+Objective: input up to 9 relevant secondary categories.
+
+Procedure:
+
+- Choose only categories related to real-world services the client actually provides.
+- Cross-reference every category against official onboarding documents and Ground Control.
+- Do not add irrelevant, aspirational, or loosely related categories.
+- Leave secondary categories blank when no accurate secondary category fits.
+
+Training: [Secondary Categories Implementation](https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06)
+
+### 4. Description / Bio Generation
+
+Objective: generate a compelling, optimization-friendly business bio.
+
+Procedure:
+
+- Execute the approved ChatGPT instructions template.
+- Input only verified structure data: business name, service areas, main category, specific services, and year founded.
+- Keep the bio under 750 characters.
+- Write in first-person plural when appropriate.
+- Include the primary category, key services, service areas, and a unique selling point.
+- Maintain natural readability without keyword stuffing.
+
+Training: [Description / Bio Generation](https://www.loom.com/share/8f7ff70aa500463e95adc8e81541380b)
+
+### 5. Opening Date Setup
+
+Objective: set the accurate operational start date.
+
+Procedure:
+
+- Locate the start date in Client Directory Info.
+- Enter the date in Month + Year format.
+- If the exact month is completely unknown, default to January.
+- Do not guess the year.
+
+Training: [Opening Date Setup](https://www.loom.com/share/c9ca147d0d4d4194864a8f066bf893d9)
+
+### 6. Phone Number Configuration
+
+Objective: set correct primary and routing phone numbers.
+
+Procedure:
+
+- For Primary, use the default tracking/marketing number from `Client Phone Numbers` or the Service Area Expert sheets.
+- For Additional numbers, click `+ Add Phone Number` and enter the client-provided direct destination number / Connect Number.
+- Verify every digit before saving.
+
+Training: [Phone Number Configuration](https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed)
+
+### 7. Website Integration
+
+Objective: link the correct canonical homepage URL.
+
+Procedure:
+
+- Copy the live homepage URL from Client Directory Info / Ground Control.
+- Paste the canonical URL into GBP.
+- Manually load and verify the URL works before final submission.
+
+Training: [Website Integration](https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5)
+
+### 8. Social Profile Mapping
+
+Objective: add functional social media destination links.
+
+Procedure:
+
+- Gather social profile links from verified client documents.
+- Test every link before publishing.
+- Confirm each URL routes to the correct destination profile.
+- Publish only active, working, client-owned URLs.
+
+Training: [Social Profile Mapping](https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce)
+
+### 9. Location / Address Management - High Risk
+
+Objective: manage structural location configuration without triggering Google re-verification.
+
+Procedure:
+
+- Existing GBP: make zero modifications to the address field unless explicitly approved.
+- New GBP: set the location status to `Private` when appropriate.
+- New GBP service-area/home-based business: immediately toggle off `Show Business Address To Customers`.
+- If an unexpected verification loop triggers, stop and notify Matt immediately.
+
+Training: [Location / Address Management](https://www.loom.com/share/6e288141bf1a4298be98fb85f82aa228)
+
+### 10. Service Area Targeting
+
+Objective: establish service boundaries from localized client priorities.
+
+Procedure:
+
+- Pull the client-approved service-area list from the dedicated ClickUp client folder and Ground Control.
+- Add specific cities only.
+- Do not target broad counties.
+- Prioritize the Top 3 and Top 5 target cities first.
+- Populate viable cities in descending operational priority.
+- Stop before saving if the list conflicts with the approved source of truth.
+
+Training: [Service Area Targeting](https://www.loom.com/share/b736ba347a1846cab93768e8022a6de9)
+
+### 11. Business Hours Alignment
+
+Objective: match operational hours to real-world business data.
+
+Procedure:
+
+- Cross-reference Client Directory Info and Ground Control.
+- Populate exact operating hours from the approved schedule.
+- Do not guess seasonal, emergency, or holiday hours.
+
+Training: [Business Hours Alignment](https://www.loom.com/share/94deb5cb277347b88911d3bda195b30f)
+
+### 12. Cover Photo Deployment
+
+Objective: feature a high-quality authentic brand image.
+
+Procedure:
+
+- Select the strongest brand asset supplied directly by the client.
+- Do not use generic or unbranded stock imagery for the cover photo.
+- Confirm the asset is clean, relevant, and client-specific before upload.
+
+Training: [Cover Photo Deployment](https://www.loom.com/share/46c8ba13f5ad4e4ca3f07c0c8769bd6b?sid=f800f0ae-2a4a-4762-b761-6f2ad9caed7e)
+
+### 13. Brand Logo Upload
+
+Objective: publish a clean, high-resolution, square-format logo.
+
+Procedure:
+
+- Verify the logo is square.
+- Confirm adequate negative space around the edges.
+- If no viable client logo exists, design one internally following asset rules.
+- Ensure the logo is free of phone numbers and visual clutter.
+
+Training: [Brand Logo Upload](https://www.loom.com/share/d2010dc3a3ea41a08d5d89713eff594b?sid=a6712d50-4a02-4352-81e6-331c7ae7726d)
+
+### 14. Additional Image Upload & Verification Loop
+
+Objective: enhance profile authority with 5 to 10 approved image files.
+
+Procedure:
+
+- Bulk upload 5 to 10 distinctive client-provided real images.
+- Avoid stock photography.
+- Verify no embedded text or phone numbers appear in the images.
+- Return exactly 10 minutes after upload to detect processing rejections.
+- If Google flags or rejects an asset, pull it into Canva, flip the graphic horizontally, and re-upload.
+
+Training: [Additional Image Upload & Verification Loop](https://www.loom.com/share/c35da3a150464af9af08f60faceb0820?sid=ccb406f5-2a8d-4562-bd02-e4fa5b106c69)
+
+### 15. Product Optimization
+
+Objective: populate the GBP product carousel manually with core offerings.
+
+Procedure:
+
+- For every core service, set Category to the overarching Core Service title.
+- Set Product Name to the Individual Service title.
+- Generate a 3-sentence description using the approved internal prompt.
+- Leave Price fields blank.
+- Leave Landing URL fields blank.
+- Appropriate stock images are allowed only when custom client imagery is unavailable.
+
+Training: [Product Optimization](https://www.loom.com/share/829cfddecedd4ae6b8e01be11063b81f?sid=b04264a9-a702-43ec-90c9-4f67b450a491)
+
+### 16. Services Database Alignment
+
+Objective: verify every targeted client service is mapped under the optimal category header.
+
+Procedure:
+
+- Input all secondary services directly under matching core GBP categories.
+- Use technical SEO judgment for structure.
+- Use the approved AI prompt only for expansion inspiration.
+- When expanding, request 20 contextual variations and manually approve only real client services.
+- Do not add services the client does not perform.
+
+Training: [Services Database Alignment](https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a)
+
 ## Workflow
 
 ### 1. Confirm Scope and Access
@@ -239,7 +457,7 @@ Gather approved client facts from:
 - Approved service and service-area list.
 - Approved logo/photo folder.
 
-Do not invent missing facts. Mark them as blockers.
+Ground Control is the controlling source where populated. Do not invent missing facts, and do not overwrite Ground Control facts from memory. Mark mismatches as blockers.
 
 Source-of-truth packet:
 
@@ -531,8 +749,10 @@ Use this structure for ClickUp updates or handoff docs:
     "Process 33 - GBP Photo Management",
     "Process 35 - GBP Link on Website"
   ],
-  "training_video": "No applicable Loom found in ClickUp list 901111072650",
-  "status": "Needs human approval"
+  "training_video": "https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409",
+  "automation_status": "0/10 - 100% manual",
+  "ground_control_match": "Pass / blocker noted",
+  "status": "Manual execution complete / blocked"
 }
 ```
 
@@ -542,12 +762,16 @@ Use this structure for ClickUp updates or handoff docs:
 - [ ] Relevant subtasks checked.
 - [ ] Post-launch GBP task checked when applicable.
 - [ ] NAP cleanup task checked when applicable.
-- [ ] No unrelated Loom/video added.
+- [ ] Ground Control checked before every field is saved.
+- [ ] Every entered value matches Ground Control / Client Directory Info exactly.
+- [ ] Overview and step-specific Loom training assets used as needed.
 - [ ] GBP access/verification status documented.
 - [ ] Business name copied from approved source exactly.
 - [ ] Existing GBP sensitive fields were not changed without approval.
+- [ ] Existing GBP address field was left untouched unless explicitly approved.
 - [ ] Address visibility matches business model.
 - [ ] Service-area cities match approved source.
+- [ ] Service-area changes checked for re-verification risk.
 - [ ] Primary category present and plausible.
 - [ ] Secondary categories are directly relevant.
 - [ ] Phone number follows approved tracking/client-phone rules.
@@ -562,6 +786,7 @@ Use this structure for ClickUp updates or handoff docs:
 - [ ] Social profile links are official and working.
 - [ ] Q&A content is approved before publication.
 - [ ] Verification/re-verification prompts are documented.
+- [ ] Any verification loop was escalated to Matt immediately.
 - [ ] Blockers are listed in ClickUp.
 - [ ] Handoffs to Processes 30-36 are noted.
 
@@ -570,11 +795,13 @@ Use this structure for ClickUp updates or handoff docs:
 Process 29 is complete only when:
 
 - Source-of-truth packet is locked.
+- Ground Control and approved client documentation have been checked against every completed field.
 - GBP verification/access status is documented.
 - All safe fields are completed or audited.
 - Sensitive fields have human approval before edits.
 - Description, services, products, photos, and Q&A are drafted/applied as assigned.
 - Address/service-area/phone/website choices match approved client facts.
+- Address and service-area re-verification risk is documented.
 - Verification blockers are documented instead of bypassed.
 - Handoffs are created for categories, posts, reviews, photos, Q&A, website links, and attributes.
 - ClickUp reflects the real final status.

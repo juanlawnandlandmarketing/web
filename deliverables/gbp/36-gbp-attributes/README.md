@@ -1,8 +1,8 @@
 # GBP Attributes
 
 **Category:** GBP SEO
-**Automation Readiness Score:** 3/10 - Low automation, human approval required
-**Status:** SOP documented
+**Automation Readiness Score:** 0/10 - 100% manual
+**Status:** 100% manual SOP documented
 
 ---
 
@@ -19,7 +19,7 @@ This process covers:
 - Accessibility, amenities, service options, highlights, payments, planning, and identity attributes where available.
 - Services/products/profile fact consistency.
 - Risk review before public claims are added.
-- Manual or API-assisted updates when authorized.
+- Manual updates in the live GBP interface.
 - Verification after Google accepts, rejects, or edits profile details.
 - Handoffs to categories, services, products, hours, address, NAP, website links, schema, and reviews.
 
@@ -48,12 +48,29 @@ Related ClickUp subtasks:
 
 There is no standalone ClickUp task named `GBP Attributes` in list `901111072650`. This SOP documents the operating layer that sits between category setup, profile completion, services/products, and ongoing GBP audits.
 
+## Critical Ground Control Rule
+
+Every attribute, service option, payment option, accessibility claim, identity/highlight claim, hour, service-area implication, and profile fact must match Ground Control and approved client documentation exactly.
+
+Before saving attributes:
+
+- Verify the current primary/secondary categories against Ground Control.
+- Verify available attributes in the live GBP interface.
+- Confirm each selected attribute is supported by client facts.
+- Confirm the attribute does not imply an address, storefront, public location, service area, or operating capability that conflicts with Ground Control.
+
+If the live GBP interface, Ground Control, and client docs disagree, stop and route the issue before saving.
+
+## Re-Verification and Public-Claim Warning
+
+Attributes can create customer-facing claims and may be affected by category, address, service-area, and verification state. Exercise extreme caution when attributes touch service areas, onsite service availability, accessibility, verified address details, identity highlights, or business operations. Do not make attribute changes alongside address or service-area edits unless the risk is explicitly approved and documented.
+
 ## Target State
 
 Every Process 36 run should produce:
 
 1. Current category and country/location context.
-2. Available attribute categories visible in GBP or returned by the API.
+2. Available attribute categories visible in the live GBP interface.
 3. Recommended attributes with source-of-truth evidence.
 4. Human-approved changes before public claims are saved.
 5. Updated attributes or documented blocker.
@@ -63,51 +80,38 @@ Every Process 36 run should produce:
 
 ## Automation Score
 
-**3/10 - Low automation, human approval required**
+**0/10 - 100% manual**
 
-Koga can automate useful prep and QA:
+Process 36 is a 100% manual operation. Koga/AI may prepare comparison notes, but the operator must manually inspect the live GBP profile, verify Ground Control, select or clear attributes, save changes, monitor pending/rejected status, and document final proof.
 
-- Pull current attributes from the Business Profile API when OAuth access exists.
-- List available attributes by category/country where the API supports it.
+AI support is limited to non-executing assistance:
+
+- Organize current attributes from operator screenshots or manual notes.
+- Compare visible attributes by category/country when the operator supplies them.
 - Compare attributes against website content, onboarding notes, services, products, reviews, and client facts.
 - Flag risky, unsupported, or missing attribute claims.
 - Build an approval packet.
 - Track before/after states and verification notes.
 
-The score stays low because many attributes must be confirmed from the live GBP interface, availability changes by category/country, some claims can create legal/accessibility/reputation risk, and final edits may trigger Google review, rejection, or profile changes that require human judgment.
+The score is `0/10` because many attributes must be confirmed from the live GBP interface, availability changes by category/country, some claims create legal/accessibility/reputation risk, and final edits may trigger Google review, rejection, or profile changes that require manual judgment.
 
 ## Training Video
 
-No applicable Loom video for Process 36 was found in ClickUp list `901111072650`.
+Use these Loom assets while executing manual attribute and profile-fact review:
 
-Checked sources:
-
-- `1. GBP Audit and Image Post`
-- `Initial Audit`
-- `Services audit`
-- `10. Pre Launch Website GBP Optimization`
-- `11. Post Launch Website GBP Optimization`
-- `Primary Category`
-- `Secondary Categories`
-- `Add "Services"`
-- `Add "Products"`
-- `Business Hours`
-- `Service Area`
-- `Location / Address`
-- `Verify NAP in website and GBP`
-- Related attribute, amenity, accessibility, service option, category, GBP, Google Business Profile, audit, profile, service, product, hours, location, and NAP task names/descriptions
-- Task comments
-- Attachments
-- Custom fields
-- Checklists
-- Rich embed payloads
-- Full-list Loom sweep across ClickUp list `901111072650`
-
-Decision: document the SOP from ClickUp GBP audit/profile context, existing GBP SOPs, and Google Business Profile attribute documentation. Do not include unrelated reporting, Looker Studio, citation, Whitespark, blog, PageSpeed, Rank Math, schema-only, mobile-only, robots, canonical, backlink, Signal GeNeSYS, GBP post, review-reply, Q&A, website-link, or image-compression videos in this SOP.
+| Stage | Training Asset |
+|---|---|
+| Process overview | [Overview training video](https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409) |
+| Primary category context | [Primary Category Configuration](https://www.loom.com/share/d3293974918a495ca1db090c2939e660) |
+| Secondary category context | [Secondary Categories Implementation](https://www.loom.com/share/1da6482095864c4799939cbd4d7f2a06) |
+| Service area context | [Service Area Targeting](https://www.loom.com/share/b736ba347a1846cab93768e8022a6de9) |
+| Business hours context | [Business Hours Alignment](https://www.loom.com/share/94deb5cb277347b88911d3bda195b30f) |
+| Product/profile offering context | [Product Optimization](https://www.loom.com/share/829cfddecedd4ae6b8e01be11063b81f?sid=b04264a9-a702-43ec-90c9-4f67b450a491) |
+| Services context | [Services Database Alignment](https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a) |
 
 ## Source References
 
-Use ClickUp for internal operating context and Google documentation for attribute rules and API behavior.
+Use ClickUp for internal operating context and Google documentation for attribute rules and public behavior.
 
 | Source | Role in Process 36 |
 |---|---|
@@ -124,15 +128,11 @@ Use ClickUp for internal operating context and Google documentation for attribut
 | [`Service Area`](https://app.clickup.com/t/868ehbhw5) | Service-area consistency source. |
 | [`Location / Address`](https://app.clickup.com/t/868ehbhvv) | Address visibility and verification risk context. |
 | [`Verify NAP in website and GBP`](https://app.clickup.com/t/868egz6r4) | NAP consistency check. |
+| Ground Control client records | Required source of truth for category, service, hours, service-area, and profile fact matching. |
 | [Google Business Profile: Manage your business attributes](https://support.google.com/business/answer/9049526) | Official UI guidance for adding/editing attributes. |
 | [Google Business Profile: Edit your Business Profile](https://support.google.com/business/answer/3039617) | General profile edit path. |
 | [Google Business Profile: Guidelines for representing your business](https://support.google.com/business/answer/3038177) | Official accuracy and representation rules. |
 | [Google Business Profile: Manage your business category](https://support.google.com/business/answer/7249669) | Category-specific feature context. |
-| [Google Business Profile API: Attributes resource](https://developers.google.com/my-business/reference/businessinformation/rest/v1/Attributes) | Attribute object and availability behavior. |
-| [Google Business Profile API: Add attributes](https://developers.google.com/my-business/content/attributes) | API attribute workflow and notes about Place Actions/Lodging APIs. |
-| [Google Business Profile API: locations.getAttributes](https://developers.google.com/my-business/reference/businessinformation/rest/v1/locations/getAttributes) | API lookup for current location attributes. |
-| [Google Business Profile API: locations.updateAttributes](https://developers.google.com/my-business/reference/businessinformation/rest/v1/locations/updateAttributes) | API update path and OAuth scope. |
-| [Google Business Profile API: attributes.list](https://developers.google.com/my-business/reference/rest/v4/attributes/list) | API list of attributes available by category and country. |
 | `deliverables/gbp/29-gbp-profile-build/README.md` | Profile identity and verification guardrails. |
 | `deliverables/gbp/30-gbp-categories/README.md` | Category review and downstream attribute handoff. |
 | `deliverables/gbp/35-gbp-link-on-website/README.md` | Website/profile consistency handoff. |
@@ -149,9 +149,9 @@ Examples vary by category, market, and profile state. Common attribute families 
 | Planning | Appointment required, appointments recommended. | Must match scheduling operations. |
 | Payments | Cash, checks, credit cards, mobile payments. | Confirm payment acceptance with client. |
 | Identity/highlights | Women-owned, veteran-owned, Latino-owned, Black-owned, LGBTQ+ friendly, similar highlights where available. | Sensitive. Must be client-approved and truthful. |
-| Lodging/hospitality | Amenities, sustainability practices, hotel details. | Use lodging-specific docs/API where relevant. Usually not for L&L green-industry clients. |
+| Lodging/hospitality | Amenities, sustainability practices, hotel details. | Use lodging-specific Google docs where relevant. Usually not for L&L green-industry clients. |
 
-Do not treat these as guaranteed options. Start from what the live profile or API says is available.
+Do not treat these as guaranteed options. Start from what the live profile says is available.
 
 ## Attribute Rules
 
@@ -191,7 +191,7 @@ Record:
 - Public address vs hidden address/service-area status.
 - Current services/products state.
 - Approval owner.
-- Whether access is manual UI, API, or audit-only.
+- Whether access is manual UI or audit-only.
 
 ### 2. Pull Current Attribute State
 
@@ -199,7 +199,6 @@ Use whichever source is available:
 
 - Google Business Profile UI: Edit profile -> More / attribute categories.
 - Google Maps mobile Business tab where applicable.
-- Business Profile API `locations.getAttributes` when OAuth access exists.
 - Manual screenshot or profile export where access is limited.
 
 Record:
@@ -213,12 +212,6 @@ Record:
 ### 3. List Available Attributes
 
 Attributes available for a profile may depend on category and country.
-
-If using API:
-
-- Use the available attributes/list endpoint with category and country when appropriate.
-- Compare available attributes against current attributes.
-- Do not assume the API list equals the UI exactly in every case.
 
 If using the UI:
 
@@ -257,11 +250,11 @@ Prepare an approval packet before changing public profile details.
 
 | Field | Notes |
 |---|---|
-| Attribute | Exact visible/API attribute name. |
+| Attribute | Exact visible attribute name. |
 | Recommended value | Yes, No, unset, selected option, or URL where applicable. |
 | Evidence | Client fact, website page, onboarding note, photo, or AM/client confirmation. |
 | Risk | Accessibility, identity, service-area, category, legal, verification, or reputation risk. |
-| Update path | Manual UI, API, defer, or route to another process. |
+| Update path | Manual UI, defer, or route to another process. |
 
 Do not save sensitive or uncertain attributes without approval.
 
@@ -277,16 +270,7 @@ Manual UI path:
 6. Save.
 7. Watch for pending/rejected changes.
 
-API path when authorized:
-
-1. Pull current attributes.
-2. Confirm available attributes.
-3. Prepare the update payload.
-4. Use `locations.updateAttributes` with the correct `attributeMask`.
-5. Use the `business.manage` OAuth scope.
-6. Verify the response and live/public state.
-
-Do not update place action links through the general attributes flow. Google notes that place action links belong in the Place Actions API. Lodging-specific details may require lodging-specific workflows.
+Do not use API or bulk update paths for this process. The operator must save attributes manually in the live GBP interface and verify the public/profile state afterward.
 
 ### 7. Verify Public/Accepted State
 
@@ -329,7 +313,7 @@ Use this structure for ClickUp updates, approval packets, or trackers:
   "profile": "Google Business Profile location",
   "primary_category": "Lawn care service",
   "country": "US",
-  "access_method": "Manual UI / API / audit-only",
+  "access_method": "Manual UI / audit-only",
   "attribute": "Online estimates",
   "recommended_value": "Yes",
   "evidence": "Client confirmed online estimate workflow",
@@ -337,7 +321,12 @@ Use this structure for ClickUp updates, approval packets, or trackers:
   "approval_status": "Approved by Account Manager",
   "update_status": "Saved / pending / rejected / unavailable / deferred",
   "proof": "Screenshot or tracker URL",
-  "training_video": "No applicable Loom found in ClickUp list 901111072650",
+  "training_videos": [
+    "https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409",
+    "https://www.loom.com/share/886ca62d5eaa4b9192382d43a1123218?sid=ebeb3f3e-0ec2-45a2-af9f-680658e0444a"
+  ],
+  "automation_status": "0/10 - 100% manual",
+  "ground_control_match": "Pass / blocker noted",
   "handoffs": [
     "Process 30 if category limits expected attributes",
     "Process 29 if profile facts conflict"
@@ -353,7 +342,8 @@ Use this structure for ClickUp updates, approval packets, or trackers:
 - [ ] Secondary categories reviewed.
 - [ ] Country/location context recorded.
 - [ ] Current attribute state captured.
-- [ ] Available attribute options checked in live UI or API.
+- [ ] Ground Control checked before any attribute is selected or saved.
+- [ ] Available attribute options checked in the live GBP UI.
 - [ ] Services/products reviewed for consistency.
 - [ ] Hours reviewed if relevant.
 - [ ] Service area/address visibility reviewed if relevant.
@@ -363,7 +353,7 @@ Use this structure for ClickUp updates, approval packets, or trackers:
 - [ ] Payment/planning attributes confirmed with client or AM.
 - [ ] Recommendation packet prepared for approval.
 - [ ] Human approval collected for public claims.
-- [ ] Updates applied manually or via authorized API.
+- [ ] Updates applied manually in the live GBP interface.
 - [ ] Pending/rejected/Google-updated state checked.
 - [ ] Public profile reviewed after update.
 - [ ] ClickUp/tracker updated with proof and final status.
@@ -375,7 +365,7 @@ Process 36 is complete only when:
 - Current and available attributes are checked for the real profile/category/country.
 - Recommendations are based on approved business facts.
 - Risky attributes are approved by a human before saving.
-- Updates are applied only through the appropriate UI/API path.
+- Updates are applied only through the live manual GBP UI path.
 - Pending, rejected, unavailable, or hidden attributes are documented.
 - Public/profile state is verified after the update.
 - Related category, service, address, NAP, website, schema, review, or Q&A issues are routed.
@@ -390,7 +380,7 @@ Process 36 is complete only when:
 - Using identity attributes without explicit client approval.
 - Treating services/products as attributes.
 - Updating attributes while ignoring NAP, address, hours, or service-area conflicts.
-- Assuming API availability means the attribute will display publicly.
+- Assuming old screenshots or exports match the current live GBP interface.
 - Forgetting that Google can reject or alter profile changes.
 - Not checking attributes after a category change.
 
@@ -416,10 +406,6 @@ Process 36 is complete only when:
 | Google Business Profile edit profile help | General profile edit workflow. |
 | Google Business Profile guidelines | Accuracy and representation rules. |
 | Google Business Profile category help | Category-specific feature context. |
-| Google Business Profile API Attributes resource | Attribute object and availability behavior. |
-| Google Business Profile API add attributes guide | API workflow and caveats for place actions/lodging. |
-| Google Business Profile API get/update attributes | Current-state and update endpoints. |
-| Google Business Profile API attributes.list | Available-attributes lookup by category/country. |
 | ClickUp `1. GBP Audit and Image Post` | Recurring audit source. |
 | ClickUp `10. Pre Launch Website GBP Optimization` | Setup source for profile details. |
 | Process 29 | Profile fact and verification guardrails. |
