@@ -14,5 +14,8 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/operationsplaybook", "destination": "/operationsplaybook/index.html" }
   ]
 }
