@@ -26,17 +26,6 @@
   color: var(--green);
 }
 
-.ops-redaction-note {
-  margin-top: 12px;
-  padding: 10px 12px;
-  border: 1px solid rgba(245,165,36,0.20);
-  border-radius: var(--radius-sm);
-  background: rgba(245,165,36,0.08);
-  color: #f5c66d;
-  font-size: 12px;
-  line-height: 1.45;
-}
-
 .ops-area-panel {
   display: grid;
   grid-template-columns: minmax(210px, 0.35fr) minmax(0, 1fr);
@@ -112,7 +101,6 @@
   }
 
   .page-subtitle,
-  .ops-redaction-note,
   .seo-system-hero p,
   .ops-area-panel p {
     overflow-wrap: anywhere;
