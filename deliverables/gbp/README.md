@@ -2,6 +2,8 @@
 
 This folder contains automation builds for all **7 active GBP SEO** deliverables.
 
+Process 34 was intentionally removed because the old GBP Q&A workflow is no longer useful or supported as an active fulfillment process.
+
 For GBP product description and image prompt creation, use [GBP Products Process](./GBP-PRODUCTS-PROCESS.md).
 
 | # | Deliverable | Automation Score | Status |
