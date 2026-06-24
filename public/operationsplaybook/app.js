@@ -11,6 +11,31 @@ const S = {
   search: '',
 };
 
+const ONBOARDING_STAGE_LABELS = {
+  pre_call: 'Pre-Call',
+  the_call: 'Onboarding Call',
+  post_call: 'Post-Call',
+  launch: 'Launch',
+};
+
+const ONBOARDING_DEPARTMENT_LABELS = {
+  web_dev: 'Web Dev',
+  google_ads: 'Google Ads',
+  meta_ads: 'Meta Ads',
+  seo_team: 'SEO',
+  content: 'Content',
+  service_area_expert: 'Service Area Expert',
+  operations: 'Operations',
+  acct_management: 'Acct. Management',
+  leadership: 'Leadership',
+};
+
+const ONBOARDING_PROGRAM_LABELS = {
+  authority: 'Authority',
+  growth: 'Growth',
+  universal: 'Authority + Growth',
+};
+
 const $ = (selector) => document.querySelector(selector);
 const h = (value) => String(value || '').replace(/[&<>"']/g, (char) => ({
   '&': '&amp;',
@@ -48,6 +73,18 @@ function readinessClass(score) {
   if (score >= 5) return 'partial';
   if (score >= 3) return 'low';
   return 'manual';
+}
+
+function onboardingStageLabel(stage) {
+  return ONBOARDING_STAGE_LABELS[stage] || stage || 'Unmapped';
+}
+
+function onboardingDepartmentLabel(department) {
+  return ONBOARDING_DEPARTMENT_LABELS[department] || department || 'Unmapped';
+}
+
+function onboardingProgramLabel(program) {
+  return ONBOARDING_PROGRAM_LABELS[program || 'universal'] || program || 'Authority + Growth';
 }
 
 function areaIcon(key) {
@@ -205,6 +242,84 @@ function isVideoUrl(url) {
   return /(?:loom\.com\/share|youtube\.com|youtu\.be|vimeo\.com)/i.test(url || '');
 }
 
+function renderOnboardingStep(step) {
+  const video = step.videoUrl
+    ? `<a class="btn btn-ghost btn-compact" href="${h(step.videoUrl)}" target="_blank" rel="noopener noreferrer">Watch Video</a>`
+    : '<span class="template-missing-pill">Video pending</span>';
+  const sop = step.sop
+    ? `<div class="template-step-sop">${renderSopMarkdown(step.sop)}</div>`
+    : '<p class="template-step-muted">Task Garden SOP plain text still needs authenticated export.</p>';
+  return `<article class="template-step-card">
+    <div class="template-step-head">
+      <span class="process-number">${h(step.number)}</span>
+      <h3>${h(step.title)}</h3>
+    </div>
+    <div class="template-step-meta">
+      <span>${h(onboardingStageLabel(step.stage))}</span>
+      <span>${h(onboardingDepartmentLabel(step.department))}</span>
+      <span>${h(onboardingProgramLabel(step.program))}</span>
+      <span>${h(step.timeframe || 'Milestone pending')}</span>
+    </div>
+    <p>${h(step.description || 'No description provided yet.')}</p>
+    <div class="template-step-compare">
+      <strong>${h(step.taskGardenStatus || 'Comparison')}</strong>
+      <span>${h(step.comparison || 'No comparison note available.')}</span>
+    </div>
+    <div class="template-step-actions">${video}</div>
+    ${sop}
+  </article>`;
+}
+
+function renderTaskGardenComparison(process) {
+  if (!process.templateSteps?.length) return renderSopMarkdown(process.sopMarkdown);
+  const comparison = process.taskGardenComparison || {};
+  const mapped = comparison.mappedFields || [];
+  const pending = comparison.pendingFields || [];
+  return `<div class="template-comparison-reader">
+    <section class="template-comparison-hero">
+      <div>
+        <span class="doc-kicker">Task Garden Comparison</span>
+        <h2>${h(process.templateSteps.length)} current steps mapped into the template model.</h2>
+        <p>${h(comparison.accessNote || 'Current checklist steps are mapped into Task Garden-style fields for comparison.')}</p>
+      </div>
+      <div class="template-comparison-stats">
+        <div><strong>${h(process.templateSteps.length)}</strong><span>current sheet steps</span></div>
+        <div><strong>${h(mapped.length)}</strong><span>mapped fields</span></div>
+        <div><strong>${h(pending.length)}</strong><span>pending fields</span></div>
+      </div>
+    </section>
+    <div class="template-field-grid">
+      <div>
+        <strong>Verified source</strong>
+        <span>${h(comparison.currentSource || process.source)}</span>
+      </div>
+      <div>
+        <strong>Template source</strong>
+        <span>${h(comparison.templateSource || 'Task Garden onboarding template')}</span>
+      </div>
+      <div>
+        <strong>Mapped fields</strong>
+        <span>${h(mapped.join(', ') || 'None yet')}</span>
+      </div>
+      <div>
+        <strong>Needs export/session</strong>
+        <span>${h(pending.join(', ') || 'None')}</span>
+      </div>
+    </div>
+    <section class="template-steps-section">
+      <div class="section-header compact">
+        <h2 class="section-title">Step Comparison</h2>
+        <p class="section-subtitle">Each row is the current operations playbook checklist item translated into the fields Task Garden stores per template step.</p>
+      </div>
+      <div class="template-step-list">${process.templateSteps.map(renderOnboardingStep).join('')}</div>
+    </section>
+    <details class="template-original-checklist">
+      <summary>Original checklist snapshot</summary>
+      ${renderSopMarkdown(process.sopMarkdown)}
+    </details>
+  </div>`;
+}
+
 function openModal(title, body, footer, modalClass = '') {
   $('#modalRoot').innerHTML = `<div class="modal-overlay" id="modalOverlay"><div class="modal ${h(modalClass)}"><div class="modal-header"><h2>${title}</h2><button class="modal-close" id="modalClose">×</button></div><div class="modal-body">${body}</div>${footer ? `<div class="modal-footer">${footer}</div>` : ''}</div></div>`;
   $('#modalOverlay').addEventListener('click', (event) => {
@@ -249,7 +364,7 @@ function openOperationsSop(processId) {
         <span>${h(process.source)}</span>
         <span>${h(process.category)}</span>
       </div>
-      ${renderSopMarkdown(process.sopMarkdown)}
+      ${renderTaskGardenComparison(process)}
     </article>
   `;
   const external = process.externalUrl ? `<a class="btn btn-ghost" href="${h(process.externalUrl)}" target="_blank" rel="noopener noreferrer">Open Linked System</a>` : '';
@@ -278,6 +393,18 @@ function filteredProcesses(area) {
       process.fulfillment,
       process.source,
       process.sopMarkdown,
+      ...(process.templateSteps || []).flatMap((step) => [
+        step.title,
+        step.stage,
+        step.department,
+        step.program,
+        step.timeframe,
+        step.description,
+        step.sop,
+        step.videoUrl,
+        step.taskGardenStatus,
+        step.comparison,
+      ]),
     ].join(' ').toLowerCase();
     return haystack.includes(query);
   });
@@ -299,6 +426,13 @@ function renderProcessCard(process) {
   const sopButton = sopUrl && isVideoUrl(sopUrl)
     ? `<a class="btn btn-primary sop-view-btn" href="${h(sopUrl)}" target="_blank" rel="noopener noreferrer">Watch SOP</a>`
     : `<button class="btn btn-primary sop-view-btn" type="button" onclick="openOperationsSop('${h(process.id)}')">View SOP</button>`;
+  const comparison = process.taskGardenComparison;
+  const templateStepCount = process.templateSteps?.length || 0;
+  const templateFields = comparison ? `<div class="template-coverage-strip">
+      <span>${templateStepCount} current steps</span>
+      <span>${h((comparison.mappedFields || []).length)} fields mapped</span>
+      <span>${h((comparison.pendingFields || []).join(', ')) || 'No pending fields'}</span>
+    </div>` : '';
   return `<article class="seo-process-card">
     <div class="seo-process-topline">
       <span class="process-number">${h(process.number)}</span>
@@ -311,6 +445,7 @@ function renderProcessCard(process) {
       <div><strong>Human role</strong><span>${h(process.human)}</span></div>
       <div><strong>Koga/Kai role</strong><span>${h(process.ai)}</span></div>
     </div>
+    ${templateFields}
     <div class="process-meta-row">
       <span>${h(process.sopStatus)}</span>
       <span>${h(process.cadence)}</span>
@@ -509,6 +644,16 @@ function renderContent() {
 
   const rows = filteredProcesses(area);
   const highAutomation = area.processes.filter((process) => process.score >= 7).length;
+  const isOnboarding = area.key === 'onboarding';
+  const onboardingStepTotal = isOnboarding
+    ? area.processes.reduce((sum, process) => sum + (process.templateSteps?.length || 0), 0)
+    : 0;
+  const onboardingMappedFields = isOnboarding
+    ? new Set(area.processes.flatMap((process) => process.taskGardenComparison?.mappedFields || [])).size
+    : 0;
+  const onboardingPendingFields = isOnboarding
+    ? new Set(area.processes.flatMap((process) => process.taskGardenComparison?.pendingFields || [])).size
+    : 0;
   $('#breadcrumb').innerHTML = `<span class="bc-item">Operations Playbook</span><span class="bc-sep">›</span><span class="bc-item">${h(area.label)}</span>`;
 
   return `
@@ -527,9 +672,9 @@ function renderContent() {
       </div>
       <div class="seo-system-stats">
         <div><strong>${area.count}</strong><span>process cards in this tab</span></div>
-        <div><strong>${PLAYBOOK.totalAreas}</strong><span>operations areas</span></div>
-        <div><strong>${highAutomation}</strong><span>automation candidates</span></div>
-        <div><strong>${area.averageScore}/10</strong><span>avg automation readiness</span></div>
+        <div><strong>${isOnboarding ? onboardingStepTotal : PLAYBOOK.totalAreas}</strong><span>${isOnboarding ? 'mapped onboarding steps' : 'operations areas'}</span></div>
+        <div><strong>${isOnboarding ? onboardingMappedFields : highAutomation}</strong><span>${isOnboarding ? 'Task Garden fields mapped' : 'automation candidates'}</span></div>
+        <div><strong>${isOnboarding ? onboardingPendingFields : `${area.averageScore}/10`}</strong><span>${isOnboarding ? 'fields still gated' : 'avg automation readiness'}</span></div>
       </div>
     </div>
 
@@ -548,8 +693,8 @@ function renderContent() {
 
     <div class="section">
       <div class="section-header">
-        <h2 class="section-title">Process Library</h2>
-        <p class="section-subtitle">Same card logic as the SEO fulfillment system: summary, human role, Koga/Kai role, cadence, source, readiness, and a dedicated SOP button.</p>
+        <h2 class="section-title">${isOnboarding ? 'Template Comparison Library' : 'Process Library'}</h2>
+        <p class="section-subtitle">${isOnboarding ? 'Current onboarding checklist steps are mapped into the same fields used by Task Garden templates: stage, department, program, milestone, description, SOP, and video.' : 'Same card logic as the SEO fulfillment system: summary, human role, Koga/Kai role, cadence, source, readiness, and a dedicated SOP button.'}</p>
       </div>
       <div class="ops-area-panel">
         <div>
