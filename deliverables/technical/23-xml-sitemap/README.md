@@ -1,14 +1,14 @@
 # XML Sitemap
 
 **Category:** Technical SEO
-**Automation Readiness Score:** 7/10 - Highly automatable
-**Status:** SOP documented
+**Automation Readiness Score:** 10/10 - Fully automated
+**Status:** Fully automated
 
 ---
 
 ## Purpose
 
-Process 23 covers XML sitemap generation, validation, submission, and monitoring. The goal is to make sure each client site gives Google a clean list of the URLs we actually want discovered and indexed.
+Process 23 covers XML sitemap generation, validation, submission, and monitoring. The Content Engine pipeline uses the target URL set, the defined SEO strategy, platform routing, and live site checks to make sure each client site gives Google a clean list of the URLs we actually want discovered and indexed.
 
 This process sits between Rank Math setup and Google Search Console work:
 
@@ -44,9 +44,11 @@ Related Process 22 tasks also feed this workflow:
 - `Compare both listings using the custom GPT`.
 - `Request the index for the not indexed URL`.
 
+The Content Engine pipeline now owns the full standard sitemap workflow. It discovers the live sitemap source, validates sitemap files, compares included URLs against the target URL set and SEO strategy, routes platform-specific updates, submits or verifies sitemap status when access exists, and records follow-up issues.
+
 The ClickUp sitemap extraction note says to add `sitemap.xml` to the client domain. That is useful as a starting guess, but it is not enough for the SOP. Rank Math and other WordPress SEO plugins often expose a sitemap index at `/sitemap_index.xml`, with child sitemaps for pages, posts, categories, services, or other post types.
 
-The live sitemap URL must be verified, not guessed.
+The live sitemap URL must be verified, not guessed. For Vercel + GitHub stacks, sitemap execution is generated and validated from the target URLs and defined SEO strategy in the deployable codebase. For WordPress sites, sitemap execution is fully automated by integrating with and leveraging Rank Math after Process 20 establishes the plugin baseline.
 
 ## Target State
 
@@ -63,21 +65,36 @@ Every client should have a sitemap record that explains:
 
 ## Automation Score
 
-**7/10 - Highly automatable**
+**10/10 - Fully automated**
 
-Koga can automate most sitemap inspection and monitoring:
+Process 23 is fully automated in the Content Engine pipeline. Platform-specific routing controls how the sitemap is generated, updated, validated, and monitored:
 
-- Discover common sitemap URLs.
-- Parse sitemap index files and child sitemaps.
-- Count URLs by sitemap type.
-- Validate HTTP status codes.
-- Detect redirects, 404s, soft errors, noindex URLs, canonical mismatches, robots blocks, and duplicate URLs.
-- Compare sitemap URLs against CMS/page inventories when access exists.
-- Compare sitemap URLs against GSC indexing data when access exists.
-- Prepare GSC submission and issue reports.
-- Monitor sitemap status over time.
+- Vercel + GitHub stacks: the pipeline uses the target URL inventory and defined SEO strategy to generate or update sitemap output in the repo, validate the resulting XML, and verify the deployed sitemap after merge/deploy.
+- WordPress sites: the pipeline integrates with Rank Math, uses the approved post-type/taxonomy settings, verifies `/sitemap_index.xml` and child sitemaps, and routes needed setting updates through the Rank Math-controlled sitemap module.
 
-The score is not higher because plugin settings, CMS configuration, GSC submission, indexability decisions, canonical decisions, launch/staging rules, and client-sensitive URL decisions can affect what Google crawls. Humans should approve changes that alter sitemap output or indexing eligibility.
+The pipeline automates:
+
+- Discovering common sitemap URLs.
+- Parsing sitemap index files and child sitemap files.
+- Counting URLs by sitemap type.
+- Validating HTTP status codes.
+- Detecting redirects, 404s, soft errors, noindex URLs, canonical mismatches, robots blocks, duplicate URLs, and stale URLs.
+- Comparing sitemap URLs against the target URL set, generated content inventory, site strategy, CMS/page inventories, and GSC indexing data when available.
+- Applying platform routing for Vercel + GitHub or WordPress + Rank Math.
+- Preparing GSC submission and issue reports.
+- Monitoring sitemap status over time.
+- Routing exceptions to Rank Math, GitHub, GSC, robots.txt, redirects, canonicals, or content QA.
+
+No routine human gate is required for standard sitemap production. Human review is exception-only for access blockers, conflicting indexing strategy, launch/staging uncertainty, or URL-inclusion decisions that cannot be resolved from the approved SEO strategy.
+
+## Platform Routing
+
+| Platform | Automated Execution Path | Notes |
+|---|---|---|
+| Vercel + GitHub stack | Use the target URL inventory and defined SEO strategy to generate or update sitemap XML in the codebase, validate XML locally, push through GitHub, and verify the deployed sitemap after Vercel deployment. | Fully automated from source files, generated routes, redirects, canonicals, and indexability rules. |
+| WordPress with Rank Math | Use Rank Math as the sitemap source of truth, verify `/sitemap_index.xml` and child sitemaps, apply approved post-type/taxonomy inclusion rules, and validate output after cache/plugin refresh. | Fully automated by integrating with and leveraging Rank Math after Process 20 baseline setup. |
+| Other WordPress SEO plugin | Use only when explicitly approved as the sitemap source of truth. | Route plugin conflicts to Process 20. |
+| Legacy/custom site | Generate or update XML from the approved URL inventory when no reliable CMS/plugin generator exists. | Treat as an exception path and document source-of-truth logic. |
 
 ## Training Video
 
@@ -155,8 +172,11 @@ Use ClickUp for the internal task flow and Google documentation for current site
 | Client domain | Sitemap discovery and property matching. |
 | CMS/platform | Determines whether sitemap is generated by Rank Math, another plugin, CMS, static build, or custom file. |
 | WordPress admin or WP-CLI access | Confirm plugin settings and included post types when needed. |
+| GitHub repo access for Vercel stacks | Generate, update, validate, and ship sitemap files or sitemap-generation logic. |
+| Vercel deployment state | Confirms deployed sitemap output after merge/deploy for Vercel + GitHub stacks. |
 | GSC property access | Submit sitemap and review parsing/status. |
 | Approved indexable URL groups | Defines which pages/posts/services belong in the sitemap. |
+| Target URL inventory and SEO strategy | Drives automated sitemap inclusion for Vercel + GitHub stacks. |
 | Current page/post inventory | Compares CMS output to sitemap output. |
 | robots.txt URL | Checks sitemap directive and crawl blockers. |
 | Canonical/noindex output | Explains why URLs should be included or excluded. |
@@ -171,11 +191,11 @@ Choose one sitemap source per site.
 |---|---|---|
 | WordPress with Rank Math | Rank Math sitemap module | Default source for most L&L WordPress clients after Process 20. |
 | WordPress with another approved SEO plugin | Approved plugin sitemap | Do not run duplicate sitemap plugins. |
-| Static/custom site | Generated XML sitemap in deploy/build pipeline | Confirm file updates when pages change. |
+| Vercel + GitHub static/custom site | Generated XML sitemap in the deploy/build pipeline | Target URLs and SEO strategy drive the generated sitemap. |
 | Ecommerce or large catalog | Platform sitemap index | Child sitemaps may be needed for products/categories. |
 | Legacy/custom site | Manually generated XML sitemap | Use only when no reliable CMS/plugin generator exists. |
 
-If multiple sitemap systems are active, pick the approved source and disable or ignore duplicates only after human approval.
+If multiple sitemap systems are active, pick the approved source and disable or ignore duplicates only when the platform route and source-of-truth rule are clear. If they are not clear, create an exception packet.
 
 ## Workflow
 
@@ -188,6 +208,8 @@ Record:
 - Client domain.
 - Site platform.
 - Expected sitemap source.
+- Platform route: Vercel + GitHub, WordPress + Rank Math, other approved plugin, or exception path.
+- Target URL inventory and defined SEO strategy.
 - Whether this is launch setup, monthly monitoring, migration cleanup, or issue investigation.
 - Whether GSC access is available.
 - Whether Rank Math or another SEO plugin controls sitemap output.
@@ -210,6 +232,25 @@ Also check:
 - GSC Sitemaps report for already submitted URLs.
 
 Do not stop at the first guessed URL. Confirm the sitemap index and every child sitemap that matters.
+
+### 2A. Route by Platform
+
+For Vercel + GitHub stacks:
+
+- Pull the target URL inventory from generated routes, static route files, sitemap-generation code, redirects, canonical rules, and the defined SEO strategy.
+- Generate or update sitemap XML in the codebase or sitemap generation script.
+- Validate the generated sitemap locally before push.
+- After merge/deploy, fetch the live Vercel output and confirm the sitemap matches the intended target URLs.
+
+For WordPress sites:
+
+- Confirm Rank Math owns sitemap output after Process 20.
+- Use Rank Math post-type and taxonomy sitemap settings as the sitemap source of truth.
+- Verify `/sitemap_index.xml` and child sitemaps.
+- Apply approved inclusion/exclusion rules through Rank Math rather than manual XML edits.
+- Refresh cache/plugin output and validate the live sitemap.
+
+If the platform route is unclear, stop and create an exception packet instead of changing sitemap output.
 
 ### 3. Validate Sitemap HTTP and XML
 
@@ -299,7 +340,8 @@ Use these defaults unless the client/site strategy says otherwise:
 
 Depending on the site:
 
-- Adjust Rank Math sitemap post-type/taxonomy settings.
+- For Vercel + GitHub stacks, update the sitemap source file, generation script, route inventory, or build output based on the target URLs and SEO strategy.
+- For WordPress sites, adjust Rank Math sitemap post-type/taxonomy settings.
 - Exclude low-value archives or attachments.
 - Regenerate the static sitemap.
 - Correct domain/protocol inconsistencies.
@@ -307,7 +349,7 @@ Depending on the site:
 - Add missing priority URLs by fixing CMS publish/index settings.
 - Confirm sitemap cache/plugin cache has refreshed.
 
-Do not make live sitemap changes without understanding why the URL is included or excluded.
+Do not make live sitemap changes unless the automated route can tie the inclusion or exclusion to the target URL inventory, Rank Math configuration, or approved SEO strategy.
 
 ### 8. Submit or Verify in GSC
 
@@ -365,29 +407,31 @@ Update ClickUp with:
 
 ## What Gets Automated
 
-Koga can:
+The Content Engine pipeline automates:
 
 - Discover sitemap URLs.
 - Parse sitemap index and child sitemap files.
 - Export URL inventory.
 - Check HTTP status and redirects.
 - Detect duplicate, non-canonical, noindex, blocked, missing, or stale URLs.
-- Compare sitemap URLs against crawl/page inventories.
+- Compare sitemap URLs against target URL inventory, SEO strategy, crawl/page inventories, and generated content data.
 - Compare sitemap URLs against GSC data when access exists.
 - Detect robots.txt sitemap directives.
+- Update sitemap source files or generation logic for Vercel + GitHub stacks.
+- Update or verify Rank Math sitemap configuration for WordPress sites.
 - Prepare GSC submission instructions.
 - Generate ClickUp update summaries and issue logs.
 
-## What Stays Human
+## Exception Handling
 
-Humans handle:
+Human review is limited to exceptions:
 
-- WordPress/admin access and plugin setting changes.
-- Deciding whether categories, tags, archives, or landing pages should be indexable.
-- Approving sitemap changes during launch or migration.
-- Submitting in GSC when account access or manual UI work is required.
-- Resolving plugin conflicts or CMS issues.
-- Deciding whether thin/duplicate pages should be improved, noindexed, canonicalized, redirected, or removed.
+- Missing platform access.
+- Conflicting target URL inventory or SEO strategy.
+- Launch/staging uncertainty.
+- Rank Math/plugin conflicts the pipeline cannot safely resolve.
+- GSC access blockers.
+- URL-inclusion decisions that require a business or campaign decision outside the approved strategy.
 - Client-facing explanation of major indexing or visibility changes.
 
 ## QA Checklist
@@ -396,6 +440,8 @@ Before marking Process 23 complete:
 
 - [ ] Correct client domain and canonical protocol confirmed.
 - [ ] Sitemap source of truth identified.
+- [ ] Platform route confirmed: Vercel + GitHub, WordPress + Rank Math, other approved plugin, or exception path.
+- [ ] Target URL inventory and SEO strategy checked.
 - [ ] Sitemap index URL confirmed.
 - [ ] Child sitemap URLs reviewed.
 - [ ] Sitemap files return HTTP 200.
@@ -421,9 +467,11 @@ Use this structure in ClickUp or the sitemap audit log:
 ## XML Sitemap Review - [Client]
 
 Sitemap source:
+Platform route:
 Sitemap index URL:
 Child sitemaps reviewed:
 Total URLs:
+Target URL strategy:
 GSC submitted: Yes/No
 GSC status:
 
@@ -440,6 +488,9 @@ Issues found:
 Changes made:
 - None.
 
+Automation status:
+- Fully automated.
+
 Next actions:
 - None.
 ```
@@ -449,6 +500,7 @@ Next actions:
 Process 23 is complete when:
 
 - The correct sitemap URL is confirmed.
+- The platform route is confirmed.
 - Sitemap files are fetchable and parseable.
 - Sitemap contents are aligned with intended indexable URLs.
 - Obvious junk, blocked, redirected, duplicate, noindex, or stale URLs are removed or routed.
