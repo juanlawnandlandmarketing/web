@@ -1,8 +1,8 @@
 # GBP Link on Website
 
 **Category:** GBP SEO
-**Automation Readiness Score:** 2/10 - Manual with audit assistance
-**Status:** SOP documented
+**Automation Readiness Score:** 0/10 - 100% manual
+**Status:** 100% manual SOP documented
 
 ---
 
@@ -44,9 +44,27 @@ Related ClickUp and SOP sources:
 - Process 36 - GBP Attributes
 - Process 21 - Schema Markup
 
-ClickUp `Website` gives one side of the link relationship: copy the correct homepage URL from Client Directory Info into GBP and ensure the link works before submission.
+ClickUp `Website` gives one side of the link relationship: copy the correct homepage URL from Client Directory Info and Ground Control into GBP and ensure the link works before submission.
 
 Process 35 covers the reverse side: make sure the website links back to the correct Google entity or review surface after launch.
+
+## Critical Ground Control Rule
+
+Every URL, NAP value, GBP entity, and social/profile destination used in Process 35 must match Ground Control and approved client documentation exactly.
+
+Before publishing or updating any website link:
+
+- Confirm the website URL matches the canonical homepage in Ground Control / Client Directory Info.
+- Confirm the GBP or Maps URL belongs to the exact client and location.
+- Confirm review links are generated from or verified against the correct GBP dashboard.
+- Confirm visible NAP on the website matches approved client data.
+- Confirm social/profile links route to active, client-owned profiles.
+
+If Ground Control, the website, and GBP disagree, stop and route the mismatch to Process 29 / NAP cleanup before publishing new links.
+
+## High-Risk GBP Link Warning
+
+Wrong GBP, Maps, review, address, or social links can split review demand, send customers to the wrong location, expose hidden addresses, or create NAP trust issues. For service-area businesses with hidden addresses, do not add map embeds or directions links that imply a public storefront unless approved.
 
 ## Target State
 
@@ -64,9 +82,11 @@ Every completed Process 35 should produce:
 
 ## Automation Score
 
-**2/10 - Manual with audit assistance**
+**0/10 - 100% manual**
 
-Koga can automate useful checks:
+Process 35 is a 100% manual operation. Koga/AI may crawl for existing links or prepare a QA report, but a human must verify the correct GBP entity, review link, website placement, NAP match, and final published behavior.
+
+AI support is limited to non-executing assistance:
 
 - Crawl website pages for Google Maps, GBP, `g.page`, `search.google.com/local/writereview`, and `google.com/maps` links.
 - Detect missing, broken, redirected, or duplicate Google links.
@@ -75,31 +95,18 @@ Koga can automate useful checks:
 - Check whether review CTAs use risky language.
 - Build a placement and QA report.
 
-The score stays low because the correct GBP/review URL often must be confirmed from inside the current Google Business Profile dashboard, WordPress placement is client/theme-specific, review language carries policy risk, and final approval should come from a human before publishing or changing conversion paths.
+The score is `0/10` because final confirmation and publishing require manual GBP dashboard verification, WordPress/theme-specific placement, policy-safe review language, and live desktop/mobile QA.
 
 ## Training Video
 
-No applicable Loom video for Process 35 was found in ClickUp list `901111072650`.
+Use these Loom assets while executing manual website/profile link work:
 
-Checked sources:
-
-- `4. Clients Reviews Integration`
-- `How it works`
-- `11. Post Launch Website GBP Optimization`
-- `Link Products`
-- `Website`
-- `Verify NAP in website and GBP`
-- `3. Review Generation Strategy`
-- `Review check`
-- Related GBP, Google, review, website, link, profile, footer, contact, map, launch, and NAP task names/descriptions
-- Task comments
-- Attachments
-- Custom fields
-- Checklists
-- Rich embed payloads
-- Full-list Loom sweep across ClickUp list `901111072650`
-
-Decision: document the SOP from ClickUp task intent, existing GBP SOPs, Google help docs, and website launch QA patterns. Do not include unrelated reporting, Looker Studio, citation, Whitespark, blog, PageSpeed, Rank Math, schema-only, mobile-only, robots, canonical, backlink, Signal GeNeSYS, GBP post, review-reply, or image-compression videos in this SOP.
+| Stage | Training Asset |
+|---|---|
+| Process overview | [Overview training video](https://www.loom.com/share/90a3eed979b844bd83c8fbcb1a6e284e?sid=65634bb3-68ba-4ea7-96bf-ece000dab409) |
+| Website integration | [Website Integration](https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5) |
+| Social profile mapping | [Social Profile Mapping](https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce) |
+| Phone/NAP context | [Phone Number Configuration](https://www.loom.com/share/c462d78d21ef408f9e5fc8da34f880ed) |
 
 ## Source References
 
@@ -112,6 +119,7 @@ Use ClickUp for internal operating context and Google documentation for current 
 | [`11. Post Launch Website GBP Optimization`](https://app.clickup.com/t/868eeg11q) | Post-launch GBP optimization source. |
 | [`Website`](https://app.clickup.com/t/868ehbhuv) | Confirms the site-to-GBP relationship: GBP should use the correct homepage URL from Client Directory Info. |
 | [`Verify NAP in website and GBP`](https://app.clickup.com/t/868egz6r4) | NAP consistency check between website and GBP. |
+| Ground Control client records | Required source of truth for homepage URL, NAP, and profile-link matching. |
 | [`3. Review Generation Strategy`](https://app.clickup.com/t/868eh43qp) | Review acquisition context for review link placement. |
 | [`Review check`](https://app.clickup.com/t/868exrphu) | Recurring review monitoring context. |
 | [Google Business Profile: Ask for reviews](https://support.google.com/business/answer/7035772) | Official review request/link guidance and review policy cautions. |
@@ -202,7 +210,7 @@ If the client has more than one location, do not guess. Confirm which GBP locati
 
 Collect:
 
-- Website homepage URL from Client Directory Info.
+- Website homepage URL from Client Directory Info and Ground Control.
 - Public GBP / Google Maps profile URL.
 - Review request URL from the GBP dashboard when available.
 - Place ID or CID when available.
@@ -212,6 +220,8 @@ Collect:
 - Approved NAP from the client source of truth.
 
 Prefer the current Google Business Profile dashboard for review request links. If building a Maps URL, use official Google Maps URL formats and include a Place ID when possible.
+
+Do not publish links until the website URL, GBP entity, and NAP values match Ground Control exactly.
 
 ### 3. Validate the Google Entity
 
@@ -265,7 +275,7 @@ Use simple, neutral labels:
 
 For service pages, keep the primary CTA focused on leads. GBP/review links should support trust, not steal attention from the contact form or phone CTA.
 
-### 6. Implement in WordPress
+### 6. Implement Manually in WordPress
 
 Common implementation locations:
 
@@ -347,7 +357,12 @@ Use this structure for ClickUp updates, QA notes, or trackers:
   "desktop_qa": "Pass",
   "risk_notes": "No incentives; neutral review CTA used",
   "proof": "Screenshot or tracker URL",
-  "training_video": "No applicable Loom found in ClickUp list 901111072650",
+  "training_videos": [
+    "https://www.loom.com/share/be70e718be954fcbb88b9bf2614c95d5",
+    "https://www.loom.com/share/3f8e9a8c471b4f12a81d0deb45ff60ce"
+  ],
+  "automation_status": "0/10 - 100% manual",
+  "ground_control_match": "Pass / blocker noted",
   "handoffs": [
     "Process 29 if GBP website field is wrong",
     "Process 32 for review replies"
@@ -361,6 +376,7 @@ Use this structure for ClickUp updates, QA notes, or trackers:
 - [ ] `11. Post Launch Website GBP Optimization` checked when this is launch/post-launch work.
 - [ ] `Website` task checked for approved homepage URL context.
 - [ ] `Verify NAP in website and GBP` considered.
+- [ ] Ground Control checked for canonical homepage, NAP, and client identity.
 - [ ] Client website domain confirmed.
 - [ ] Correct GBP/Maps profile URL confirmed.
 - [ ] Review request URL confirmed from GBP dashboard where available.
@@ -368,6 +384,7 @@ Use this structure for ClickUp updates, QA notes, or trackers:
 - [ ] Existing website Google links audited.
 - [ ] Wrong, stale, duplicate, or broken links removed/replaced.
 - [ ] Hidden-address/service-area rules respected.
+- [ ] No map embed/directions link exposes a hidden/private address.
 - [ ] Footer/contact/reviews/location placement selected.
 - [ ] Review CTA language is neutral.
 - [ ] No review incentives, gating, or "5-star" pressure used.
@@ -376,6 +393,7 @@ Use this structure for ClickUp updates, QA notes, or trackers:
 - [ ] Mobile QA completed.
 - [ ] Link opens the correct public Google surface.
 - [ ] NAP still matches between website and GBP.
+- [ ] Ground Control match confirmed after publishing.
 - [ ] Screenshot/tracker proof saved.
 - [ ] ClickUp updated with final placement and proof.
 
@@ -384,6 +402,7 @@ Use this structure for ClickUp updates, QA notes, or trackers:
 Process 35 is complete only when:
 
 - The correct GBP/Maps/review URL is verified.
+- Ground Control matches the website URL, NAP, and selected Google entity.
 - The website links to the correct Google entity in approved locations.
 - Review language is neutral and policy-safe.
 - Multi-location mapping is correct when applicable.
