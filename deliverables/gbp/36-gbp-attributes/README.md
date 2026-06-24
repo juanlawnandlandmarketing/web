@@ -182,7 +182,7 @@ Important rules:
 - Do not add "onsite services," "online estimates," or similar claims unless the client actually provides them.
 - Do not use attributes to imply a storefront if the profile is service-area only or address-hidden.
 - Do not change categories just to unlock attributes.
-- Do not use attributes as a replacement for services, products, posts, Q&A, or schema.
+- Do not use attributes as a replacement for services, products, posts, or schema.
 - If an attribute is unavailable, document the blocker instead of forcing a workaround.
 
 ## Workflow
@@ -310,7 +310,7 @@ Check whether:
 - Categories changed and exposed new attributes.
 - Services/products changed and require attribute review.
 - Hours/service area/address changed.
-- Reviews or Q&A suggest wrong expectations.
+- Reviews suggest wrong expectations.
 - Google added or removed available attributes.
 - A competitor/profile audit suggests a useful but truthful attribute is missing.
 - Existing attributes are stale, unsupported, or risky.
@@ -384,7 +384,7 @@ Process 36 is complete only when:
 - Updates are applied only through the live manual GBP UI path.
 - Pending, rejected, unavailable, or hidden attributes are documented.
 - Public/profile state is verified after the update.
-- Related category, service, address, NAP, website, schema, review, or Q&A issues are routed.
+- Related category, service, address, NAP, website, schema, or review issues are routed.
 - ClickUp or the tracker contains final status and proof.
 
 ## Common Mistakes
@@ -411,7 +411,6 @@ Process 36 is complete only when:
 | Address or service-area issue | Process 29 / citation cleanup |
 | Website profile facts conflict | Process 35 - GBP Link on Website |
 | Attribute should be reflected in schema | Process 21 - Schema Markup |
-| Attribute implies FAQ/customer expectation | Process 34 - Q&A Management |
 | Reviews mention repeated mismatch | Process 32 - Automated Review Replies |
 
 ## References

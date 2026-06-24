@@ -40,7 +40,6 @@ Related ClickUp and SOP sources:
 - Process 29 - GBP Profile Build & Completion
 - Process 31 - Weekly GBP Posts
 - Process 32 - Automated Review Replies
-- Process 34 - Q&A Management
 - Process 36 - GBP Attributes
 - Process 21 - Schema Markup
 
@@ -137,7 +136,7 @@ Use ClickUp for internal operating context and Google documentation for current 
 | [Google Business Profile: Business representation guidelines](https://support.google.com/business/answer/3038177) | Official accuracy and representation rules for profile facts. |
 | [Google Maps URLs](https://developers.google.com/maps/documentation/urls/get-started) | Official URL format for Maps actions and place links. |
 | [Google Maps Platform: Place IDs](https://developers.google.com/maps/documentation/places/web-service/place-id) | Place ID guidance when building stable Maps URLs. |
-| [Google Maps user-generated content policy](https://support.google.com/contributionpolicy/answer/7422880) | Review/Q&A contribution policy context, including deceptive engagement concerns. |
+| [Google Maps user-generated content policy](https://support.google.com/contributionpolicy/answer/7422880) | Review contribution policy context, including deceptive engagement concerns. |
 | `deliverables/gbp/29-gbp-profile-build/README.md` | GBP ownership, profile identity, website field, and NAP guardrails. |
 | `deliverables/gbp/32-gbp-review-replies/README.md` | Review monitoring and response handoff. |
 | `deliverables/technical/21-schema-markup/README.md` | LocalBusiness/review/schema consistency handoff. |
@@ -441,7 +440,6 @@ Process 35 is complete only when:
 | GBP website field wrong | Process 29 - GBP Profile Build & Completion |
 | NAP mismatch between site and GBP | Process 29 / citation cleanup |
 | Review link exists but replies are missing | Process 32 - Automated Review Replies |
-| Review themes suggest new Q&A/FAQ | Process 34 - Q&A Management |
 | Profile services/products are inconsistent | Process 30 / Process 36 |
 | LocalBusiness schema references wrong URL/profile | Process 21 - Schema Markup |
 | Contact/location page layout breaks after link placement | Web dev launch QA |

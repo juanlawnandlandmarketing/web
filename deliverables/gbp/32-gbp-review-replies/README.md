@@ -39,10 +39,8 @@ Related ClickUp and SOP sources:
 - `1. GBP Audit and Image Post`
 - `10. Pre Launch Website GBP Optimization`
 - `11. Post Launch Website GBP Optimization`
-- `Q&As Submitted`
 - Process 29 - GBP Profile Build & Completion
 - Process 31 - Weekly GBP Posts
-- Process 34 - Q&A Management
 - Process 35 - GBP Link on Website
 
 ClickUp currently exposes the review task names but no detailed task body, checklist, attachments, or Loom for this exact process. The `Review check` task includes a Google Sheet bookmark:
@@ -97,7 +95,6 @@ Checked sources:
 - `1. GBP Audit and Image Post`
 - `10. Pre Launch Website GBP Optimization`
 - `11. Post Launch Website GBP Optimization`
-- `Q&As Submitted`
 - Related review, reply, replies, generation, client reviews, GBP, profile, and integration task names/descriptions
 - Task comments
 - Attachments
@@ -125,7 +122,6 @@ Use ClickUp and the review tracker for internal operating context. Use Google do
 | [Google Maps user-generated content policy](https://support.google.com/contributionpolicy/answer/7422880) | Policy context for inappropriate, fake, restricted, or risky review content. |
 | `deliverables/gbp/29-gbp-profile-build/README.md` | GBP access, verification, and profile ownership guardrails. |
 | `deliverables/gbp/31-gbp-weekly-posts/README.md` | Reputation content handoff for positive review themes. |
-| `deliverables/gbp/34-gbp-qa-management/README.md` | FAQ and public-answer handoff from repeated review questions. |
 | `deliverables/gbp/35-gbp-link-on-website/README.md` | Review link placement and review acquisition handoff. |
 
 ## Review Reply Rules to Respect
@@ -463,7 +459,6 @@ Process 32 is complete only when:
 |---|---|
 | GBP access, verification, or ownership issue | Process 29 - GBP Profile Build & Completion |
 | Positive review can support a future post | Process 31 - Weekly GBP Posts |
-| Review mentions recurring customer question | Process 34 - Q&A Management |
 | Website needs stronger review/profile link | Process 35 - GBP Link on Website |
 | Review points to outdated service info | Process 29 / Process 30 / service audit |
 | Review-generation campaign needed | `3. Review Generation Strategy` / Clients Reviews Integration |
