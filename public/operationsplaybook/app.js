@@ -421,11 +421,6 @@ function renderSeoTabContent() {
         <div class="stat-helper">Short summaries and source locations first</div>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Source Model</div>
-        <div class="stat-value small">LawnLab</div>
-        <div class="stat-helper">Playbook + 38-item checklist</div>
-      </div>
-      <div class="stat-card">
         <div class="stat-label">Master SOPs</div>
         <div class="stat-value">${masterSopCount}</div>
         <div class="stat-helper">Existing Koga markdown docs referenced</div>
@@ -548,11 +543,6 @@ function renderContent() {
         <div class="stat-label">Active Tab</div>
         <div class="stat-value small">${h(area.label)}</div>
         <div class="stat-helper">${rows.length}/${area.count} currently visible</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-label">Source</div>
-        <div class="stat-value small">Sheet</div>
-        <div class="stat-helper">${h(PLAYBOOK.generatedFrom)}</div>
       </div>
     </div>
 
