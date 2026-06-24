@@ -317,6 +317,7 @@ input, textarea, select { font-family: inherit; }
 .run-status {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   min-height: 34px;
   margin: -8px 0 24px;

@@ -1,6 +1,12 @@
 const { corsHeaders } = require('../../lib/data');
 const { fetchRankedKeywordsTrend, getCredentials } = require('../../lib/dataforseo');
 const { insert, patch, select, upsert } = require('../../lib/supabase');
+const {
+  closeStaleWeeklyRuns,
+  failRunBeforeTimeout,
+  maxRunMs,
+  shouldStopBeforeTimeout,
+} = require('../../lib/weekly-runs');
 
 function intParam(value, fallback) {
   const parsed = Number.parseInt(value, 10);
@@ -130,8 +136,11 @@ module.exports = async function handler(req, res) {
   const runRankings = action === 'full' || action === 'rankings';
 
   let run;
+  const startedAt = Date.now();
 
   try {
+    await closeStaleWeeklyRuns({ year, weekNumber });
+
     const clients = await select('clients', {
       select: 'id,client_name,domain,website_url,status,dataforseo_location_code,dataforseo_language_code',
       status: 'eq.active',
@@ -170,6 +179,14 @@ module.exports = async function handler(req, res) {
     const dataForSeoConfigured = getCredentials().configured;
 
     for (const client of clients) {
+      if (shouldStopBeforeTimeout(startedAt)) {
+        const failedRun = await failRunBeforeTimeout(run, completed, startedAt);
+        return res.status(200).json({
+          run: failedRun,
+          note: `${actionLabel(action)} stopped before the serverless timeout after ${completed}/${clients.length} clients. Re-run it to keep refreshing the remaining clients.`,
+        });
+      }
+
       if (runTechnical) {
         const health = copyHealthForWeek(currentHealthByClient.get(client.id) || latestHealthByClient.get(client.id), client.id);
         await upsert('technical_health_snapshots', [{
@@ -229,7 +246,8 @@ module.exports = async function handler(req, res) {
       run: finishedRun,
       note: runRankings && !dataForSeoConfigured
         ? `${actionLabel(action)} saved, but DataForSEO trend data is not connected because credentials are missing.`
-        : `${actionLabel(action)} saved.`,
+        : `${actionLabel(action)} saved in ${Math.round((Date.now() - startedAt) / 1000)}s.`,
+      max_run_seconds: Math.round(maxRunMs() / 1000),
     });
   } catch (error) {
     if (run?.id) {
