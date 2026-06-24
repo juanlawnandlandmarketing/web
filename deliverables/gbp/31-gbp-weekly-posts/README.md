@@ -20,7 +20,7 @@ This process covers:
 - Post scheduling and recurrence.
 - Post approval, publishing, and status checks.
 - Rejection cleanup and human escalation.
-- Handoffs to GBP photos, services, products, Q&A, blog, press release, and review workflows.
+- Handoffs to GBP photos, services, products, blog, press release, and review workflows.
 
 ## Current State
 
@@ -38,11 +38,9 @@ Related ClickUp and SOP sources:
 - `Add "Products"`
 - `Services audit`
 - `Updating Service Descriptions`
-- `Q&As Submitted`
 - Process 29 - GBP Profile Build & Completion
 - Process 30 - GBP Categories
 - Process 33 - GBP Photo Management
-- Process 34 - Q&A Management
 - Process 35 - GBP Link on Website
 - Process 36 - GBP Attributes
 - Process 04 - Blog Content
@@ -97,7 +95,6 @@ Checked sources:
 - `Add "Products"`
 - `Services audit`
 - `Updating Service Descriptions`
-- `Q&As Submitted`
 - Related GBP, post, image, profile, service, update, offer, event, photo, and audit task names/descriptions
 - Task comments
 - Attachments
@@ -119,7 +116,6 @@ Use ClickUp for internal operating context and Google Business Profile documenta
 | [`Cover Photo`](https://app.clickup.com/t/868ehbhy2) | Photo quality/source guardrails. |
 | [`Add "Services"`](https://app.clickup.com/t/868ehbhz7) | Service list source for post themes. |
 | [`Add "Products"`](https://app.clickup.com/t/868ehbhz3) | Product/service-style GBP content source. |
-| [`Q&As Submitted`](https://app.clickup.com/t/868ehbhzm) | FAQ and customer-question angle source. |
 | [`Services audit`](https://app.clickup.com/t/868eha50a) | Ongoing service accuracy check. |
 | [`Updating Service Descriptions`](https://app.clickup.com/t/868ehagx2) | Service copy source and handoff. |
 | [Google: Create & manage posts on your Business Profile](https://support.google.com/business/answer/7342169) | Official post types, scheduling, recurrence, display locations, and status guidance. |
@@ -363,7 +359,7 @@ Maintain a simple post log:
 | Schedule/live date | Date and time. |
 | Status | Scheduled, live, pending, rejected, blocked. |
 | Proof | Screenshot, post ID, or search URL. |
-| Handoff | Image, service, product, Q&A, blog, PR, or GBP issue. |
+| Handoff | Image, service, product, blog, PR, or GBP issue. |
 
 Reuse the strategy, not the exact words. If a theme repeats, rewrite it around the current season, client service mix, and latest proof.
 
@@ -419,7 +415,7 @@ Use this structure for ClickUp updates, post queues, or handoff docs:
 - [ ] Status checked after publish/schedule.
 - [ ] Pending/rejected posts are documented and rechecked/escalated.
 - [ ] ClickUp contains proof, final copy, URL, media note, and status.
-- [ ] Handoffs are routed to photos, services, products, Q&A, blog, PR, or profile cleanup as needed.
+- [ ] Handoffs are routed to photos, services, products, blog, PR, or profile cleanup as needed.
 
 ## Completion Criteria
 
@@ -453,7 +449,6 @@ Process 31 is complete only when:
 | GBP access or profile issue | Process 29 - GBP Profile Build & Completion |
 | Post theme conflicts with categories/services | Process 30 - GBP Categories |
 | No approved media or media rejected | Process 33 - GBP Photo Management |
-| Public questions should become future posts | Process 34 - Q&A Management |
 | CTA needs correct GBP/review/profile link | Process 35 - GBP Link on Website |
 | Attributes or service facts look outdated | Process 36 - GBP Attributes |
 | Blog can be repurposed into GBP post | Process 04 - Blog Content |

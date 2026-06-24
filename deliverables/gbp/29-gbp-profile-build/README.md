@@ -24,7 +24,6 @@ This process covers:
 - Products when appropriate.
 - Photos, logo, and cover photo.
 - Social profile links.
-- Q&A seed content when approved.
 - Review and NAP consistency handoff.
 - Verification and re-verification risk controls.
 
@@ -52,7 +51,6 @@ The main Process 29 source is `10. Pre Launch Website GBP Optimization`, which i
 - `Cover Photo`
 - `Additional Images`
 - `Social Profile`
-- `Q&As Submitted`
 
 Related ClickUp tasks:
 
@@ -97,9 +95,9 @@ Every GBP profile build or completion audit should produce:
 4. Field-by-field completion checklist.
 5. Risk log for changes that may trigger verification or policy issues.
 6. Human-applied edits for every profile field in scope.
-7. Drafted bio, services, products, Q&A, and photo/file recommendations where needed.
+7. Drafted bio, services, products, and photo/file recommendations where needed.
 8. Screenshots or notes proving each completed field.
-9. Handoffs to category, posts, reviews, photos, Q&A, website link, and attributes processes.
+9. Handoffs to category, posts, reviews, photos, website link, and attributes processes.
 10. Final ClickUp update with what was completed, what was blocked, and what needs client/Matt/Juan approval.
 
 ## Automation Score
@@ -196,7 +194,6 @@ Use ClickUp for internal operating context and Google Business Profile documenta
 | [`Cover Photo`](https://app.clickup.com/t/868ehbhy2) | Cover photo selection step. |
 | [`Additional Images`](https://app.clickup.com/t/868ehbhy8) | Additional GBP photo upload step. |
 | [`Social Profile`](https://app.clickup.com/t/868ehbhvk) | Social link validation step. |
-| [`Q&As Submitted`](https://app.clickup.com/t/868ehbhzm) | Initial Q&A content step. |
 | [Google: Guidelines for representing your business on Google](https://support.google.com/business/answer/3038177) | Eligibility, name, address, category, and profile quality rules. |
 | [Google: Edit your Business Profile](https://support.google.com/business/answer/3039617) | How profile edits work in Search/Maps. |
 | [Google: Manage your Business Profile service area](https://support.google.com/business/answer/9157481) | Service-area and address visibility guidance. |
@@ -209,7 +206,6 @@ Use ClickUp for internal operating context and Google Business Profile documenta
 | `deliverables/gbp/30-gbp-categories/README.md` | Deeper category research handoff. |
 | `deliverables/gbp/31-gbp-weekly-posts/README.md` | GBP post handoff. |
 | `deliverables/gbp/33-gbp-photo-management/README.md` | Ongoing photo workflow handoff. |
-| `deliverables/gbp/34-gbp-qa-management/README.md` | Q&A workflow handoff. |
 | `deliverables/gbp/35-gbp-link-on-website/README.md` | Website GBP/review link handoff. |
 | `deliverables/gbp/36-gbp-attributes/README.md` | Attributes workflow handoff. |
 
@@ -690,19 +686,7 @@ Rules:
 
 If social profiles need to be created or claimed, route to the social/backlink/entity workflow and human access owner.
 
-### 15. Q&A Submitted
-
-Use ClickUp `Q&As Submitted`.
-
-Rules:
-
-- Draft 10 helpful questions and answers only when this is part of the assigned GBP build.
-- Use People Also Ask, client services, service areas, and common customer objections.
-- Keep answers short, accurate, and client-approved.
-- Do not publish risky claims, prices, warranties, licensing, or emergency availability without approval.
-- Route ongoing Q&A monitoring and public question handling to Process 34.
-
-### 16. Verification and Re-Verification
+### 15. Verification and Re-Verification
 
 Before sensitive edits, check:
 
@@ -722,7 +706,7 @@ If verification triggers:
 
 Do not attempt verification workarounds or profile ownership changes.
 
-### 17. Final Completeness Audit
+### 16. Final Completeness Audit
 
 Confirm:
 
@@ -741,7 +725,6 @@ Confirm:
 - Cover photo.
 - Additional photos.
 - Social profiles.
-- Q&A if included.
 - Review/link handoff.
 - NAP consistency handoff.
 - Verification status.
@@ -776,7 +759,7 @@ Use this structure for ClickUp updates or handoff docs:
     "description": "Ready for approval",
     "services": "Ready for GBP entry",
     "products": "Not used",
-    "qa": "Needs client approval"
+    "photos": "Ready for approval"
   },
   "handoffs": [
     "Process 30 - GBP Categories",
@@ -818,7 +801,6 @@ Use this structure for ClickUp updates or handoff docs:
 - [ ] Cover photo is high quality and approved.
 - [ ] Additional images are approved and checked for rejection.
 - [ ] Social profile links are official and working.
-- [ ] Q&A content is approved before publication.
 - [ ] Verification/re-verification prompts are documented.
 - [ ] Any verification loop was escalated to Matt immediately.
 - [ ] Blockers are listed in ClickUp.
@@ -833,11 +815,11 @@ Process 29 is complete only when:
 - GBP verification/access status is documented.
 - All safe fields are completed or audited.
 - Sensitive fields have human approval before edits.
-- Description, services, products, photos, and Q&A are drafted/applied as assigned.
+- Description, services, products, and photos are drafted/applied as assigned.
 - Address/service-area/phone/website choices match approved client facts.
 - Address and service-area re-verification risk is documented.
 - Verification blockers are documented instead of bypassed.
-- Handoffs are created for categories, posts, reviews, photos, Q&A, website links, and attributes.
+- Handoffs are created for categories, posts, reviews, photos, website links, and attributes.
 - ClickUp reflects the real final status.
 
 ## Common Mistakes
@@ -851,7 +833,6 @@ Process 29 is complete only when:
 - Guessing hours, years in business, licenses, awards, or warranties.
 - Using stock images when ClickUp/client instructions require client-provided images.
 - Uploading logo images with tiny text or phone numbers.
-- Publishing Q&A without client/account approval.
 - Ignoring verification prompts.
 - Treating "prepared" as complete when access or verification is blocked.
 
@@ -863,7 +844,6 @@ Process 29 is complete only when:
 | Ongoing GBP posts | Process 31 - Weekly GBP Posts |
 | Review response workflow | Process 32 - Automated Review Replies |
 | Ongoing photo uploads/freshness | Process 33 - GBP Photo Management |
-| Public Q&A monitoring | Process 34 - Q&A Management |
 | Website needs GBP/review link | Process 35 - GBP Link on Website |
 | Attributes review | Process 36 - GBP Attributes |
 | NAP mismatch | Process 11 - Citation Monitoring / NAP cleanup |

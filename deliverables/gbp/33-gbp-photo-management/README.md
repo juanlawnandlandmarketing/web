@@ -24,7 +24,7 @@ This process covers:
 - Image compression and prep.
 - Rejection monitoring.
 - Human escalation for rejected, missing, low-quality, stock, or risky media.
-- Handoffs to GBP posts, products, services, Q&A, website images, and client photo collection.
+- Handoffs to GBP posts, products, services, website images, and client photo collection.
 
 ## Current State
 
@@ -44,11 +44,9 @@ Related ClickUp and SOP sources:
 - `Optimice images using smush`
 - `Add "Products"`
 - `Add "Services"`
-- `Q&As Submitted`
 - Process 29 - GBP Profile Build & Completion
 - Process 30 - GBP Categories
 - Process 31 - Weekly GBP Posts
-- Process 34 - Q&A Management
 - Process 06 - Alt Text on Images
 
 ClickUp gives useful field-level guidance:
@@ -456,7 +454,6 @@ Process 33 is complete only when:
 | GBP access or profile ownership issue | Process 29 - GBP Profile Build & Completion |
 | Photos do not match services/categories | Process 30 - GBP Categories / services audit |
 | Photo should support a weekly post | Process 31 - Weekly GBP Posts |
-| Photo suggests a useful public Q&A | Process 34 - Q&A Management |
 | Website image alt text/naming needs work | Process 06 - Alt Text on Images |
 | Product/service photo needed | `Add "Products"` / `Add "Services"` |
 | Client lacks approved real photos | Account manager/client photo request |
