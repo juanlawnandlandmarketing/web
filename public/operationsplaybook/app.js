@@ -521,7 +521,6 @@ function renderContent() {
       <div>
         <h1 class="page-title">AI-Powered Operations Playbook</h1>
         <p class="page-subtitle">Interactive process library built from the operations spreadsheet, including onboarding, ads, web, SEO, Facebook, and SAE documentation.</p>
-        <div class="ops-redaction-note">${h(PLAYBOOK.redactionNote)}</div>
       </div>
     </div>
 
