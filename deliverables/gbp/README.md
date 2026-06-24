@@ -1,6 +1,6 @@
 # GBP SEO
 
-This folder contains automation builds for all **8 GBP SEO** deliverables.
+This folder contains automation builds for all **7 active GBP SEO** deliverables.
 
 For GBP product description and image prompt creation, use [GBP Products Process](./GBP-PRODUCTS-PROCESS.md).
 
@@ -11,6 +11,5 @@ For GBP product description and image prompt creation, use [GBP Products Process
 | 31 | [Weekly GBP Posts](./31-gbp-weekly-posts/) | 8/10 | ✅ Documented |
 | 32 | [Automated Review Replies](./32-gbp-review-replies/) | 9/10 | ✅ Documented |
 | 33 | [GBP Photo Management](./33-gbp-photo-management/) | 2/10 | ✅ Documented |
-| 34 | [Retired GBP Q&A Workflow](./34-gbp-qa-management/) | 0/10 | ⚫ Retired / no execution |
 | 35 | [GBP Link on Website](./35-gbp-link-on-website/) | 0/10 | ⚫ 100% manual |
 | 36 | [GBP Attributes](./36-gbp-attributes/) | 0/10 | ⚫ 100% manual |

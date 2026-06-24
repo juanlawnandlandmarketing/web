@@ -37,7 +37,6 @@ const SOP_FILES = {
   '31': { title: 'Weekly GBP Posts', source: 'deliverables/gbp/31-gbp-weekly-posts/README.md' },
   '32': { title: 'Automated Review Replies', source: 'deliverables/gbp/32-gbp-review-replies/README.md' },
   '33': { title: 'GBP Photo Management', source: 'deliverables/gbp/33-gbp-photo-management/README.md' },
-  '34': { title: 'Retired GBP Q&A Workflow', source: 'deliverables/gbp/34-gbp-qa-management/README.md' },
   '35': { title: 'GBP Link on Website', source: 'deliverables/gbp/35-gbp-link-on-website/README.md' },
   '36': { title: 'GBP Attributes', source: 'deliverables/gbp/36-gbp-attributes/README.md' },
   '37': { title: 'Internal Monthly Scorecard', source: 'deliverables/reporting/37-internal-monthly-scorecard/README.md' },
